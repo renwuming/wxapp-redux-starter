@@ -1,0 +1,35 @@
+page {
+  height: auto;
+  min-height: 100%;
+  background-color: #070707;
+}
+.wrapper {
+  padding: 30rpx;
+  align-items: flex-start;
+}
+.container {
+  width: 100%;
+}
+.item {
+  width: 100%;
+}
+.m-t {
+  margin-top: 30rpx!important;
+}
+text {
+  color: #fff;
+}
+
+.player-list {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.player-list image {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 50rpx;
+  flex-shrink: 0;
+  border: 1px solid #fff;
+}

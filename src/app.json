@@ -3,9 +3,8 @@
     // First is default to view
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
     "pages": [
-        "pages/homes/index",
-        "pages/labs/index",
-        "pages/articles/show"
+        "pages/home/index",
+        "pages/q/index/index"
     ],
     // Window configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
@@ -18,7 +17,7 @@
         "navigationBarTextStyle": "black",
         // 类型：String；默认值：无
         // 导航栏标题文字内容
-        "navigationBarTitleText": "好奇心日报",
+        "navigationBarTitleText": "高升客栈",
         // 类型：HexColor；默认值：#ffffff
         // 窗口的背景色
         "backgroundColor": "#f7f7f7",
@@ -32,23 +31,23 @@
     },
     // Tab bar configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#tabBar
-    "tabBar": {
-        "color": "#999999",
-        "selectedColor": "#000000",
-        "backgroundColor": "#f5f5f5",
-        "position": "top",
-        "list": [{
-            "text": "NEWS",
-            "pagePath": "pages/homes/index"
-                // "iconPath": "images/icon_component.png",
-                // "selectedIconPath": "images/icon_component_HL.png"
-        }, {
-            "text": "LABS",
-            "pagePath": "pages/labs/index"
-                // "iconPath": "images/icon_component.png",
-                // "selectedIconPath": "images/icon_component_HL.png"
-        }]
-    },
+    // "tabBar": {
+    //     "color": "#999999",
+    //     "selectedColor": "#000000",
+    //     "backgroundColor": "#f5f5f5",
+    //     "position": "top",
+    //     "list": [{
+    //         "text": "NEWS",
+    //         "pagePath": "pages/home/index"
+    //             // "iconPath": "images/icon_component.png",
+    //             // "selectedIconPath": "images/icon_component_HL.png"
+    //     }, {
+    //         "text": "LABS",
+    //         "pagePath": "pages/home/index"
+    //             // "iconPath": "images/icon_component.png",
+    //             // "selectedIconPath": "images/icon_component_HL.png"
+    //     }]
+    // },
     // Network timeout configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#networkTimeout
     "networkTimeout": {

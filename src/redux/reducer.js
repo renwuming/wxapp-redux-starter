@@ -6,6 +6,14 @@ import { updateObject, updateItemInArray } from '../libs/utils.js';
 // import reducers
 import {
     // action
+    UPDATE_USERINFO,
+    UPDATE_SESSIONID,
+    // reducer
+    userReducer
+} from './models/user.js';
+// import reducers
+import {
+    // action
     UPDATE_ENTITIES,
     // reducer
     entitiesReducer
@@ -34,6 +42,8 @@ import {
 // ------------------------------------
 function crossReducer(state, action) {
     switch (action.type) {
+        case UPDATE_USERINFO:
+        case UPDATE_SESSIONID:
         case UPDATE_PAPERS_DETAIL:
         case UPDATE_PAPERS_LIST:
         case UPDATE_ARTICLES_DETAIL:
@@ -63,7 +73,7 @@ function crossReducer(state, action) {
 export const rootReducer = reduceReducers(
     combineReducers({
         entities: entitiesReducer,
-
+        user: userReducer,
         articles: articlesReducer,
         papers: papersReducer
     }),

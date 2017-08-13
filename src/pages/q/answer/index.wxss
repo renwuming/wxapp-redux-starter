@@ -1,0 +1,39 @@
+page {
+  height: auto;
+  min-height: 100%;
+  background-color: #070707;
+}
+.wrapper {
+  padding: 30rpx;
+  align-items: flex-start;
+}
+.container {
+  width: 100%;
+}
+.item {
+  width: 100%;
+}
+.item .container-h {
+  width: 100%;
+  margin-top: 10rpx;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.m-t {
+  margin-top: 30rpx!important;
+}
+.m-t-lg {
+  margin-top: 80rpx;
+}
+
+text {
+  color: #fff;
+}
+
+
+image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  border: 1px solid #fff;
+}

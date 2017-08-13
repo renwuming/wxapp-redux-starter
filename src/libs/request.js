@@ -15,8 +15,8 @@ function request(method = 'GET') {
                         errMsg = res.errMsg,
                         data = res.data;
 
-                    if (statusCode == 200 && data.meta && data.meta.status == 200) {
-                        resolve(data.response);
+                    if (statusCode == 200) {
+                        resolve(data);
                     } else {
                         reject('网路请求错误，请稍后再试~');
                     }

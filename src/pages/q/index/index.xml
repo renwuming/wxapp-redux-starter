@@ -1,0 +1,29 @@
+<!-- 
+<view class="container h-full">
+  <image class="bk" src="/images/bk.jpg" mode="aspectFill"></image>
+
+  <view class="container">
+    <button bindtap="goto0">创建问卷</button>
+    <button bindtap="goto1">问卷列表</button>
+    <button bindtap="goto2">问卷结果</button>
+  </view>
+
+  <template is="toaster" data="{{...toasterData}}"></template>
+</view> -->
+
+
+<import src="../../../components/grid-paper/index"></import>
+<import src="../../../components/loader/index"></import>
+<import src="../../../components/toaster/index"></import>
+
+<view class="container page">
+    <template is="toaster" data="{{...toasterData}}"></template>
+
+    <scroll-view scroll-y="true" bindscrolltolower="handleScroll" class="posts-wrapper">
+        <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
+            <template wx:if="{{postsHash[id].datatype == '0'}}" is="grid-paper" data="{{...postsHash[id]}}"></template>
+        </block>
+
+        <template is="loader" data="{{hasmore}}"></template>
+    </scroll-view>
+</view>

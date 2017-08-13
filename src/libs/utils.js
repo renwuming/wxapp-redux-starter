@@ -188,3 +188,8 @@ export const updateItemInArray = (array, itemId, updateItemCallback) => {
 
     return updatedArray;
 }
+
+export const equalObject = (o1, o2) => {
+    let str = JSON.stringify;
+    return str(o1) === str(o2);
+}

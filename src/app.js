@@ -1,13 +1,17 @@
 import { Provider } from './vendors/weapp-redux.js';
 import { sizeof } from './libs/utils.js';
 
+import { fetchUserInfo, fetchSessionid } from './redux/models/user.js';
+
 import { store } from './redux/store.js';
+
+// let p = getCurrentPage();
 
 let appConfig = {
     onLaunch: function() {
-        console.log('onLaunch');
     },
-
+    onShow: function() {
+    },
     onHide: function() {
         let state = store.getState(),
             cacheEntities = {};
@@ -20,5 +24,7 @@ let appConfig = {
         wx.setStorageSync('entities', cacheEntities);
     }
 };
+
+
 
 App(Provider(store)(appConfig))

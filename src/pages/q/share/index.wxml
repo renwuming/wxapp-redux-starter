@@ -1,0 +1,23 @@
+<view class="container wrapper">
+  
+  <block wx:if="{{!complete}}">
+    <view class="container">
+      <text>{{title}}</text>
+      <view wx:for="{{list}}" wx:key="item" wx:for-index="index" class="item m-t">
+        <view class="container-h">
+          <text>{{index+1}}.{{item.Q}}</text>
+        </view>
+        <radio-group class="container-h radio-group" data-index="{{index}}" bindchange="radioChange">
+          <label class="radio"><radio value="{{item.A}}"/>{{item.A}}</label>
+          <label class="radio"><radio value="{{item.B}}"/>{{item.B}}</label>
+        </radio-group>
+      </view>
+    </view>
+    <button class="m-t-lg main-btn" bindtap="complete">查看结果</button>
+  </block>
+
+  <view wx:if="{{complete}}" class="container center-container">
+    <image src="/img/complete.jpg" mode="aspectFill"></image>
+    <text>你被整蛊了！</text>
+  </view>
+</view>

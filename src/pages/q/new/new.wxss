@@ -1,0 +1,47 @@
+page {
+  height: auto;
+  min-height: 100%;
+  background-color: #070707;
+}
+.wrapper {
+  padding: 30rpx;
+  align-items: flex-start;
+}
+.container {
+  width: 100%;
+}
+.item {
+  width: 100%;
+}
+.item .container-h {
+  width: 100%;
+  margin-top: 10rpx;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.m-t {
+  margin-top: 30rpx!important;
+}
+
+
+text {
+  color: #fff;
+  line-height: 50rpx;
+}
+input, textarea {
+  box-sizing:border-box;
+  margin-left: 10rpx;
+  padding: 10rpx;
+  line-height: 50rpx;
+  background-color: #fff;
+  color: #000;
+}
+textarea {
+  width: 600rpx;
+}
+.slist input {
+  width: 180rpx;
+}
+.main-btn {
+  width: 500rpx;
+}

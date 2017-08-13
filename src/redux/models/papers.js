@@ -13,21 +13,6 @@ export const UPDATE_PAPERS_LIST = 'UPDATE_PAPERS_LIST';
 // ------------------------------------
 // helpers
 // ------------------------------------
-function formatFeeds(feeds) {
-    let posts;
-
-    posts = feeds.map((feed) => {
-        let post = feed.post,
-            category = post.category;
-
-        post.type = feed.type;
-        category.post_genre = post.genre;
-
-        return post;
-    });
-
-    return posts;
-}
 
 
 //判断paper是今天的，还是昨天的
@@ -55,12 +40,13 @@ function formatCount(posts){
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function updatePapersList(normalizeData, lastkey) {
+export function updatePapersList(normalizeData, lastkey, hasmore) {
     return {
         type: UPDATE_PAPERS_LIST,
         payload: {
             normalizeData: normalizeData,
-            listLastkey: lastkey
+            listLastkey: lastkey,
+            hasmore
         }
     }
 }
@@ -72,23 +58,24 @@ export const fetchPapersList = (errorCallback) => {
     return (dispatch, getState) => {
         let papers = getState().papers,
             lastkey = papers.listLastkey || 0,
-            url = `${getAPIDomain()}/wxapp/papers/index/${lastkey}.json`;
+            url = `${getAPIDomain()}/test/papers/${lastkey}`;
 
         return GET(url)
             .then(function(res) {
                 let feeds = res.feeds,
                     lastkey = res.last_key,
+                    hasmore = res.has_more,
                     posts, normalizeData;
 
                 if(feeds && feeds.length){
-                    posts = formatFeeds(feeds);
-                    posts = formatCount(posts);
+                    posts = formatCount(feeds);
 
                     normalizeData = normalize(posts, arrayOf(postSchema));
 
                     dispatch(updatePapersList(
                         normalizeData,
-                        lastkey
+                        lastkey,
+                        hasmore
                     ));
                 }
             }, function(err){
@@ -108,11 +95,13 @@ const ACTION_HANDLERS = {
         let payload = action.payload,
             normalizeData = payload.normalizeData,
             list = papers.list.concat(normalizeData.result),
-            listLastkey = payload.listLastkey;
+            listLastkey = payload.listLastkey,
+            hasmore = payload.hasmore;
 
         return updateObject(papers, {
             list,
-            listLastkey
+            listLastkey,
+            hasmore
         });
     }
 }
@@ -121,7 +110,8 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 export function papersReducer(papers = {
     list: [],
-    listLastkey: 0
+    listLastkey: 0,
+    hasmore: true
 }, action) {
     const handler = ACTION_HANDLERS[action.type]
 

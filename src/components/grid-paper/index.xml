@@ -1,9 +1,9 @@
 <template name="grid-paper">
     <view class="com-grid-paper">
     	<view class="grid-paper-hd">
-            <image class="lazyloaded" src="../../images/icon_vote.png"></image>
+            <image class="lazyloaded" src="/images/icon_vote.png"></image>
             <view  class="count">
-                <image mode="aspectFill" src="../../images/black.png"></image>
+                <image mode="aspectFill" src="/images/black.png"></image>
                 <view class="words">
                     <view wx:if="{{today}}">
                         <text class="num DIN">NEW</text>

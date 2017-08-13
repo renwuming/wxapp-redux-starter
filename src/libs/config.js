@@ -1,1 +1,1 @@
-export const domain = 'https://test.app.qdaily.com';
+export const domain = 'https://www.renwuming.xyz/wumingstore';
