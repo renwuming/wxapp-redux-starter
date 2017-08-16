@@ -21,3 +21,6 @@ npm-debug.log*
 
 # yarn
 yarn.lock
+
+# bower
+/bower_components

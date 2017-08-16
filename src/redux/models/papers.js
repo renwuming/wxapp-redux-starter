@@ -1,7 +1,7 @@
 import Promise from '../../vendors/es6-promise.js';
 import { normalize, arrayOf } from '../../vendors/normalizr.min.js';
 
-import { updateObject, getAPIDomain, merge } from '../../libs/utils.js';
+import { updateObject, VALID_TIME } from '../../libs/utils.js';
 import { GET, POST } from '../../libs/request.js';
 
 import { postSchema } from '../schema.js';
@@ -40,7 +40,7 @@ function formatCount(posts){
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function updatePapersList(normalizeData, lastkey, hasmore) {
+export function updatePapersList(normalizeData, lastkey = null, hasmore = null) {
     return {
         type: UPDATE_PAPERS_LIST,
         payload: {
@@ -51,16 +51,52 @@ export function updatePapersList(normalizeData, lastkey, hasmore) {
     }
 }
 
+function updateValidate(data) {
+    if(!data) return true;
+    return (+new Date() - data.publish_time) > VALID_TIME;
+}
+
 // ------------------------------------
 // Async Actions
 // ------------------------------------
+export const fetchPaper = (id, errorCallback) => {
+    return (dispatch, getState) => {
+        let papers = getState().papers,
+             entities = getState().entities,
+             oldPaper = entities.posts && entities.posts[id],
+             url = `/test/paper/${id}`;
+
+        if(!updateValidate(oldPaper)) return Promise.resolve();
+        return GET(url, {}, 500)
+            .then(function(res) {
+                let feeds = res.feeds,
+                    posts, normalizeData;
+
+                if(feeds && feeds.length){
+                    posts = formatCount(feeds);
+
+                    normalizeData = normalize(posts, arrayOf(postSchema));
+
+                    dispatch(updatePapersList(
+                        normalizeData
+                    ));
+                }
+            }, function(err){
+                errorCallback && errorCallback(err);
+            }).catch(function(err) {
+                errorCallback && errorCallback();
+                console.error(err);
+            });
+    }
+}
+
 export const fetchPapersList = (errorCallback) => {
     return (dispatch, getState) => {
         let papers = getState().papers,
-            lastkey = papers.listLastkey || 0,
-            url = `${getAPIDomain()}/test/papers/${lastkey}`;
+             lastkey = papers.listLastkey || 0,
+             url = `/test/papers/${lastkey}`;
 
-        return GET(url)
+        return GET(url, {}, 500)
             .then(function(res) {
                 let feeds = res.feeds,
                     lastkey = res.last_key,
@@ -96,13 +132,13 @@ const ACTION_HANDLERS = {
             normalizeData = payload.normalizeData,
             list = papers.list.concat(normalizeData.result),
             listLastkey = payload.listLastkey,
-            hasmore = payload.hasmore;
+            hasmore = payload.hasmore,
+            newPapers = { list };
+        // 忽略null
+        (listLastkey !== null) && (newPapers.listLastkey = listLastkey);
+        (hasmore !== null) && (newPapers.hasmore = hasmore);
 
-        return updateObject(papers, {
-            list,
-            listLastkey,
-            hasmore
-        });
+        return updateObject(papers, newPapers);
     }
 }
 // ------------------------------------

@@ -5,9 +5,9 @@ import { fetchUserInfo, fetchSessionid } from '../../redux/models/user.js';
 import Toaster from '../../components/toaster/index.js';
 
 let pageConfig = {
-  goto: function() {
+  navigateTo: function() {
     wx.navigateTo({
-      url: "/pages/q/index/index"
+      url: "/pages/q/home/index"
     });
   },
   onShow: function() {

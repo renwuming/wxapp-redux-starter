@@ -1,7 +1,7 @@
 <template name="loader">
     <view class="com-loader loading">
         <view class="loader-bd">
-            <view class="notext" wx:if="{{!data}}">没有更多啦</view>
+            <view class="notext" wx:if="{{!hasmore}}">没有更多啦</view>
             <view class="spinner" wx:else>
                 <text class="bounce bounce1"></text>
                 <text class="bounce bounce2"></text>

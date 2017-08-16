@@ -5,8 +5,6 @@ import { fetchUserInfo, fetchSessionid } from './redux/models/user.js';
 
 import { store } from './redux/store.js';
 
-// let p = getCurrentPage();
-
 let appConfig = {
     onLaunch: function() {
     },

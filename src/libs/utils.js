@@ -1,12 +1,22 @@
-import { domain as cfgDomain } from './config.js';
+import { domain as cfgDomain, AES_KEY, VALID_TIME as _VALID_TIME } from './config.js';
 import deepMerge from '../vendors/deep-merge.js';
 import deepClone from '../vendors/clone.js';
+import CryptoJS from '../vendors/crypto-js.js';
 
 
 // 获取API域名，统一配置
 export const getAPIDomain = () => {
     return cfgDomain;
 }
+
+// AES对称加密、解密
+export const Encrypt = (data) => {
+    return CryptoJS.AES.encrypt(JSON.stringify(data), AES_KEY).toString();
+}
+export const Decrypt = (data) => {
+    return JSON.parse(CryptoJS.AES.decrypt(data, AES_KEY).toString(CryptoJS.enc.Utf8));
+}
+export const VALID_TIME = _VALID_TIME;
 
 /**
  * 格式化时间

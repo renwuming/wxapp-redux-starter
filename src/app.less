@@ -1,12 +1,14 @@
-@import url(./components/grid-paper/index);
+@import url(./components/paper/index);
+@import url(./components/paper-detail/index);
+@import url(./components/toolbar/index);
 @import url(./components/loader/index);
 @import url(./components/toaster/index);
 
 page {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
+  min-height: 100%;
   background-color: #f9f9f9;
   // font-family 最佳实践
   font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", STXihei, "Microsoft YaHei", SimHei, "WenQuanYi Micro Hei", sans-serif;
@@ -18,7 +20,6 @@ page {
   flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   box-sizing: border-box;
 }
 .container-h {
@@ -44,4 +45,7 @@ image.bk {
   .posts-wrapper {
     height: 100%;
   }
+}
+.toolbar-container {
+  padding-bottom: 108rpx;
 }

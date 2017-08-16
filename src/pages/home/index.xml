@@ -1,4 +1,4 @@
-<import src="../../components/toaster/index"></import>
+<import src="/components/toaster/index"></import>
 
 <view class="container">
   <image class="bk" src="/images/bk.jpg" mode="aspectFill"></image>
@@ -7,7 +7,7 @@
     <text>{{userInfo.nickName}}</text>
   </view>
   <view class="container-h">
-    <view class="btn" bindtap="goto">
+    <view class="btn" bindtap="navigateTo">
       <image src="/images/q.jpg" mode="aspectFill"></image>
       <text>趣味测试</text>
     </view>

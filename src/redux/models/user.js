@@ -1,6 +1,6 @@
 import Promise from '../../vendors/es6-promise.js';
 
-import { getAPIDomain, equalObject } from '../../libs/utils.js';
+import { equalObject } from '../../libs/utils.js';
 import { GET, POST } from '../../libs/request.js';
 
 
@@ -40,8 +40,8 @@ export const fetchUserInfo = (errorCallback) => {
     return (dispatch, getState) => {
         let oldUserInfo = getState().entities.userInfo,
              sessionid = getState().entities.sessionid,
-             url = `${getAPIDomain()}/user/userinfo`,
-             url2 = `${getAPIDomain()}/user/userinfo`;
+             url = `/user/userinfo`,
+             url2 = `/user/userinfo`;
 
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
@@ -93,7 +93,7 @@ export const fetchSessionid = (errorCallback) => {
 }
 
 let getSessionId = (R, errorCallback, dispatch) => {
-    let url = `${getAPIDomain()}/sessionkey`;
+    let url = `/sessionkey`;
     return new Promise(() => {
         wx.login({
             complete: function (res) {

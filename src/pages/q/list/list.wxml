@@ -1,8 +1,0 @@
-<view class="container wrapper">
-  <view class="container">
-    <view wx:for="{{testlist}}" wx:key="item" wx:for-index="index" class="item m-t">
-      <button bindtap="goto" data-test="{{item}}">{{item.value.title}}</button>
-    </view>
-  </view>
-
-</view>
