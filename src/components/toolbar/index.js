@@ -3,10 +3,12 @@ let defaultData = {
         isPraised: false,
         praiseCount: 0,
         showPraiseIcon: false,
+        showShare: true
     },
     praiseCount = defaultData.praiseCount,
     isPraised = false,
-    showPraiseIcon = false;
+    showPraiseIcon = false,
+    showShare = true;
 
 function _formatPraiseCount(praiseCount) {
     praiseCount = praiseCount || 0;
@@ -25,18 +27,20 @@ function _setPageData() {
         toolbarData: {
             isPraised: isPraised,
             showPraiseIcon: showPraiseIcon,
-            praiseCount: _formatPraiseCount(praiseCount)
+            praiseCount: _formatPraiseCount(praiseCount),
+            showShare
         }
     });
 }
 
 // 初始化
-function init(count, praised, show = false) {
+function init(count, praised, show = false, share = true) {
     var me = this;
 
     showPraiseIcon = show;
     isPraised = praised;
     praiseCount = count;
+    showShare = share;
 
     _setPageData.call(me);
 }

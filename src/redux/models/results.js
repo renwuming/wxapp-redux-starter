@@ -1,16 +1,16 @@
 import Promise from '../../vendors/es6-promise.js';
 import { normalize, arrayOf } from '../../vendors/normalizr.min.js';
 
-import { updateObject, VALID_TIME } from '../../libs/utils.js';
+import { updateObject } from '../../libs/utils.js';
 import { GET, POST } from '../../libs/request.js';
 
-import { postSchema } from '../schema.js';
+import { postSchema, resultsSchema } from '../schema.js';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const UPDATE_PAPERS_LIST = 'UPDATE_PAPERS_LIST';
-export const REPLACE_PAPERS_LIST = 'REPLACE_PAPERS_LIST';
+export const UPDATE_RESULTS_LIST = 'UPDATE_RESULTS_LIST';
+export const REPLACE_RESULTS_LIST = 'REPLACE_RESULTS_LIST';
 // ------------------------------------
 // helpers
 // ------------------------------------
@@ -18,7 +18,6 @@ export const REPLACE_PAPERS_LIST = 'REPLACE_PAPERS_LIST';
 
 //判断是今天的，还是昨天的
 function formatCount(posts){
-
     posts = posts.map((post) => {
         let publishTime = post.publish_time,
             nowDate, diffMinute;
@@ -38,12 +37,38 @@ function formatCount(posts){
     return posts;
 }
 
+function handleResults(posts) {
+    let results = [],
+         papers = [],
+         normalizePapers, normalizeResults;
+
+    posts.map(e => {
+        results.push(e.result);
+        papers.push(e.paper);
+    });
+
+    normalizePapers = normalize(papers, arrayOf(postSchema));
+    normalizeResults = normalize(results, arrayOf(resultsSchema));
+
+    return updateObject(normalizePapers, normalizeResults);
+}
+
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function updatePapersList(normalizeData, lastkey = null, hasmore = null) {
+export function updateResultsList(normalizeData, lastkey = null, hasmore = null) {
     return {
-        type: UPDATE_PAPERS_LIST,
+        type: UPDATE_RESULTS_LIST,
+        payload: {
+            normalizeData: normalizeData,
+            listLastkey: lastkey,
+            hasmore
+        }
+    }
+}
+export function replaceResultsList(normalizeData, lastkey = null, hasmore = null) {
+    return {
+        type: REPLACE_RESULTS_LIST,
         payload: {
             normalizeData: normalizeData,
             listLastkey: lastkey,
@@ -52,63 +77,20 @@ export function updatePapersList(normalizeData, lastkey = null, hasmore = null) 
     }
 }
 
-export function replacePapersList(normalizeData, lastkey = null, hasmore = null) {
-    return {
-        type: REPLACE_PAPERS_LIST,
-        payload: {
-            normalizeData: normalizeData,
-            listLastkey: lastkey,
-            hasmore
-        }
-    }
-}
-
-function updateValidate(data) {
-    if(!data) return true;
-    return (+new Date() - data.publish_time) > VALID_TIME;
-}
 
 // ------------------------------------
 // Async Actions
 // ------------------------------------
-export const fetchPaper = (id, errorCallback) => {
+
+export const fetchResultList = (errorCallback, init) => {
     return (dispatch, getState) => {
-        let papers = getState().papers,
-             entities = getState().entities,
-             oldPaper = entities.posts && entities.posts[id],
-             url = `/test/paper/${id}`;
+        let state = getState(),
+             results = state.results,
+             sessionid = state.entities.sessionid,
+             lastkey = init ? 0 : results.listLastkey || 0,
+             url = `/test/results/${lastkey}`;
 
-        if(!updateValidate(oldPaper)) return Promise.resolve();
-        return GET(url, {}, 500)
-            .then(function(res) {
-                let feeds = res.feeds,
-                    posts, normalizeData;
-
-                if(feeds && feeds.length){
-                    posts = formatCount(feeds);
-
-                    normalizeData = normalize(posts, arrayOf(postSchema));
-
-                    dispatch(updatePapersList(
-                        normalizeData
-                    ));
-                }
-            }, function(err){
-                errorCallback && errorCallback(err);
-            }).catch(function(err) {
-                errorCallback && errorCallback();
-                console.error(err);
-            });
-    }
-}
-
-export const fetchPapersList = (errorCallback, init) => {
-    return (dispatch, getState) => {
-        let papers = getState().papers,
-             lastkey = init ? 0 : papers.listLastkey || 0,
-             url = `/test/papers/${lastkey}`;
-
-        return GET(url, {}, 500)
+        return GET(url, { sessionid }, 500)
             .then(function(res) {
                 let feeds = res.feeds,
                     lastkey = res.last_key,
@@ -121,16 +103,16 @@ export const fetchPapersList = (errorCallback, init) => {
                 if(feeds && feeds.length){
                     posts = formatCount(feeds);
 
-                    normalizeData = normalize(posts, arrayOf(postSchema));
+                    normalizeData = handleResults(posts);
                 }
                 if(init) {
-                    dispatch(replacePapersList(
+                    dispatch(replaceResultsList(
                         normalizeData,
                         lastkey,
                         hasmore
                     ));
                 } else {
-                    dispatch(updatePapersList(
+                    dispatch(updateResultsList(
                         normalizeData,
                         lastkey,
                         hasmore
@@ -149,42 +131,42 @@ export const fetchPapersList = (errorCallback, init) => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-    [UPDATE_PAPERS_LIST]: (papers, action) => {
+    [UPDATE_RESULTS_LIST]: (results, action) => {
         let payload = action.payload,
             normalizeData = payload.normalizeData,
-            list = papers.list.concat(normalizeData.result),
+            list = results.list.concat(normalizeData.result),
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
-            newPapers = { list };
+            newObj = { list };
         // 忽略null
-        (listLastkey !== null) && (newPapers.listLastkey = listLastkey);
-        (hasmore !== null) && (newPapers.hasmore = hasmore);
+        (listLastkey !== null) && (newObj.listLastkey = listLastkey);
+        (hasmore !== null) && (newObj.hasmore = hasmore);
 
-        return updateObject(papers, newPapers);
+        return updateObject(results, newObj);
     },
-    [REPLACE_PAPERS_LIST]: (papers, action) => {
+    [REPLACE_RESULTS_LIST]: (results, action) => {
         let payload = action.payload,
             normalizeData = payload.normalizeData,
             list = normalizeData.result,
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
-            newPapers = { list };
+            newObj = { list };
         // 忽略null
-        (listLastkey !== null) && (newPapers.listLastkey = listLastkey);
-        (hasmore !== null) && (newPapers.hasmore = hasmore);
+        (listLastkey !== null) && (newObj.listLastkey = listLastkey);
+        (hasmore !== null) && (newObj.hasmore = hasmore);
 
-        return updateObject(papers, newPapers);
-    },
+        return updateObject(results, newObj);
+    }
 }
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export function papersReducer(papers = {
+export function resultsReducer(results = {
     list: [],
     listLastkey: 0,
     hasmore: true
 }, action) {
     const handler = ACTION_HANDLERS[action.type]
 
-    return handler ? handler(papers, action) : papers
+    return handler ? handler(results, action) : results
 }

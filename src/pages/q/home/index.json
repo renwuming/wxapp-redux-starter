@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "高升客栈"
+  "navigationBarTitleText": "高升客栈",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

@@ -3,7 +3,7 @@
 		<view class="arrow-left" catchtap="returnBack">
 			<image src="/images/arrowleft.png"></image>
 		</view>
-		<view class="share">
+		<view wx:if="{{showShare}}" class="share">
 			<button open-type="share"></button>
 			<image src="/images/share.png" mode="aspectFit"></image>
 		</view>

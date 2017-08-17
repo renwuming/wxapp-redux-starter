@@ -3,7 +3,7 @@ import { connect } from '../../../vendors/weapp-redux.js';
 import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 
-import { clone, getDeviceInfo, Encrypt, Decrypt } from '../../../libs/utils.js';
+import { clone, getDeviceInfo } from '../../../libs/utils.js';
 
 let pageConfig = {
     data: {
@@ -25,12 +25,13 @@ let pageConfig = {
 
     },
     onShareAppMessage: function() {
-      let _data = this.data;
+      let { detail, aesSessionid, id } = this.data,
+           { title, description: desc } = detail;
 
       return {
-        title: _data.detail.title,
-        desc: _data.detail.description,
-        path: `/pages/q/detail2/index?id=${_data.id}&from=${_data.aesSessionid}`
+        title,
+        desc,
+        path: `/pages/q/detail2/index?id=${id}&from=${aesSessionid}`
       };
     },
     radioSelect: function(e) {
@@ -40,7 +41,7 @@ let pageConfig = {
       _data.score += _score;
       newData.progress = ++_data.progress;
       if(_data.progress>=_data.questions.length) {
-        newData.result = this.getRusult();
+        newData.result = this.getResult();
       }
       this.setData(newData);
     },
@@ -49,7 +50,7 @@ let pageConfig = {
            ind2 = e.detail.value;
       return +this.data.questions[ind1].options[ind2].score;
     },
-    getRusult() {
+    getResult() {
       let _data = this.data,
            ratio = _data.score / _data.totalScore,
            _result = _data.detail.result.filter(e=>e.score<=ratio).sort().reverse()[0];
@@ -58,14 +59,6 @@ let pageConfig = {
     },
     returnBack: function(e) {
         wx.navigateBack();
-    },
-    navigateTo: function(e) {
-        let elCurrentTarget = e.currentTarget,
-            url = elCurrentTarget.dataset.url;
-
-        wx.navigateTo({
-            url: url
-        });
     },
 }
 
@@ -83,7 +76,7 @@ let mapStateToData = (state, params) => {
         questions,
         totalScore,
         sessionid: state.entities.sessionid,
-        aesSessionid: Encrypt(state.entities.sessionid)
+        aesSessionid: state.entities.aesSessionid
     }
 };
 

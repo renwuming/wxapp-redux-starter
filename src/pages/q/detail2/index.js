@@ -7,7 +7,7 @@ import { fetchUserInfo, fetchSessionid } from '../../../redux/models/user.js';
 import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 
-import { clone, getDeviceInfo, Encrypt, Decrypt } from '../../../libs/utils.js';
+import { clone, getDeviceInfo, Decrypt } from '../../../libs/utils.js';
 
 let pageConfig = {
     data: {
@@ -15,10 +15,9 @@ let pageConfig = {
       score: 0,
       result: ""
     },
-    onLoad: function(params) {
+    onShow: function() {
       let { detail, id } = this.data,
           errorCallback = Toaster.show.bind(this);
-
       // 先获取sessionid再获取userInfo
       this.fetchSessionid(errorCallback).then(() => {
         this.fetchUserInfo(errorCallback);
@@ -35,6 +34,7 @@ let pageConfig = {
           title: detail.title || '趣味测试'
       });
       toolbarInit(detail.praise_count, detail.praise || false, true);
+      this.setData({progress:0});
     },
     onShareAppMessage: function() {
       let { title, description } = this.data.detail,
@@ -42,7 +42,7 @@ let pageConfig = {
       return {
         title,
         desc: description,
-        path: `/pages/q/detail2/index?id=${id}&from=${aesSessionid}`
+        path: `/pages/q/detail2/index?id=${id}&from=${from}`
       };
     },
     radioSelect: function(e) {
@@ -87,14 +87,6 @@ let pageConfig = {
     },
     returnBack: function(e) {
         wx.navigateBack();
-    },
-    navigateTo: function(e) {
-        let elCurrentTarget = e.currentTarget,
-            url = elCurrentTarget.dataset.url;
-
-        wx.navigateTo({
-            url: url
-        });
     },
 }
 

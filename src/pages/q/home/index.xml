@@ -1,4 +1,3 @@
-
 <import src="/components/paper/index"></import>
 <import src="/components/loader/index"></import>
 <import src="/components/toaster/index"></import>
@@ -6,11 +5,12 @@
 <view class="container page">
     <template is="toaster" data="{{...toasterData}}"></template>
 
-    <scroll-view scroll-y="true" bindscrolltolower="handleScroll" class="posts-wrapper">
+    <view class="posts-wrapper">
+        
         <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
             <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
         </block>
 
         <template is="loader" data="{{hasmore}}"></template>
-    </scroll-view>
+    </view>
 </view>

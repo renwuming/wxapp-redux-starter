@@ -11,7 +11,7 @@ import {
     // reducer
     userReducer
 } from './models/user.js';
-// import reducers
+
 import {
     // action
     UPDATE_ENTITIES,
@@ -22,9 +22,18 @@ import {
 import {
     // action
     UPDATE_PAPERS_LIST,
+    REPLACE_PAPERS_LIST,
     // reducer
     papersReducer
 } from './models/papers.js';
+
+import {
+    // action
+    UPDATE_RESULTS_LIST,
+    REPLACE_RESULTS_LIST,
+    // reducer
+    resultsReducer
+} from './models/results.js';
 
 
 // ------------------------------------
@@ -35,6 +44,9 @@ function crossReducer(state, action) {
         case UPDATE_USERINFO:
         case UPDATE_SESSIONID:
         case UPDATE_PAPERS_LIST:
+        case REPLACE_PAPERS_LIST:
+        case UPDATE_RESULTS_LIST:
+        case REPLACE_RESULTS_LIST:
             let payload = action.payload,
                 normalizeData = payload.normalizeData;
 
@@ -58,7 +70,8 @@ export const rootReducer = reduceReducers(
     combineReducers({
         entities: entitiesReducer,
         user: userReducer,
-        papers: papersReducer
+        papers: papersReducer,
+        results: resultsReducer
     }),
     crossReducer
 );

@@ -1,6 +1,6 @@
 import Promise from '../../vendors/es6-promise.js';
 
-import { equalObject } from '../../libs/utils.js';
+import { equalObject, Encrypt } from '../../libs/utils.js';
 import { GET, POST } from '../../libs/request.js';
 
 
@@ -104,7 +104,8 @@ let getSessionId = (R, errorCallback, dispatch) => {
                         // 获取sessionkey
                         let normalizeData = {
                             entities: {
-                                sessionid: res
+                                sessionid: res,
+                                aesSessionid: Encrypt(res)
                             }
                         };
                         dispatch(updateSessionid(
