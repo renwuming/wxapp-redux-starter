@@ -7,7 +7,7 @@ import { fetchUserInfo, fetchSessionid } from '../../../redux/models/user.js';
 import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 
-import { clone, getDeviceInfo, Decrypt } from '../../../libs/utils.js';
+import { clone, getDeviceInfo } from '../../../libs/utils.js';
 
 let pageConfig = {
     data: {
@@ -92,7 +92,7 @@ let pageConfig = {
 
 let mapStateToData = (state, params) => {
     let id = params.id,
-         from = Decrypt(params.from),
+         from = params.from,
          postsHash = state.entities.posts,
          qHash = state.entities.questions,
          detail = postsHash && clone(postsHash[id]),

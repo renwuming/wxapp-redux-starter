@@ -25,13 +25,13 @@ let pageConfig = {
 
     },
     onShareAppMessage: function() {
-      let { detail, aesSessionid, id } = this.data,
+      let { detail, sessionid, id } = this.data,
            { title, description: desc } = detail;
 
       return {
         title,
         desc,
-        path: `/pages/q/detail2/index?id=${id}&from=${aesSessionid}`
+        path: `/pages/q/detail2/index?id=${id}&from=${sessionid}`
       };
     },
     radioSelect: function(e) {
@@ -75,8 +75,7 @@ let mapStateToData = (state, params) => {
         detail,
         questions,
         totalScore,
-        sessionid: state.entities.sessionid,
-        aesSessionid: state.entities.aesSessionid
+        sessionid: state.entities.sessionid
     }
 };
 
