@@ -1,7 +1,7 @@
 <template name="paper">
     <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/q/detail/index?id={{id}}">
     	<view class="grid-paper-hd">
-            <image class="lazyloaded" src="/images/icon_vote.png"></image>
+            <image class="lazyloaded" src="/images/icon_test.png"></image>
             <view  class="count">
                 <image mode="aspectFill" src="/images/black.png"></image>
                 <view class="words">

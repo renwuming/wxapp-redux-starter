@@ -76,6 +76,16 @@ gulp.task('compile:less', () => {
         .pipe(gulp.dest('dist'))
 })
 
+gulp.task('appless', () => {
+    return gulp.src(['src/app.less'])
+        .pipe(plumber(handleErrors))
+        .pipe(plugins.less())
+        .pipe(plugins.rename({ extname: '.wxss' }))
+        .pipe(plugins.logger({ showChange: true }))
+        .pipe(plugins.if(isProduction, plugins.cssnano({ compatibility: '*' })))
+        .pipe(gulp.dest('dist'))
+})
+
 /**
  * Compile json source to distribution directory
  */
@@ -139,7 +149,7 @@ gulp.task('build', next => runSequence(['compile', 'extras'], next))
 gulp.task('watch', ['build'], () => {
     gulp.watch('src/**/*.js', ['compile:js'])
     gulp.watch('src/**/*.xml', ['compile:xml'])
-    gulp.watch('src/**/*.less', ['compile:less'])
+    gulp.watch('src/**/*.less', ['compile:less','appless'])
     gulp.watch('src/**/*.json', ['compile:json'])
     gulp.watch('src/**/*.{jpe?g,png,gif}', ['compile:img'])
 })
