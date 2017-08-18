@@ -5,7 +5,7 @@
 <view class="container toolbar-container">
   <template is="toaster" data="{{...toasterData}}"></template>
 
-  <template is="paper-detail" data="{{...detail, questions, progress, result}}"></template>
+  <template is="paper-detail" data="{{...detail, questions, progress, result, showhometip}}"></template>
   
   <template is="toolbar" data="{{...toolbarData}}"></template>
 </view>

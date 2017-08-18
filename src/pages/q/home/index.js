@@ -9,7 +9,7 @@ let pageConfig = {
   data: {
     hasmore: true
   },
-  onLoad: function () {
+  onShow: function() {
     const errorCallback = Toaster.show.bind(this);
 
     // 先获取sessionid再获取userInfo

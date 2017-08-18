@@ -23,7 +23,7 @@ function request(method = 'GET') {
                     }
                 },
                 fail: function(err) {
-                    reject('网路请求不符合规范，请检查域名是否符合要求~');
+                    reject('服务器忙，请稍后再试~');
                 }
             });
         });

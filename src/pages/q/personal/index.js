@@ -8,7 +8,7 @@ let pageConfig = {
   data: {
     hasmore: true
   },
-  onLoad: function () {
+  onShow: function() {
     const errorCallback = Toaster.show.bind(this);
 
     this.fetchPosts(errorCallback, true);

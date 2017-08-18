@@ -4,25 +4,28 @@ import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 
 import { clone, getDeviceInfo } from '../../../libs/utils.js';
+import { POST_RECORD } from '../../../libs/common.js';
 
 let pageConfig = {
     data: {
       progress: 0,
       score: 0,
-      result: ""
+      result: "",
+      showsharetip: true
     },
-    onLoad: function(params) {
-        var me = this,
+    onShow: function() {
+      var me = this,
             { detail } = me.data,
             errorCallback = Toaster.show.bind(me),
             toolbarInit = Toolbar.init.bind(me);
 
-        wx.setNavigationBarTitle({
-            title: detail.title || '趣味测试'
-        });
+      wx.setNavigationBarTitle({
+        title: detail.title || '趣味测试'
+      });
 
-        toolbarInit(detail.praise_count, detail.praise || false, true);
+      toolbarInit(detail.praise_count, detail.praise || false, true);
 
+      POST_RECORD(this.data.id);
     },
     onShareAppMessage: function() {
       let { detail, sessionid, id } = this.data,
@@ -33,6 +36,9 @@ let pageConfig = {
         desc,
         path: `/pages/q/detail2/index?id=${id}&from=${sessionid}`
       };
+    },
+    hidecover: function() {
+      this.setData({ showsharetip: false });
     },
     radioSelect: function(e) {
       let _score = this.getScore(e),

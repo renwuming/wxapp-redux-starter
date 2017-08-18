@@ -8,12 +8,14 @@ import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 
 import { clone, getDeviceInfo } from '../../../libs/utils.js';
+import { POST_RECORD } from '../../../libs/common.js';
 
 let pageConfig = {
     data: {
       progress: 0,
       score: 0,
-      result: ""
+      result: "",
+      showhometip: true
     },
     onShow: function() {
       let { detail, id } = this.data,
@@ -26,6 +28,11 @@ let pageConfig = {
       this.fetchPaper(id, errorCallback).then(() => {
         this.init();
       });
+
+      POST_RECORD(this.data.id);
+    },
+    hidecover: function() {
+      this.setData({ showhometip: false });
     },
     init: function() {
       let { detail } = this.data,
