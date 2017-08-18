@@ -39,15 +39,21 @@ let pageConfig = {
            _data = this.data,
            newData = {};
       _data.score += _score;
-      newData.progress = ++_data.progress;
-      if(_data.progress>=_data.questions.length) {
-        newData.result = this.getResult();
-      }
-      this.setData(newData);
+      this.setData({
+        questions: this.data.questions
+      });
+      setTimeout(() => {
+        newData.progress = ++_data.progress;
+        if(_data.progress>=_data.questions.length) {
+          newData.result = this.getResult();
+        }
+        this.setData(newData);
+      }, 300);
     },
     getScore(e) {
       let ind1 = e.currentTarget.dataset.index,
            ind2 = e.detail.value;
+      this.data.questions[ind1].options[ind2].hoverClass = "selected"; // hover
       return +this.data.questions[ind1].options[ind2].score;
     },
     getResult() {

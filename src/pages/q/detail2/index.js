@@ -50,13 +50,18 @@ let pageConfig = {
            _data = this.data,
            newData = {};
       _data.score += _score;
-      newData.progress = ++_data.progress;
       this.saveSelect(e);
-      if(_data.progress>=_data.questions.length) {
-        newData.result = this.getRusult();
-        this.postResult();
-      }
-      this.setData(newData);
+      this.setData({
+        questions: this.data.questions
+      });
+      setTimeout(() => {
+        newData.progress = ++_data.progress;
+        if(_data.progress>=_data.questions.length) {
+          newData.result = this.getResult();
+          this.postResult();
+        }
+        this.setData(newData);
+      }, 300);
     },
     saveSelect(e) {
       let ind1 = e.currentTarget.dataset.index,
@@ -66,9 +71,10 @@ let pageConfig = {
     getScore(e) {
       let ind1 = e.currentTarget.dataset.index,
            ind2 = e.detail.value;
+      this.data.questions[ind1].options[ind2].hoverClass = "selected"; // hover
       return +this.data.questions[ind1].options[ind2].score;
     },
-    getRusult() {
+    getResult() {
       let { detail, score, totalScore } = this.data,
            ratio = score / totalScore,
            _result = detail.result.filter(e=>e.score<=ratio).sort().reverse()[0];

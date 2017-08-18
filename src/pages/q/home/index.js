@@ -35,7 +35,7 @@ let pageConfig = {
     });
   },
   onReachBottom: function() {
-    if(this.scrolling) return;
+    if(this.scrolling || !this.data.hasmore) return;
     this.scrolling = true;
     const errorCallback = Toaster.show.bind(this);
     this.fetchPosts(errorCallback).then(() => {
