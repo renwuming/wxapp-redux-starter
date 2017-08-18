@@ -2,7 +2,7 @@
 <import src="/components/loader/index"></import>
 <import src="/components/toaster/index"></import>
 
-<view class="container page">
+<view class="container">
     <template is="toaster" data="{{...toasterData}}"></template>
 
     <view class="posts-wrapper">
