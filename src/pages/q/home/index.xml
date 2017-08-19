@@ -5,12 +5,9 @@
 <view class="container">
     <template is="toaster" data="{{...toasterData}}"></template>
 
-    <view class="posts-wrapper">
-        
-        <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
-            <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
-        </block>
+    <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
+      <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
+    </block>
 
-        <template is="loader" data="{{hasmore}}"></template>
-    </view>
+    <template is="loader" data="{{hasmore}}"></template>
 </view>

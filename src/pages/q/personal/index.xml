@@ -3,13 +3,11 @@
 <import src="/components/toaster/index"></import>
 
 <view class="container">
-    <template is="toaster" data="{{...toasterData}}"></template>
+  <template is="toaster" data="{{...toasterData}}"></template>
 
-    <view class="posts-wrapper">
-        <block wx:for="{{results}}" wx:for-item="id" wx:key="*this">
-            <template is="paper-result" data="{{...postsHash[resultsHash[id].paperid], ...resultsHash[id]}}"></template>
-        </block>
+  <block wx:for="{{results}}" wx:for-item="id" wx:key="*this">
+    <template is="paper-result" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
+  </block>
 
-        <template is="loader" data="{{hasmore}}"></template>
-    </view>
+  <template is="loader" data="{{hasmore}}"></template>
 </view>

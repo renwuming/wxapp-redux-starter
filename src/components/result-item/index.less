@@ -1,0 +1,25 @@
+.result-item {
+  margin-bottom: 0;
+  padding: 20rpx 40rpx;
+  padding-bottom: 0;
+  box-sizing:border-box;
+  &:nth-last-of-type(1) {
+    padding-bottom: 20rpx;
+  }
+  .grid-paper-hd {
+    height:200rpx;
+    justify-content:flex-start;
+    border:1px solid #eee;
+    border-radius:10rpx;
+    padding-left:30rpx;
+    .player {
+      position: static;
+      text {
+        color: #666;
+      }
+    }
+    .count {
+      right: 60rpx;
+    }
+  }
+}

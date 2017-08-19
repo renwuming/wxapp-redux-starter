@@ -1,0 +1,17 @@
+<template name="result-item">
+    <view class="com-grid-paper result-item" bindtap="navigateTo" data-url="/pages/q/result/index?id={{id}}">
+    	<view class="container-h grid-paper-hd">
+            <view  class="player">
+                <image mode="aspectFill" src="{{player.avatarUrl}}"></image>
+                <text>{{player.nickName}}</text>
+            </view>
+            <view class="count" wx:if="{{!record_count}}">
+                <view class="words">
+                    <view>
+                        <text class="num DIN">NEW</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

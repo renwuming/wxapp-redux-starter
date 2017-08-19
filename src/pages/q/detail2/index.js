@@ -44,11 +44,12 @@ let pageConfig = {
       this.setData({progress:0});
     },
     onShareAppMessage: function() {
-      let { title, description } = this.data.detail,
+      let { title, description: desc, image: imageUrl } = this.data.detail,
            { id, aesSessionid } = this.data;
       return {
         title,
-        desc: description,
+        desc,
+        // imageUrl,
         path: `/pages/q/detail2/index?id=${id}&from=${from}`
       };
     },

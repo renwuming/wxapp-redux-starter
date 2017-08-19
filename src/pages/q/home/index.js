@@ -9,7 +9,7 @@ let pageConfig = {
   data: {
     hasmore: true
   },
-  onShow: function() {
+  onLoad: function() {
     const errorCallback = Toaster.show.bind(this);
 
     // 先获取sessionid再获取userInfo
@@ -44,8 +44,8 @@ let pageConfig = {
   },
   onShareAppMessage: function() {
     return {
-      title: '高升客栈',
-      desc: '高升客栈',
+      title: '趣味测试',
+      desc: '少年，来让叔叔给你测试一下心理~',
       path: '/pages/q/home/index'
     };
   }
@@ -55,7 +55,6 @@ let pageConfig = {
 
 let mapStateToData = state => {
   return {
-    lastkey: state.papers.listLastkey,
     posts: state.papers.list,
     hasmore: state.papers.hasmore,
     postsHash: state.entities.posts,

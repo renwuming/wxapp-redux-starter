@@ -1,32 +1,30 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 
 import Toolbar from '../../../components/toolbar/index.js';
-import Toaster from '../../../components/toaster/index.js';
 
 import { clone, updateObject } from '../../../libs/utils.js';
+import { POST } from '../../../libs/request.js';
+
+import { fetchResultRecord } from "../../../redux/models/results.js";
 
 let pageConfig = {
-    data: {
-      progress: 0,
-      score: 0,
-      result: ""
-    },
-    onLoad: function(params) {
-        var me = this,
+    onShow: function() {
+      var me = this,
             { detail } = me.data,
-            errorCallback = Toaster.show.bind(me),
             toolbarInit = Toolbar.init.bind(me);
 
-        wx.setNavigationBarTitle({
-            title: detail.title || '趣味测试'
-        });
+      wx.setNavigationBarTitle({
+          title: detail.title || '趣味测试'
+      });
 
-        // 隐藏分享
-        toolbarInit(detail.praise_count, detail.praise || false, true, false);
+      // 隐藏分享
+      toolbarInit(detail.praise_count, detail.praise || false, true, false);
 
-        this.setData({
-          answerResult: this.getResult()
-        });
+      this.setData({
+        answerResult: this.getResult()
+      });
+      // 已查看
+      this.fetchResultRecord(this.data.id);
     },
     getResult() {
       let { detail, questions } = this.data,
@@ -44,7 +42,7 @@ let pageConfig = {
 
 let mapStateToData = (state, params) => {
     let id = params.id,
-         { posts: postsHash, questions: qHash, results: resultsHash } = state.entities,
+         { posts: postsHash, questions: qHash, resultDetails: resultsHash } = state.entities,
          result = clone(resultsHash[id]),
          detail = clone(postsHash[result.paperid]),
          questions = result.answers.map(e => updateObject(e,qHash[e.id]));
@@ -53,12 +51,15 @@ let mapStateToData = (state, params) => {
         id,
         result,
         detail,
-        questions
+        questions,
+        sessionid: state.entities.sessionid
     }
 };
 
 
-let mapDispatchToPage = dispatch => ({});
+let mapDispatchToPage = dispatch => ({
+  fetchResultRecord: (id) => dispatch(fetchResultRecord(id))
+});
 
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)

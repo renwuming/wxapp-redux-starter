@@ -16,36 +16,10 @@ export const REPLACE_RESULTS_LIST = 'REPLACE_RESULTS_LIST';
 // ------------------------------------
 
 
-//判断是今天的，还是昨天的
-function formatCount(posts){
-    posts = posts.map((post) => {
-        let publishTime = post.publish_time,
-            nowDate, diffMinute;
-
-        nowDate = new Date();
-        diffMinute = (nowDate.getTime() / 1000 - publishTime) / 60;
-
-        if (diffMinute <= nowDate.getHours() * 60) {
-            post.today = true;
-        } else {
-            post.today = false;
-        }
-
-        return post;
-    });
-
-    return posts;
-}
-
 function handleResults(posts) {
-    let results = [],
-         papers = [],
+    let results = posts.results,
+         papers = posts.papers,
          normalizePapers, normalizeResults;
-
-    posts.map(e => {
-        results.push(e.result);
-        papers.push(e.paper);
-    });
 
     normalizePapers = normalize(papers, arrayOf(postSchema));
     normalizeResults = normalize(results, arrayOf(resultsSchema));
@@ -100,11 +74,8 @@ export const fetchResultList = (errorCallback, init) => {
                     },
                     posts;
 
-                if(feeds && feeds.length){
-                    posts = formatCount(feeds);
+                normalizeData = handleResults(feeds);
 
-                    normalizeData = handleResults(posts);
-                }
                 if(init) {
                     dispatch(replaceResultsList(
                         normalizeData,
@@ -122,6 +93,39 @@ export const fetchResultList = (errorCallback, init) => {
                 errorCallback && errorCallback(err);
             }).catch(function(err) {
                 errorCallback && errorCallback();
+                console.error(err);
+            });
+    }
+}
+
+export const fetchResultRecord = (id) => {
+    return (dispatch, getState) => {
+        let state = getState(),
+             detail = state.entities.resultDetails[id],
+             url = `/test/result/record`,
+             normalizeData;
+
+        return POST(url, { id })
+            .then(function(res) {
+
+                if(detail.record_count) detail.record_count++;
+                else detail.record_count = 1;
+
+                normalizeData = {
+                    result: [],
+                    entities: {
+                        resultDetails: {
+                            id: detail
+                        }
+                    }
+                };
+
+                dispatch(updateResultsList(
+                    normalizeData
+                ));
+
+            }, function(err){
+            }).catch(function(err) {
                 console.error(err);
             });
     }

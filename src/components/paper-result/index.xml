@@ -1,9 +1,15 @@
 <template name="paper-result">
-    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/q/result/index?id={{id}}">
-    	<view class="grid-paper-hd">
-            <view  class="player">
-                <image mode="aspectFill" src="{{player.avatarUrl}}"></image>
-                <text>{{player.nickName}}</text>
+    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/q/resultlist/index?id={{id}}">
+        <view class="grid-paper-hd">
+            <view class="count" wx:if="{{new}}">
+                <view class="words">
+                    <view>
+                        <text class="num DIN">NEW</text>
+                    </view>
+                </view>
+            </view>
+            <view class="player-list">
+                <image mode="aspectFill" wx:for="{{newPlayers}}" wx:key="*this" src="{{item.avatarUrl}}"></image>
             </view>
         	<image mode="aspectFill" src="{{image}}"></image>
         </view>

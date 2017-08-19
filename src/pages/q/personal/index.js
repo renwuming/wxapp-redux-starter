@@ -1,6 +1,7 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 
 import { fetchResultList } from '../../../redux/models/results.js';
+import { clone, updateObject, ArrayIncludeItem } from '../../../libs/utils.js';
 
 import Toaster from '../../../components/toaster/index.js';
 
@@ -8,7 +9,7 @@ let pageConfig = {
   data: {
     hasmore: true
   },
-  onShow: function() {
+  onLoad: function() {
     const errorCallback = Toaster.show.bind(this);
 
     this.fetchPosts(errorCallback, true);
@@ -40,14 +41,33 @@ let pageConfig = {
 };
 
 
-
 let mapStateToData = state => {
+  let results = clone(state.results.list),
+       resultsHash = clone(state.entities.results),
+       resultDetailsHash = clone(state.entities.resultDetails),
+       resultDetails = {};
+
+  results.map(e => {
+    resultDetails[e] = { newPlayers: [] };
+    let item = resultsHash[e];
+    item.list.map(i => {
+      let detail = resultDetailsHash[i];
+      if(!detail.record_count) {
+        resultDetails[e].new = true;
+        let newplayers = resultDetails[e].newPlayers;
+        // 不重复的头像，仅显示前三个
+        if(!ArrayIncludeItem(newplayers, detail.player) && newplayers.length < 3) {
+          newplayers.push(detail.player);
+        }
+      }
+    });
+  });
+
   return {
-    lastkey: state.results.listLastkey,
-    results: state.results.list,
-    hasmore: state.results.hasmore,
-    resultsHash: state.entities.results,
     postsHash: state.entities.posts,
+    hasmore: state.results.hasmore,
+    results,
+    resultDetails
   }
 };
 

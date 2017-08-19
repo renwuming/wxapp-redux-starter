@@ -1,7 +1,6 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 
 import Toolbar from '../../../components/toolbar/index.js';
-import Toaster from '../../../components/toaster/index.js';
 
 import { clone, getDeviceInfo } from '../../../libs/utils.js';
 import { POST_RECORD } from '../../../libs/common.js';
@@ -16,7 +15,6 @@ let pageConfig = {
     onShow: function() {
       var me = this,
             { detail } = me.data,
-            errorCallback = Toaster.show.bind(me),
             toolbarInit = Toolbar.init.bind(me);
 
       wx.setNavigationBarTitle({
@@ -29,11 +27,12 @@ let pageConfig = {
     },
     onShareAppMessage: function() {
       let { detail, sessionid, id } = this.data,
-           { title, description: desc } = detail;
+           { title, description: desc, image: imageUrl } = detail;
 
       return {
         title,
         desc,
+        // imageUrl,
         path: `/pages/q/detail2/index?id=${id}&from=${sessionid}`
       };
     },

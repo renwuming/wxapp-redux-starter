@@ -199,7 +199,12 @@ export const updateItemInArray = (array, itemId, updateItemCallback) => {
     return updatedArray;
 }
 
+let str = JSON.stringify;
+
 export const equalObject = (o1, o2) => {
-    let str = JSON.stringify;
     return str(o1) === str(o2);
+}
+
+export const ArrayIncludeItem = (arr, o) => {
+    return str(arr).indexOf(str(o)) > -1;
 }

@@ -5,6 +5,7 @@
     "pages": [
         "pages/q/home/index",
         "pages/q/personal/index",
+        "pages/q/resultlist/index",
         "pages/q/result/index",
         "pages/q/detail/index",
         "pages/q/detail2/index",
