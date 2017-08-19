@@ -78,7 +78,10 @@ let mapStateToData = (state, params) => {
          postsHash = state.entities.posts,
          qHash = state.entities.questions,
          detail = clone(postsHash[id]),
-         questions = detail.questions.map(e => qHash[e]),
+         questions = detail && detail.questions.map(e => {
+           qHash[e].options.shuffle();
+           return qHash[e];
+         }),
          totalScore = questions.reduce((pre,next) => pre+Math.max.apply(null, next.options.map(e=>e.score)), 0);
         
     return {

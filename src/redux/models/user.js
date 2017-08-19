@@ -40,8 +40,7 @@ export const fetchUserInfo = (errorCallback) => {
     return (dispatch, getState) => {
         let oldUserInfo = getState().entities.userInfo,
              sessionid = getState().entities.sessionid,
-             url = `/user/userinfo`,
-             url2 = `/user/userinfo`;
+             url = `/user/userinfo`;
 
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
@@ -59,7 +58,7 @@ export const fetchUserInfo = (errorCallback) => {
                     resolve();
                     // 将userInfo上传到服务器
                     if(sessionid) {
-                        POST(url2, {
+                        POST(url, {
                           sessionid,
                           userInfo
                         });
