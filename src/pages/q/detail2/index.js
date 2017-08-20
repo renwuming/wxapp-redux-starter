@@ -16,7 +16,7 @@ let pageConfig = {
       result: "",
       showhometip: true
     },
-    onShow: function() {
+    onLoad: function() {
       let { detail, id } = this.data,
           errorCallback = Toaster.show.bind(this);
       // 获取测试详情

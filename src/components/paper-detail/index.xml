@@ -25,11 +25,11 @@
         <text class="content container">{{result.content}}</text>
     </view>
     <view wx:if="{{progress>=questions.length&&showsharetip}}" class="share-box fullcover" bindtap="hidecover">
-        <text>分享给朋友进行测试，你会收到他的答案哦~</text>
+        <text class="BEAN">分享给朋友进行测试，你会收到他的答案哦~</text>
         <image mode="aspectFill" src="/images/share_tip.png"></image>
     </view>
     <view wx:if="{{progress>=questions.length&&showhometip}}" class="home-box fullcover" bindtap="hidecover">
-        <text>进入小程序首页，获取更多有趣测试~</text>
+        <text class="BEAN">进入小程序首页，获取更多有趣测试~</text>
         <image mode="aspectFill" src="/images/home_tip.png"></image>
     </view>
 </template>

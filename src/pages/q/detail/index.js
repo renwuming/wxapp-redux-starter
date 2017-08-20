@@ -12,7 +12,7 @@ let pageConfig = {
       result: "",
       showsharetip: true
     },
-    onShow: function() {
+    onLoad: function() {
       var me = this,
             { detail } = me.data,
             toolbarInit = Toolbar.init.bind(me);
