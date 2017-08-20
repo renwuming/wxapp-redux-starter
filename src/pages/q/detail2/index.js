@@ -2,7 +2,6 @@ import { connect } from '../../../vendors/weapp-redux.js';
 import { GET, POST } from '../../../libs/request.js';
 
 import { fetchPaper } from '../../../redux/models/papers.js';
-import { fetchUserInfo, fetchSessionid } from '../../../redux/models/user.js';
 
 import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
@@ -20,16 +19,14 @@ let pageConfig = {
     onShow: function() {
       let { detail, id } = this.data,
           errorCallback = Toaster.show.bind(this);
-      // 先获取sessionid再获取userInfo
-      this.fetchSessionid(errorCallback).then(() => {
-        this.fetchUserInfo(errorCallback);
-      });
       // 获取测试详情
       this.fetchPaper(id, errorCallback).then(() => {
         this.init();
       });
 
-      POST_RECORD(this.data.id);
+      POST_RECORD(this.data.id).then(res => {
+        this.setData({ showhometip: res.tip });
+      });
     },
     hidecover: function() {
       this.setData({ showhometip: false });
@@ -45,7 +42,7 @@ let pageConfig = {
     },
     onShareAppMessage: function() {
       let { title, description: desc, image: imageUrl } = this.data.detail,
-           { id, aesSessionid } = this.data;
+           { id } = this.data;
       return {
         title,
         desc,
@@ -54,6 +51,8 @@ let pageConfig = {
       };
     },
     radioSelect: function(e) {
+      if(this.selecting) return;
+      this.selecting = true;
       let _score = this.getScore(e),
            _data = this.data,
            newData = {};
@@ -69,6 +68,7 @@ let pageConfig = {
           this.postResult();
         }
         this.setData(newData);
+        this.selecting = false;
       }, 300);
     },
     saveSelect(e) {
@@ -127,9 +127,7 @@ let mapStateToData = (state, params) => {
 
 
 let mapDispatchToPage = dispatch => ({
-  fetchPaper: (id, errorCallback) => dispatch(fetchPaper(id, errorCallback)),
-  fetchUserInfo: (errorCallback) => dispatch(fetchUserInfo(errorCallback)),
-  fetchSessionid: (errorCallback) => dispatch(fetchSessionid(errorCallback))
+  fetchPaper: (id, errorCallback) => dispatch(fetchPaper(id, errorCallback))
 });
 
 

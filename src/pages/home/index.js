@@ -1,6 +1,5 @@
 import { connect } from '../../vendors/weapp-redux.js';
 
-import { fetchUserInfo, fetchSessionid } from '../../redux/models/user.js';
 
 import Toaster from '../../components/toaster/index.js';
 
@@ -14,10 +13,6 @@ let pageConfig = {
   },
   onLoad: function () {
     const errorCallback = Toaster.show.bind(this);
-    // 先获取sessionid再获取userInfo
-    this.fetchSessionid(errorCallback).then(() => {
-      this.fetchUserInfo(errorCallback);
-    });
   },
   onShareAppMessage: function () {
     return {
@@ -36,10 +31,7 @@ let mapStateToData = state => {
   }
 };
 
-let mapDispatchToPage = dispatch => ({
-    fetchUserInfo: (errorCallback) => dispatch(fetchUserInfo(errorCallback)),
-    fetchSessionid: (errorCallback) => dispatch(fetchSessionid(errorCallback))
-});
+let mapDispatchToPage = dispatch => ({});
 
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)

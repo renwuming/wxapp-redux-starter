@@ -23,7 +23,9 @@ let pageConfig = {
 
       toolbarInit(detail.praise_count, detail.praise || false, true);
 
-      POST_RECORD(this.data.id);
+      POST_RECORD(this.data.id).then(res => {
+        this.setData({ showsharetip: res.tip });
+      });
     },
     onShareAppMessage: function() {
       let { detail, sessionid, id } = this.data,
@@ -40,6 +42,8 @@ let pageConfig = {
       this.setData({ showsharetip: false });
     },
     radioSelect: function(e) {
+      if(this.selecting) return;
+      this.selecting = true;
       let _score = this.getScore(e),
            _data = this.data,
            newData = {};
@@ -53,6 +57,7 @@ let pageConfig = {
           newData.result = this.getResult();
         }
         this.setData(newData);
+        this.selecting = false;
       }, 300);
     },
     getScore(e) {

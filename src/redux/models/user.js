@@ -40,7 +40,16 @@ export const fetchUserInfo = (errorCallback) => {
     return (dispatch, getState) => {
         let oldUserInfo = getState().entities.userInfo,
              sessionid = getState().entities.sessionid,
-             url = `/user/userinfo`;
+             url = `/user/userinfo`,
+             defaultUserInfo = {
+               nickName: "神秘人",
+               gender: 2,
+               language: "zh_CN",
+               city: "",
+               province: "",
+               country: "",
+               avatarUrl: "http://www.renwuming.xyz/wumingstore/img/portrait.jpg"
+             };
 
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
@@ -48,9 +57,9 @@ export const fetchUserInfo = (errorCallback) => {
                     const userInfo = res.userInfo;
                     if(equalObject(oldUserInfo, userInfo)) return;
                     let normalizeData = {
-                        entities: {
-                            userInfo
-                        }
+                      entities: {
+                        userInfo
+                      }
                     };
                     dispatch(updateUserInfo(
                         normalizeData
@@ -65,8 +74,23 @@ export const fetchUserInfo = (errorCallback) => {
                     }
                 },
                 fail: (err) => {
-                    errorCallback && errorCallback(err.errMsg);
-                    reject(err);
+                    if(equalObject(oldUserInfo, defaultUserInfo)) return;
+                    let normalizeData = {
+                        entities: {
+                          userInfo: defaultUserInfo
+                        }
+                    };
+                    dispatch(updateUserInfo(
+                        normalizeData
+                    ));
+                    resolve();
+                    // 将defaultUserInfo上传到服务器
+                    if(sessionid) {
+                        POST(url, {
+                          sessionid,
+                          userInfo: defaultUserInfo
+                        });
+                    }
                 }
             });
         });
@@ -75,13 +99,20 @@ export const fetchUserInfo = (errorCallback) => {
 
 export const fetchSessionid = (errorCallback) => {
     return (dispatch, getState) => {
-        let sessionid = getState().entities.sessionid;
+        let sessionid = getState().entities.sessionid,
+             url = `/sessionid/validate`;
 
         return new Promise((resolve, reject) => {
             wx.checkSession({
                 success: () => {
                   if(!sessionid) getSessionId(resolve, errorCallback, dispatch);
-                  else resolve();
+                  else POST(url, { sessionid })
+                    .then(res => {
+                        if(res.success) resolve();
+                        else {
+                            getSessionId(resolve, errorCallback, dispatch);
+                        }
+                    });
                 },
                 fail: () => {
                   getSessionId(resolve, errorCallback, dispatch);
@@ -96,9 +127,10 @@ let getSessionId = (R, errorCallback, dispatch) => {
     return new Promise(() => {
         wx.login({
             complete: function (res) {
-                if (res.code) {
+                let code = res.code;
+                if (code) {
                     POST(url, {
-                        js_code: res.code
+                        js_code: code
                     }).then(res => {
                         // 获取sessionkey
                         let normalizeData = {
