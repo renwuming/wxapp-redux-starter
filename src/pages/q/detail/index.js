@@ -30,7 +30,7 @@ let pageConfig = {
     onShareAppMessage: function() {
       let { detail, sessionid, id } = this.data,
            { title, description: desc, image: imageUrl } = detail;
-
+      this.hidecover();
       return {
         title,
         desc,

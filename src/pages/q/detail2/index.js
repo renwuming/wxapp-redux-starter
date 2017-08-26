@@ -43,6 +43,7 @@ let pageConfig = {
     onShareAppMessage: function() {
       let { title, description: desc, image: imageUrl } = this.data.detail,
            { id } = this.data;
+      this.hidecover();
       return {
         title,
         desc,

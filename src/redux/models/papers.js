@@ -21,12 +21,10 @@ function formatCount(posts){
 
     posts = posts.map((post) => {
         let publishTime = post.publish_time,
-            nowDate, diffMinute;
+             nowDate = new Date(),
+             diffHours = (nowDate.getTime() - publishTime) / 1000 / 3600;
 
-        nowDate = new Date();
-        diffMinute = (nowDate.getTime() / 1000 - publishTime) / 60;
-
-        if (diffMinute <= nowDate.getHours() * 60) {
+        if (diffHours <= nowDate.getHours()) {
             post.today = true;
         } else {
             post.today = false;
