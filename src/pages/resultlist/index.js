@@ -1,6 +1,6 @@
-import { connect } from '../../../vendors/weapp-redux.js';
+import { connect } from '../../vendors/weapp-redux.js';
 
-import { formatDate } from "../../../libs/utils.js";
+import { formatDate } from "../../libs/utils.js";
 
 let pageConfig = {
 

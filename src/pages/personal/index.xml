@@ -1,0 +1,6 @@
+<import src="/components/tabbar/index"></import>
+
+<view class="container">
+
+  <template is="tabbar" data="{{activeName}}"></template>
+</view>

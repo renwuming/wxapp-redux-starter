@@ -1,8 +1,9 @@
 <import src="/components/paper-result/index"></import>
+<import src="/components/tabbar/index"></import>
 <import src="/components/loader/index"></import>
 <import src="/components/toaster/index"></import>
 
-<view class="container">
+<view class="container toolbar-container">
   <template is="toaster" data="{{...toasterData}}"></template>
 
   <block wx:for="{{results}}" wx:for-item="id" wx:key="*this">
@@ -10,4 +11,6 @@
   </block>
 
   <template is="loader" data="{{hasmore}}"></template>
+
+  <template is="tabbar" data="{{activeName}}"></template>
 </view>

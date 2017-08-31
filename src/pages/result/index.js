@@ -1,11 +1,11 @@
-import { connect } from '../../../vendors/weapp-redux.js';
+import { connect } from '../../vendors/weapp-redux.js';
 
-import Toolbar from '../../../components/toolbar/index.js';
+import Toolbar from '../../components/toolbar/index.js';
 
-import { clone, updateObject } from '../../../libs/utils.js';
-import { POST } from '../../../libs/request.js';
+import { clone, updateObject } from '../../libs/utils.js';
+import { POST } from '../../libs/request.js';
 
-import { fetchResultRecord } from "../../../redux/models/results.js";
+import { fetchResultRecord } from "../../redux/models/results.js";
 
 let pageConfig = {
     onShow: function() {

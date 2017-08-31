@@ -1,5 +1,5 @@
 <template name="paper">
-    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/q/detail/index?id={{id}}">
+    <view class="com-grid-paper" bindtap="navigateTo" bindlongpress="longpress" data-url="/pages/detail/index?id={{id}}">
     	<view class="grid-paper-hd">
             <image class="lazyloaded" src="/images/icon_test.png"></image>
             <view  class="count">
@@ -11,8 +11,8 @@
                     </view>
                     <view wx:else>
                         <text class="num DIN">{{record_count}}</text>
-                        <text class="text">人已参加</text>    
-                    </view> 
+                        <text class="text">人已参加</text>
+                    </view>
                 </view>
             </view>
         	<image mode="aspectFill" src="{{image}}"></image>

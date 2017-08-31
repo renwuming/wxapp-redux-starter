@@ -1,0 +1,18 @@
+<template name="tabbar">
+	<view class="com-toolbar com-tabbar container-h {{activeName}}">
+    <view class="tab-item home-item" catchtap="redirectTo" data-url="/pages/home/index?lazy=true">
+      <image src="/images/icon_home.png" mode="aspectFit"></image>
+      <text>首页</text>
+    </view>
+    <view class="tab-item answer-item" catchtap="redirectTo" data-url="/pages/answer/index?lazy=true">
+      <image src="/images/icon_answer.png" mode="aspectFit"></image>
+      <text>答案</text>
+    </view>
+    <view class="tab-item personal-item" catchtap="redirectTo" data-url="/pages/personal/index?lazy=true">
+      <image src="/images/icon_personal.png" mode="aspectFit"></image>
+      <text>我的</text>
+    </view>
+	</view>
+</template>
+
+

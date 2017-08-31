@@ -1,5 +1,5 @@
 <template name="result-item">
-    <view class="com-grid-paper result-item" bindtap="navigateToResult" data-url="/pages/q/result/index?id={{id}}">
+    <view class="com-grid-paper result-item" bindtap="navigateToResult" data-url="/pages/result/index?id={{id}}">
     	<view class="container-h grid-paper-hd">
             <view  class="player">
                 <image mode="aspectFill" src="{{player.avatarUrl}}"></image>

@@ -3,13 +3,13 @@
     // First is default to view
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
     "pages": [
-        "pages/q/home/index",
-        "pages/q/personal/index",
-        "pages/q/resultlist/index",
-        "pages/q/result/index",
-        "pages/q/detail/index",
-        "pages/q/detail2/index",
-        "pages/home/index"
+        "pages/home/index",
+        "pages/answer/index",
+        "pages/personal/index",
+        "pages/resultlist/index",
+        "pages/result/index",
+        "pages/detail/index",
+        "pages/detail2/index"
     ],
     // Window configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
@@ -22,7 +22,7 @@
         "navigationBarTextStyle": "black",
         // 类型：String；默认值：无
         // 导航栏标题文字内容
-        "navigationBarTitleText": "高升客栈",
+        "navigationBarTitleText": "趣味测试",
         // 类型：HexColor；默认值：#ffffff
         // 窗口的背景色
         "backgroundColor": "#fff",
@@ -36,23 +36,24 @@
     },
     // Tab bar configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#tabBar
-    "tabBar": {
-        "color": "#999",
-        "selectedColor": "#000",
-        "backgroundColor": "#f8f8f8",
-        "position": "top",
-        "list": [{
-            "text": "趣味测试",
-            "pagePath": "pages/q/home/index"
-                // "iconPath": "images/icon_component.png",
-                // "selectedIconPath": "images/icon_component_HL.png"
-        }, {
-            "text": "我的测试",
-            "pagePath": "pages/q/personal/index"
-                // "iconPath": "images/icon_component.png",
-                // "selectedIconPath": "images/icon_component_HL.png"
-        }]
-    },
+    // "tabBar": {
+    //     "color": "#e5e5e5",
+    //     "selectedColor": "#f56250",
+    //     "backgroundColor": "#f8f8f8",
+    //     "position": "bottom",
+    //     "list": [{
+    //         "text": "首页",
+    //         "pagePath": "pages/home/index",
+    //         "iconPath": "images/icon_home.png",
+    //         "selectedIconPath": "images/music-active.png"
+    //     },
+    //     {
+    //         "text": "我的",
+    //         "pagePath": "pages/personal/index",
+    //         "iconPath": "images/my.png",
+    //         "selectedIconPath": "images/my-active.png"
+    //     }]
+    // },
     // Network timeout configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#networkTimeout
     "networkTimeout": {

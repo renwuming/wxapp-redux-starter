@@ -1,13 +1,13 @@
-import { connect } from '../../../vendors/weapp-redux.js';
-import { GET, POST } from '../../../libs/request.js';
+import { connect } from '../../vendors/weapp-redux.js';
+import { GET, POST } from '../../libs/request.js';
 
-import { fetchPaper } from '../../../redux/models/papers.js';
+import { fetchPaper } from '../../redux/models/papers.js';
 
-import Toolbar from '../../../components/toolbar/index.js';
-import Toaster from '../../../components/toaster/index.js';
+import Toolbar from '../../components/toolbar/index.js';
+import Toaster from '../../components/toaster/index.js';
 
-import { clone, getDeviceInfo } from '../../../libs/utils.js';
-import { POST_RECORD } from '../../../libs/common.js';
+import { clone, getDeviceInfo } from '../../libs/utils.js';
+import { POST_RECORD } from '../../libs/common.js';
 
 let pageConfig = {
     data: {
@@ -48,7 +48,7 @@ let pageConfig = {
         title,
         desc,
         // imageUrl,
-        path: `/pages/q/detail2/index?id=${id}&from=${from}`
+        path: `/pages/detail2/index?id=${id}&from=${from}`
       };
     },
     radioSelect: function(e) {

@@ -1,17 +1,16 @@
+<import src="/components/paper/index"></import>
+<import src="/components/tabbar/index"></import>
+<import src="/components/loader/index"></import>
 <import src="/components/toaster/index"></import>
 
-<view class="container">
-  <image class="bk" src="/images/bk.jpg" mode="aspectFill"></image>
-  <view class="userinfo">
-    <image src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text>{{userInfo.nickName}}</text>
-  </view>
-  <view class="container-h">
-    <view class="btn" bindtap="navigateTo">
-      <image src="/images/q.jpg" mode="aspectFill"></image>
-      <text>趣味测试</text>
-    </view>
-  </view>
-
+<view class="container toolbar-container">
   <template is="toaster" data="{{...toasterData}}"></template>
+
+  <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
+    <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
+  </block>
+
+  <template is="loader" data="{{hasmore}}"></template>
+
+  <template is="tabbar" data="{{activeName}}"></template>
 </view>

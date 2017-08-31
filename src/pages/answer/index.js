@@ -1,23 +1,31 @@
-import { connect } from '../../../vendors/weapp-redux.js';
+import { connect } from '../../vendors/weapp-redux.js';
+import { fetchResultList } from '../../redux/models/results.js';
+import { clone, updateObject, ArrayIncludeItem } from '../../libs/utils.js';
 
-import { fetchResultList } from '../../../redux/models/results.js';
-import { clone, updateObject, ArrayIncludeItem } from '../../../libs/utils.js';
-
-import Toaster from '../../../components/toaster/index.js';
+import Toaster from '../../components/toaster/index.js';
 
 let pageConfig = {
   data: {
-    hasmore: true
+    hasmore: true,
+    activeName: "answer-active",
   },
   onLoad: function() {
-    const errorCallback = Toaster.show.bind(this);
-
+    const errorCallback = Toaster.show.bind(this),
+          { lazy, results } = this.data;
+    if(lazy && results.length) return;
     this.fetchPosts(errorCallback, true);
   },
   navigateTo: function(e) {
     let elCurrentTarget = e.currentTarget,
-         url = elCurrentTarget.dataset.url;
+        url = elCurrentTarget.dataset.url;
     wx.navigateTo({
+      url
+    });
+  },
+  redirectTo: function(e) {
+    let elCurrentTarget = e.currentTarget,
+         url = elCurrentTarget.dataset.url;
+    wx.redirectTo({
       url
     });
   },
@@ -41,7 +49,7 @@ let pageConfig = {
 };
 
 
-let mapStateToData = state => {
+let mapStateToData = (state, params) => {
   let results = clone(state.results.list),
        resultsHash = clone(state.entities.results),
        resultDetailsHash = clone(state.entities.resultDetails),
@@ -64,6 +72,7 @@ let mapStateToData = state => {
   });
 
   return {
+    lazy: params.lazy,
     postsHash: state.entities.posts,
     hasmore: state.results.hasmore,
     results,

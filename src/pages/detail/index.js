@@ -1,9 +1,9 @@
-import { connect } from '../../../vendors/weapp-redux.js';
+import { connect } from '../../vendors/weapp-redux.js';
 
-import Toolbar from '../../../components/toolbar/index.js';
+import Toolbar from '../../components/toolbar/index.js';
 
-import { clone, getDeviceInfo } from '../../../libs/utils.js';
-import { POST_RECORD } from '../../../libs/common.js';
+import { clone, getDeviceInfo } from '../../libs/utils.js';
+import { POST_RECORD } from '../../libs/common.js';
 
 let pageConfig = {
     data: {
@@ -35,7 +35,7 @@ let pageConfig = {
         title,
         desc,
         // imageUrl,
-        path: `/pages/q/detail2/index?id=${id}&from=${sessionid}`
+        path: `/pages/detail2/index?id=${id}&from=${sessionid}`
       };
     },
     hidecover: function() {

@@ -1,5 +1,5 @@
 <template name="paper-result">
-    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/q/resultlist/index?id={{id}}">
+    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/resultlist/index?id={{id}}">
         <view class="grid-paper-hd">
             <view class="count" wx:if="{{new}}">
                 <image mode="aspectFill" src="/images/black.png"></image>
