@@ -100,7 +100,7 @@ export const fetchPaper = (id, errorCallback) => {
     }
 }
 
-export const fetchPapersList = (errorCallback, init) => {
+export const fetchPaperList = (errorCallback, init) => {
     return (dispatch, getState) => {
         let papers = getState().papers,
              lastkey = init ? 0 : papers.listLastkey || 0,

@@ -1,50 +1,65 @@
 import { connect } from '../../vendors/weapp-redux.js';
-import { fetchPapersList } from '../../redux/models/papers.js';
+import { fetchResultList } from '../../redux/models/results.js';
+import { fetchPaperList } from '../../redux/models/papers.js';
+import { ArrayIncludeItem } from '../../libs/utils.js';
 import Toaster from '../../components/toaster/index.js';
+
 let pageConfig = {
   data: {
-    hasmore: true,
-    activeName: "home-active",
+    hasMorePaper: true,
+    activeName: "home",
   },
   onLoad: function() {
-    const errorCallback = Toaster.show.bind(this),
-          { lazy, posts } = this.data;
-    if(lazy && posts.length) return;
-    this.fetchPosts(errorCallback, true);
+    this.errorCallback = Toaster.show.bind(this);
+
+    this.fetchPaperList(this.errorCallback, true);
+    this.initResultList();
   },
   navigateTo: function(e) {
     let elCurrentTarget = e.currentTarget,
          url = elCurrentTarget.dataset.url;
-    wx.navigateTo({
-      url
-    });
+    wx.navigateTo({ url });
   },
-  redirectTo: function(e) {
+  switchTab: function(e) {
     let elCurrentTarget = e.currentTarget,
-        url = elCurrentTarget.dataset.url;
-    wx.redirectTo({
-      url
-    });
+        activeName = elCurrentTarget.dataset.active;
+    this.setData({ activeName });
   },
-  longpress: function(e) {
-    console.log("longpress");
+  initResultList: function() {
+    this.waitSessionid = setInterval(() => {
+      if(this.data.sessionid) {
+        clearInterval(this.waitSessionid);
+        this.fetchResultList(this.errorCallback, true);
+      }
+    }, 100);
   },
   onPullDownRefresh: function() {
     if(this.scrolling) return;
     this.scrolling = true;
-    const errorCallback = Toaster.show.bind(this);
-    this.fetchPosts(errorCallback, true).then(() => {
-      this.scrolling = false;
-      wx.stopPullDownRefresh();
-    });
+    if(this.data.activeName === "home") {
+      this.fetchPaperList(this.errorCallback, true).then(() => {
+        this.scrolling = false;
+        wx.stopPullDownRefresh();
+      });
+    } else if(this.data.activeName === "answer") {
+      this.fetchResultList(this.errorCallback, true).then(() => {
+        this.scrolling = false;
+        wx.stopPullDownRefresh();
+      });
+    }
   },
   onReachBottom: function() {
     if(this.scrolling || !this.data.hasmore) return;
     this.scrolling = true;
-    const errorCallback = Toaster.show.bind(this);
-    this.fetchPosts(errorCallback).then(() => {
-      this.scrolling = false;
-    });
+    if(this.data.activeName === "home") {
+      this.fetchPaperList(this.errorCallback).then(() => {
+        this.scrolling = false;
+      });
+    } else if(this.data.activeName === "answer") {
+      this.fetchResultList(this.errorCallback).then(() => {
+        this.scrolling = false;
+      });
+    }
   },
   onShareAppMessage: function() {
     return {
@@ -54,16 +69,44 @@ let pageConfig = {
     };
   }
 };
-let mapStateToData = (state, params) => {
+let mapStateToData = state => {
+  let results = state.results.list,
+      resultsHash = state.entities.results,
+      resultDetailsHash = state.entities.resultDetails,
+      resultDetails = {},
+      newCount = 0;
+
+  results.map(e => {
+    resultDetails[e] = { newPlayers: [] };
+    let item = resultsHash[e];
+    item.list.map(i => {
+      let detail = resultDetailsHash[i];
+      if(!detail.record_count) {
+        newCount++;
+        resultDetails[e].new = true;
+        let newplayers = resultDetails[e].newPlayers;
+        // 不重复的头像，仅显示前三个
+        if(!ArrayIncludeItem(newplayers, detail.player) && newplayers.length < 3) {
+          newplayers.push(detail.player);
+        }
+      }
+    });
+  });
   return {
-    lazy: params.lazy,
-    posts: state.papers.list,
-    hasmore: state.papers.hasmore,
+    sessionid: state.entities.sessionid,
+    papers: state.papers.list,
+    hasMorePapers: state.papers.hasmore,
     postsHash: state.entities.posts,
+    hasMoreResults: state.results.hasmore,
+    results,
+    resultDetails,
+    newCount
   }
 };
 let mapDispatchToPage = dispatch => ({
-  fetchPosts: (errorCallback, init) => dispatch(fetchPapersList(errorCallback, init))
+  fetchPaperList: (errorCallback, init) => dispatch(fetchPaperList(errorCallback, init)),
+  fetchResultList: (errorCallback, init) => dispatch(fetchResultList(errorCallback, init))
 });
+
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)
 Page(pageConfig);

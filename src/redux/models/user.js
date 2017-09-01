@@ -44,11 +44,11 @@ export const fetchUserInfo = (errorCallback) => {
              defaultUserInfo = {
                nickName: "神秘人",
                gender: 2,
-               language: "zh_CN",
+               language: "isDefault",
                city: "",
                province: "",
                country: "",
-               avatarUrl: "http://www.renwuming.xyz/wumingstore/img/portrait.jpg"
+               avatarUrl: "http://www.renwuming.xyz/wumingstore/img/portrait.jpg",
              };
 
         return new Promise((resolve, reject) => {
@@ -66,29 +66,31 @@ export const fetchUserInfo = (errorCallback) => {
                     ));
                     resolve();
                     // 将userInfo上传到服务器
-                    if(sessionid) {
-                        POST(url, {
-                          sessionid,
-                          userInfo
-                        });
-                    }
+                    POST(url, {
+                      sessionid,
+                      userInfo
+                    });
                 },
                 fail: (err) => {
-                    if(equalObject(oldUserInfo, defaultUserInfo)) return;
-                    let normalizeData = {
-                        entities: {
-                          userInfo: defaultUserInfo
-                        }
-                    };
-                    dispatch(updateUserInfo(
-                        normalizeData
-                    ));
-                    resolve();
-                    // 将defaultUserInfo上传到服务器
-                    if(sessionid) {
-                        POST(url, {
-                          sessionid,
-                          userInfo: defaultUserInfo
+                    if(!oldUserInfo) {
+                        GET(url, { sessionid }).then(res => {
+                            oldUserInfo = res.userInfo || defaultUserInfo;
+                            let normalizeData = {
+                                entities: {
+                                  userInfo: oldUserInfo
+                                }
+                            };
+                            dispatch(updateUserInfo(
+                                normalizeData
+                            ));
+                            resolve();
+                            // 若服务端无数据，则上传defaultUserInfo
+                            if(!res.userInfo) {
+                                POST(url, {
+                                  sessionid,
+                                  userInfo: oldUserInfo
+                                });
+                            }
                         });
                     }
                 }
@@ -96,6 +98,28 @@ export const fetchUserInfo = (errorCallback) => {
         });
     }
 }
+
+export const fetchUserInfoUpdate = (userInfo) => {
+    return (dispatch, getState) => {
+        let oldUserInfo = getState().entities.userInfo,
+            sessionid = getState().entities.sessionid,
+            url = `/user/userinfo`,
+            normalizeData = {
+            entities: {
+              userInfo
+            }
+        };
+        dispatch(updateUserInfo(
+            normalizeData
+        ));
+        if(!equalObject(oldUserInfo, userInfo)) {
+            POST(url, {
+              sessionid,
+              userInfo
+            });
+        }
+    }
+};
 
 export const fetchSessionid = (errorCallback) => {
     return (dispatch, getState) => {

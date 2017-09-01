@@ -1,4 +1,5 @@
 <import src="/components/paper/index"></import>
+<import src="/components/paper-result/index"></import>
 <import src="/components/tabbar/index"></import>
 <import src="/components/loader/index"></import>
 <import src="/components/toaster/index"></import>
@@ -6,11 +7,19 @@
 <view class="container toolbar-container">
   <template is="toaster" data="{{...toasterData}}"></template>
 
-  <block wx:for="{{posts}}" wx:for-item="id" wx:key="*this">
-    <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
+  <block wx:if="{{activeName === 'home'}}">
+    <block wx:for="{{papers}}" wx:for-item="id" wx:key="*this">
+      <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
+    </block>
+    <template is="loader" data="{{hasmore:hasMorePapers}}"></template>
   </block>
 
-  <template is="loader" data="{{hasmore}}"></template>
+  <block wx:if="{{activeName === 'answer'}}">
+    <block wx:for="{{results}}" wx:for-item="id" wx:key="*this">
+      <template is="paper-result" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
+    </block>
+    <template is="loader" data="{{hasmore:hasMoreResults}}"></template>
+  </block>
 
-  <template is="tabbar" data="{{activeName}}"></template>
+  <template is="tabbar" data="{{activeName, newCount}}"></template>
 </view>

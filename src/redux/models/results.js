@@ -66,6 +66,7 @@ export const fetchResultList = (errorCallback, init) => {
 
         return GET(url, { sessionid }, 500)
             .then(function(res) {
+                if(res.errMsg) return Promise.reject(res.errMsg);
                 let feeds = res.feeds,
                     lastkey = res.last_key,
                     hasmore = res.has_more,
@@ -92,7 +93,7 @@ export const fetchResultList = (errorCallback, init) => {
             }, function(err){
                 errorCallback && errorCallback(err);
             }).catch(function(err) {
-                errorCallback && errorCallback();
+                errorCallback && errorCallback(err);
                 console.error(err);
             });
     }

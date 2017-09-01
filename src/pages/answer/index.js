@@ -49,7 +49,7 @@ let pageConfig = {
 };
 
 
-let mapStateToData = (state, params) => {
+let mapStateToData = state => {
   let results = clone(state.results.list),
        resultsHash = clone(state.entities.results),
        resultDetailsHash = clone(state.entities.resultDetails),
@@ -72,7 +72,6 @@ let mapStateToData = (state, params) => {
   });
 
   return {
-    lazy: params.lazy,
     postsHash: state.entities.posts,
     hasmore: state.results.hasmore,
     results,
