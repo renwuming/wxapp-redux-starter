@@ -88,7 +88,6 @@ let mapStateToData = (state, params) => {
            return qHash[e];
          }),
          totalScore = questions.reduce((pre,next) => pre+Math.max.apply(null, next.options.map(e=>e.score)), 0);
-        
     return {
         id,
         detail,

@@ -9,7 +9,8 @@
         "pages/resultlist/index",
         "pages/result/index",
         "pages/detail/index",
-        "pages/detail2/index"
+        "pages/detail2/index",
+        "pages/about/index"
     ],
     // Window configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window

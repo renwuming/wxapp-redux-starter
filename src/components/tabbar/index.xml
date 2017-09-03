@@ -1,20 +1,26 @@
 <template name="tabbar">
 	<view class="com-toolbar com-tabbar container-h {{activeName}}">
-    <view class="tab-item home-item" catchtap="switchTab" data-active="home">
+    <view class="tab-item home-item home-active" bindtap="switchTab" data-active="home">
       <image src="/images/icon_home.png" mode="aspectFit"></image>
       <text>首页</text>
     </view>
-    <view class="tab-item personal-item" catchtap="navigateTo" data-url="/pages/personal/index">
+    <view class="tab-item home-item home-normal" bindtap="switchTab" data-active="home">
+      <image src="/images/icon_home2.png" mode="aspectFit"></image>
+      <text>首页</text>
+    </view>
+    <view class="tab-item personal-item" bindtap="navigateTo" data-url="/pages/personal/index">
       <image src="/images/icon_personal.png" mode="aspectFit"></image>
       <text>我的</text>
     </view>
-    <view class="tab-item answer-item" catchtap="switchTab" data-active="answer">
+    <view class="tab-item answer-item answer-active" bindtap="switchTab" data-active="answer">
       <image src="/images/icon_answer.png" mode="aspectFit"></image>
       <text>答案</text>
     </view>
-    <text wx:if="{{newCount > 0 && newCount <= 99}}" class="new-tip">{{newCount}}</text>
-    <text wx:if="{{newCount > 99}}" class="new-tip small">99+</text>
+    <view class="tab-item answer-item answer-normal" bindtap="switchTab" data-active="answer">
+      <image src="/images/icon_answer2.png" mode="aspectFit"></image>
+      <text>答案</text>
+    </view>
+    <text wx:if="{{newCount > 0 && newCount <= 99}}" class="new-tip" bindtap="switchTab" data-active="answer">{{newCount}}</text>
+    <text wx:if="{{newCount > 99}}" class="new-tip small" bindtap="switchTab" data-active="answer">99+</text>
 	</view>
 </template>
-
-

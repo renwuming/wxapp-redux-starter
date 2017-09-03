@@ -7,19 +7,19 @@
 <view class="container toolbar-container">
   <template is="toaster" data="{{...toasterData}}"></template>
 
-  <block wx:if="{{activeName === 'home'}}">
-    <block wx:for="{{papers}}" wx:for-item="id" wx:key="*this">
+  <view class="{{activeName}} home-hide">
+    <block wx:for="{{papers}}" wx:for-item="id" wx:key="id">
       <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
     </block>
     <template is="loader" data="{{hasmore:hasMorePapers}}"></template>
-  </block>
+  </view>
 
-  <block wx:if="{{activeName === 'answer'}}">
-    <block wx:for="{{results}}" wx:for-item="id" wx:key="*this">
+  <view class="{{activeName}} answer-hide">
+    <block wx:for="{{results}}" wx:for-item="id" wx:key="id">
       <template is="paper-result" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
     </block>
     <template is="loader" data="{{hasmore:hasMoreResults}}"></template>
-  </block>
+  </view>
 
   <template is="tabbar" data="{{activeName, newCount}}"></template>
 </view>

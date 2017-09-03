@@ -10,6 +10,11 @@ let pageConfig = {
       this.fetchUserInfoUpdate(userInfo);
     }
   },
+  navigateTo: function(e) {
+    let elCurrentTarget = e.currentTarget,
+         url = elCurrentTarget.dataset.url;
+    wx.navigateTo({ url });
+  },
 };
 
 

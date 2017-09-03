@@ -19,9 +19,11 @@ let pageConfig = {
     onLoad: function() {
       let { detail, id } = this.data,
           errorCallback = Toaster.show.bind(this);
+      this.selecting = true;
       // 获取测试详情
       this.fetchPaper(id, errorCallback).then(() => {
         this.init();
+        this.selecting = false;
       });
 
       POST_RECORD(this.data.id).then(res => {

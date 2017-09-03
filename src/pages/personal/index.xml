@@ -10,7 +10,7 @@
       <text>意见反馈</text>
       <contact-button class="contact" size="27"></contact-button>
     </view>
-    <view class="item container">
+    <view class="item container" bindtap="navigateTo" data-url="/pages/about/index">
       <image src="/images/icon_about.png" mode="aspectFit"></image>
       <text>关于</text>
     </view>
