@@ -1,0 +1,9 @@
+<import src="/components/Baozou/result-home/index"></import>
+<import src="/components/FriendTest/result-list-item/index"></import>
+
+<view class="container">
+
+  <template is="result-home" data="{{...postsHash[id]}}"></template>
+
+  <template wx:for="{{results[id].list}}" wx:for-item="id" wx:key="*this" is="result-list-item" data="{{...resultDetails[id]}}"></template>
+</view>

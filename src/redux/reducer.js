@@ -14,6 +14,13 @@ import {
 
 import {
     // action
+    UPDATE_ANSWERS,
+    // reducer
+    answersReducer
+} from './models/friend_answers.js';
+
+import {
+    // action
     UPDATE_ENTITIES,
     // reducer
     entitiesReducer
@@ -42,6 +49,7 @@ import {
 function crossReducer(state, action) {
     switch (action.type) {
         case UPDATE_USERINFO:
+        case UPDATE_ANSWERS:
         case UPDATE_SESSIONID:
         case UPDATE_PAPERS_LIST:
         case REPLACE_PAPERS_LIST:
@@ -69,6 +77,7 @@ function crossReducer(state, action) {
 export const rootReducer = reduceReducers(
     combineReducers({
         entities: entitiesReducer,
+        answers: answersReducer,
         user: userReducer,
         papers: papersReducer,
         results: resultsReducer

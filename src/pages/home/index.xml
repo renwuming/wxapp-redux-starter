@@ -1,25 +1,24 @@
-<import src="/components/paper/index"></import>
-<import src="/components/paper-result/index"></import>
-<import src="/components/tabbar/index"></import>
-<import src="/components/loader/index"></import>
-<import src="/components/toaster/index"></import>
-
-<view class="container toolbar-container">
-  <template is="toaster" data="{{...toasterData}}"></template>
-
-  <view class="{{activeName}} home-hide">
-    <block wx:for="{{papers}}" wx:for-item="id" wx:key="id">
-      <template wx:if="{{postsHash[id].datatype == 0}}" is="paper" data="{{...postsHash[id]}}"></template>
-    </block>
-    <template is="loader" data="{{hasmore:hasMorePapers}}"></template>
+<view class="container wrapper">
+  <view class="top part container-h">
+    <view class="container">
+      <image src="{{userInfo.avatarUrl}}" mode="aspectFit" class="portrait"></image>
+      <text class="nick">{{userInfo.nickName}}</text>
+    </view>
   </view>
-
-  <view class="{{activeName}} answer-hide">
-    <block wx:for="{{results}}" wx:for-item="id" wx:key="id">
-      <template is="paper-result" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
-    </block>
-    <template is="loader" data="{{hasmore:hasMoreResults}}"></template>
+  <view class="part container-h">
+    <view class="friend-part" bindtap="navigateTo" data-url="/pages/FriendTest/home/index">
+      <image src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b61b1c60982081.5a5f848a67099.jpg" mode="aspectFill"></image>
+      <text class="float-text DIN">友情鉴定</text>
+    </view>
   </view>
-
-  <template is="tabbar" data="{{activeName, newCount}}"></template>
+  <view class="part container-h " style="margin-top:20rpx;">
+    <view class="baozou-part" bindtap="navigateTo" data-url="/pages/Baozou/home/index">
+      <image src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/33671c60982081.5a5f848a64beb.jpg" mode="aspectFill"></image>
+      <text class="float-text DIN">暴走测试</text>
+    </view>
+    <view class="personal-part" bindtap="navigateTo" data-url="/pages/Setting/personal/index">
+      <image src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/8c7c1e60982081.5a5f848a631b9.jpg" mode="aspectFill"></image>
+      <text class="float-text DIN">个人中心</text>
+    </view>
+  </view>
 </view>

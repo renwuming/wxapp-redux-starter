@@ -1,0 +1,23 @@
+<template name="paper-home">
+    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/FriendTest/detail-me/index?id={{id}}">
+    	<view class="grid-paper-hd">
+            <!-- <image class="lazyloaded" src="/images/icon_test.png"></image> -->
+            <view  class="count">
+                <image mode="aspectFill" src="/images/black.png"></image>
+                <view class="words">
+                    <view>
+                        <text class="num DIN">LEVEL</text>
+                        <text class="num DIN white">1</text>
+                    </view>
+                </view>
+            </view>
+        	<image mode="aspectFill" src="{{image}}"></image>
+        </view>
+        <view class="grid-paper-bd">
+        	<view class="title-description">
+        		<text class="title">{{title}}</text>
+        		<text class="description">{{description}}</text>
+        	</view>
+        </view>
+    </view>
+</template>

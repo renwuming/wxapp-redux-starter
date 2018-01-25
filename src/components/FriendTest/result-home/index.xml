@@ -1,0 +1,25 @@
+<template name="result-home">
+    <view class="com-grid-paper" bindtap="navigateTo" data-url="/pages/FriendTest/result-list/list-detail/index?id={{id}}">
+        <view class="grid-paper-hd">
+            <view class="count" wx:if="{{new}}">
+                <image mode="aspectFill" src="/images/black.png"></image>
+                <view class="words">
+                    <view>
+                        <text class="num DIN">NEW</text>
+                        <text class="text">新的答案</text>
+                    </view>
+                </view>
+            </view>
+            <view class="player-list">
+                <image mode="aspectFill" wx:for="{{newPlayers}}" wx:key="*this" src="{{item.avatarUrl}}"></image>
+            </view>
+        	<image mode="aspectFill" src="{{image}}"></image>
+        </view>
+        <view class="grid-paper-bd">
+        	<view class="title-description">
+        		<text class="title">{{title}}</text>
+        		<text class="description">{{description}}</text>
+        	</view>
+        </view>
+    </view>
+</template>

@@ -16,15 +16,14 @@ export const REPLACE_PAPERS_LIST = 'REPLACE_PAPERS_LIST';
 // ------------------------------------
 
 
-//判断是今天的，还是昨天的
+//判断是否24小时内
 function formatCount(posts){
 
     posts = posts.map((post) => {
         let publishTime = post.publish_time,
              nowDate = new Date(),
              diffHours = (nowDate.getTime() - publishTime) / 1000 / 3600;
-
-        if (diffHours <= nowDate.getHours()) {
+        if (diffHours <= 24) {
             post.today = true;
         } else {
             post.today = false;
@@ -97,6 +96,21 @@ export const fetchPaper = (id, errorCallback) => {
                 errorCallback && errorCallback();
                 console.error(err);
             });
+    }
+}
+
+export const dispatchPaper = (feeds) => {
+    return (dispatch, getState) => {
+        let normalizeData = {
+                result: []
+            };
+        if(feeds && feeds.length){
+            normalizeData = normalize(feeds, arrayOf(postSchema));
+            dispatch(updatePapersList(
+                normalizeData,
+            ));
+        }
+        return Promise.resolve();
     }
 }
 

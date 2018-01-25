@@ -27,6 +27,14 @@ function handleResults(posts) {
     return updateObject(normalizePapers, normalizeResults);
 }
 
+function handleResults2(results) {
+    let normalizeResults;
+
+    normalizeResults = normalize(results, arrayOf(resultsSchema));
+
+    return normalizeResults;
+}
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -55,7 +63,21 @@ export function replaceResultsList(normalizeData, lastkey = null, hasmore = null
 // ------------------------------------
 // Async Actions
 // ------------------------------------
+export const dispatchResultList = (feeds) => {
+    return (dispatch, getState) => {
+        let normalizeData = {
+                result: []
+            };
+        normalizeData = handleResults(feeds);
 
+        dispatch(updateResultsList(
+            normalizeData,
+        ));
+
+        return Promise.resolve();
+    }
+
+}
 export const fetchResultList = (errorCallback, init) => {
     return (dispatch, getState) => {
         let state = getState(),
@@ -72,8 +94,7 @@ export const fetchResultList = (errorCallback, init) => {
                     hasmore = res.has_more,
                     normalizeData = {
                         result: []
-                    },
-                    posts;
+                    };
 
                 normalizeData = handleResults(feeds);
 
@@ -104,6 +125,39 @@ export const fetchResultRecord = (id) => {
         let state = getState(),
              detail = state.entities.resultDetails[id],
              url = `/test/result/record`,
+             normalizeData;
+
+        return POST(url, { id })
+            .then(function(res) {
+
+                if(detail.record_count) detail.record_count++;
+                else detail.record_count = 1;
+
+                normalizeData = {
+                    result: [],
+                    entities: {
+                        resultDetails: {
+                            id: detail
+                        }
+                    }
+                };
+
+                dispatch(updateResultsList(
+                    normalizeData
+                ));
+
+            }, function(err){
+            }).catch(function(err) {
+                console.error(err);
+            });
+    }
+}
+
+export const fetchResultRecord2 = (id) => {
+    return (dispatch, getState) => {
+        let state = getState(),
+             detail = state.entities.resultDetails[id],
+             url = `/test/friendtest/result/record`,
              normalizeData;
 
         return POST(url, { id })

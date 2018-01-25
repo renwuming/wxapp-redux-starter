@@ -1,9 +1,0 @@
-<view class="container" bindtap="preview">
-  <text>🌟这个测试会发光🌟</text>
-  <text>为了让测试的互动更有趣！</text>
-  <text>如果你喜欢这款小程序</text>
-  <text>可以识别下面二维码，请作者喝杯咖啡~</text>
-  <text>谢谢支持(*^__^*)</text>
-  <!-- <text>🤡🤡🃏🃏❤️⭐️🌟</text> -->
-  <image src="http://www.renwuming.xyz/wumingstore/img/pay.jpg" mode="aspectFit"></image>
-</view>

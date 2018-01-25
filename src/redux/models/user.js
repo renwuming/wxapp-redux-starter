@@ -40,16 +40,7 @@ export const fetchUserInfo = (errorCallback) => {
     return (dispatch, getState) => {
         let oldUserInfo = getState().entities.userInfo,
              sessionid = getState().entities.sessionid,
-             url = `/user/userinfo`,
-             defaultUserInfo = {
-               nickName: "神秘人",
-               gender: 2,
-               language: "isDefault",
-               city: "",
-               province: "",
-               country: "",
-               avatarUrl: "http://www.renwuming.xyz/wumingstore/img/portrait.jpg",
-             };
+             url = `/user/userinfo`;
 
         return new Promise((resolve, reject) => {
             wx.getUserInfo({
@@ -72,27 +63,18 @@ export const fetchUserInfo = (errorCallback) => {
                     });
                 },
                 fail: (err) => {
-                    if(!oldUserInfo) {
-                        GET(url, { sessionid }).then(res => {
-                            oldUserInfo = res.userInfo || defaultUserInfo;
-                            let normalizeData = {
-                                entities: {
-                                  userInfo: oldUserInfo
-                                }
-                            };
-                            dispatch(updateUserInfo(
-                                normalizeData
-                            ));
-                            resolve();
-                            // 若服务端无数据，则上传defaultUserInfo
-                            if(!res.userInfo) {
-                                POST(url, {
-                                  sessionid,
-                                  userInfo: oldUserInfo
-                                });
+                    GET(url, { sessionid }).then(res => {
+                        oldUserInfo = res.userInfo;
+                        let normalizeData = {
+                            entities: {
+                              userInfo: oldUserInfo
                             }
-                        });
-                    }
+                        };
+                        dispatch(updateUserInfo(
+                            normalizeData
+                        ));
+                        resolve();
+                    });
                 }
             });
         });

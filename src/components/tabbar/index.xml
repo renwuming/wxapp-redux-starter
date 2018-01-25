@@ -8,10 +8,6 @@
       <image src="/images/icon_home2.png" mode="aspectFit"></image>
       <text>首页</text>
     </view>
-    <view class="tab-item personal-item" bindtap="navigateTo" data-url="/pages/personal/index">
-      <image src="/images/icon_personal.png" mode="aspectFit"></image>
-      <text>我的</text>
-    </view>
     <view class="tab-item answer-item answer-active" bindtap="switchTab" data-active="answer">
       <image src="/images/icon_answer.png" mode="aspectFit"></image>
       <text>答案</text>

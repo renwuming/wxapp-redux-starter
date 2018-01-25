@@ -56,6 +56,13 @@ function togglePraise() {
     _setPageData.call(me);
 }
 
+// 设置分享显示
+function setShare(canShare) {
+    var me = this;
+    showShare = canShare;
+    _setPageData.call(me);
+}
+
 function redirectToBack(wx, url) {
     wx.switchTab({
         url: url
@@ -68,7 +75,7 @@ function navigateToBack(wx) {
 
 function returnBack(wx, url) {
     let navigateLength = getCurrentPages();
-    
+
     if(navigateLength.length == 1){
         redirectToBack(wx, url);
     }else{
@@ -82,5 +89,6 @@ module.exports = {
     togglePraise,
     redirectToBack,
     navigateToBack,
-    returnBack
+    returnBack,
+    setShare,
 }

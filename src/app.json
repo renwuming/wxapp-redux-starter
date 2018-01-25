@@ -3,14 +3,22 @@
     // First is default to view
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
     "pages": [
-        "pages/home/index",
-        "pages/answer/index",
-        "pages/personal/index",
-        "pages/resultlist/index",
-        "pages/result/index",
-        "pages/detail/index",
-        "pages/detail2/index",
-        "pages/about/index"
+        "pages/Home/index",
+        // 暴走测试
+        "pages/Baozou/home/index",
+        "pages/Baozou/detail-me/index",
+        "pages/Baozou/detail-share/index",
+        "pages/Baozou/result-list/list-detail/index",
+        "pages/Baozou/result-list/result-item/index",
+        // 友情鉴定
+        "pages/FriendTest/home/index",
+        "pages/FriendTest/detail-me/index",
+        "pages/FriendTest/detail-share/index",
+        "pages/FriendTest/result-list/list-detail/index",
+        "pages/FriendTest/result-list/result-item/index",
+        // 其他
+        "pages/Setting/personal/index",
+        "pages/Setting/personal/about/index"
     ],
     // Window configuration
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
@@ -23,7 +31,7 @@
         "navigationBarTextStyle": "black",
         // 类型：String；默认值：无
         // 导航栏标题文字内容
-        "navigationBarTitleText": "趣味测试",
+        "navigationBarTitleText": "暴走测试",
         // 类型：HexColor；默认值：#ffffff
         // 窗口的背景色
         "backgroundColor": "#fff",

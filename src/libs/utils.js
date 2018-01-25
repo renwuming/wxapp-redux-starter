@@ -114,7 +114,6 @@ export const sizeof = function( object ) {
                     size += 4; // assume null is the same size as a boolean
                     break;
                 }
-                
                 // if it's an array, the keys add no size. if it's an object, keys
                 // add size based on their length (keys must be strings according to spec)
                 var keySizeFactor = Array.isArray( _object ) ? 0 : 1;
@@ -217,4 +216,37 @@ Array.prototype.shuffle = function() {
    this[i] = this[j];
    this[j] = t;
  }
+}
+
+
+// pageConfig 方法
+export const homeShare = function() {
+    return {
+      title: '暴走测试',
+      desc: '少年，来让叔叔给你测试一下心理~',
+      path: '/pages/Home/index'
+    };
+}
+
+
+export const ShareFromMe = function() {
+  let { detail, sessionid, id } = this.data,
+      { title, description: desc, image: imageUrl } = detail;
+  this.hidecover && this.hidecover();
+  return {
+    title,
+    desc,
+    path: `/pages/Baozou/detail-share/index?id=${id}&from=${sessionid}`
+  };
+}
+
+export const ShareFromShare = function() {
+  let { detail, from, id } = this.data,
+      { title, description: desc, image: imageUrl } = detail;
+  this.hidecover && this.hidecover();
+  return {
+    title,
+    desc,
+    path: `/pages/Baozou/detail-share/index?id=${id}&from=${from}`
+  };
 }

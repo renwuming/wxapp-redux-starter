@@ -1,0 +1,30 @@
+<template name="result-detail">
+    <view class="com-grid-paper">
+    	<view class="grid-paper-hd">
+            <view  class="player">
+                <image mode="aspectFill" src="{{player.avatarUrl}}"></image>
+                <text>{{player.nickName}}</text>
+            </view>
+        	<image mode="aspectFill" src="{{image}}"></image>
+        </view>
+        <view class="grid-paper-bd">
+        	<view class="title-description">
+        		<text class="title gray-title">{{title}}</text>
+        		<text class="description">{{description}}</text>
+        	</view>
+        </view>
+    </view>
+    <view wx:for="{{questions}}" wx:for-index="index" wx:key="item" class="q-box result-q-box">
+        <text class="title">{{index+1}}/{{questions.length}}: {{item.title}}</text>
+        <radio-group class="container radio-group">
+            <label wx:for="{{item.options}}" wx:for-item="q" wx:for-index="ind" wx:key="q.options">
+                <text wx:if="{{item.selected===ind}}" class="selected">{{q.content}}</text>
+                <text wx:else>{{q.content}}</text>
+            </label>
+        </radio-group>
+    </view>
+    <view class="result-box container">
+        <text class="title">测试结果</text>
+        <text class="content container">{{answerResult.content}}</text>
+    </view>
+</template>

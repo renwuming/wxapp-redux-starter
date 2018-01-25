@@ -1,0 +1,26 @@
+<import src="/components/FriendTest/paper-home/index"></import>
+<import src="/components/FriendTest/result-home/index"></import>
+<import src="/components/tabbar/index"></import>
+<import src="/components/toaster/index"></import>
+<import src="/components/loader/index"></import>
+
+<view class="container toolbar-container">
+  <template is="toaster" data="{{...toasterData}}"></template>
+
+  <view class="{{activeName}} home-hide">
+    <block wx:for="{{papers}}" wx:for-item="id" wx:key="id">
+      <template wx:if="{{postsHash[id].datatype == 1}}" is="paper-home" data="{{...postsHash[id]}}"></template>
+    </block>
+    <template is="loader" data="{{hasmore:hasMorePapers}}"></template>
+  </view>
+
+  <view class="{{activeName}} answer-hide">
+    <block wx:for="{{results}}" wx:for-item="item" wx:key="*this">
+      <template is="result-home" data="{{...postsHash[item.id], ...resultDetails[item.level]}}"></template>
+    </block>
+    <template is="loader" data="{{hasmore:hasMoreResults}}"></template>
+  </view>
+
+  <template is="tabbar" data="{{activeName, newCount}}"></template>
+</view>
+

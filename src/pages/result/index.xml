@@ -1,9 +1,0 @@
-<import src="/components/paper-result-detail/index"></import>
-<import src="/components/toolbar/index"></import>
-
-<view class="container toolbar-container">
-
-  <template is="paper-result-detail" data="{{...detail, ...result, questions, answerResult}}"></template>
-  
-  <template is="toolbar" data="{{...toolbarData}}"></template>
-</view>
