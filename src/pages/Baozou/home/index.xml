@@ -16,7 +16,7 @@
 
   <view class="{{activeName}} answer-hide">
     <block wx:for="{{results}}" wx:for-item="id" wx:key="id">
-      <template is="result-home" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
+      <template wx:if="{{postsHash[id].datatype == 0}}" is="result-home" data="{{...postsHash[id], ...resultDetails[id]}}"></template>
     </block>
     <template is="loader" data="{{hasmore:hasMoreResults}}"></template>
   </view>

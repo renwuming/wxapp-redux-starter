@@ -13,7 +13,7 @@ let pageConfig = {
       var me = this,
           toolbarInit = Toolbar.init.bind(me);
       this.setData({progress:0});
-      GET_FRIENDTEST(this.data.id, this.data.level).then(res => {
+      GET_FRIENDTEST(this.data.id, this.data.pid).then(res => {
         let {paper, answers} = res,
             questions = paper.questions.map(e => {
               e.options.shuffle();
@@ -26,29 +26,29 @@ let pageConfig = {
         });
 
         wx.setNavigationBarTitle({
-          title: paper.title || '泛泛之交'
+          title: paper.title
         });
         toolbarInit(paper.praise_count, paper.praise || false, true);
       });
 
     },
     updateFriendResult() {
-      let {sessionid, id, level} = this.data;
+      let {sessionid, id, pid} = this.data;
       UPDATE_FRIEND_RESULT({
         sessionid,
         from: id,
-        level,
+        pid,
         answers: this.data.newAnswers,
       });
     },
     onShareAppMessage: function() {
-      let { level, id } = this.data,
+      let { pid, id } = this.data,
           { shareTitle, shareDesc, shareImage } = paper;
       return {
         shareTitle,
         shareDesc,
         shareImage,
-        path: `/pages/realfriend/share/index?level=${level}&from=${id}`
+        path: `/pages/realfriend/share/index?id=${pid}&from=${id}`
       };
     },
     radioSelect: function(e) {
@@ -102,7 +102,7 @@ let mapStateToData = (state, params) => {
     return {
         sessionid: state.entities.sessionid,
         id: params.from,
-        level: params.level,
+        pid: params.id,
     }
 };
 

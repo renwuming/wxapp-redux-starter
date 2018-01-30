@@ -38,23 +38,25 @@ function handleResults2(results) {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function updateResultsList(normalizeData, lastkey = null, hasmore = null) {
+export function updateResultsList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: UPDATE_RESULTS_LIST,
         payload: {
             normalizeData: normalizeData,
             listLastkey: lastkey,
-            hasmore
+            hasmore,
+            hasmore_friend,
         }
     }
 }
-export function replaceResultsList(normalizeData, lastkey = null, hasmore = null) {
+export function replaceResultsList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: REPLACE_RESULTS_LIST,
         payload: {
             normalizeData: normalizeData,
             listLastkey: lastkey,
-            hasmore
+            hasmore,
+            hasmore_friend,
         }
     }
 }
@@ -111,9 +113,52 @@ export const fetchResultList = (errorCallback, init) => {
                         hasmore
                     ));
                 }
-            }, function(err){
-                errorCallback && errorCallback(err);
             }).catch(function(err) {
+                err = err.toString();
+                errorCallback && errorCallback(err);
+                console.error(err);
+            });
+    }
+}
+
+export const fetchFriendResultList = (params, errorCallback, init) => {
+    return (dispatch, getState) => {
+        let state = getState(),
+            results = state.results,
+            sessionid = state.entities.sessionid,
+            lastkey = init ? 0 : results.listLastkey || 0,
+            url = `/test/results/${lastkey}`;
+
+        return GET(url, params, 500)
+            .then(function(res) {
+                if(res.errMsg) return Promise.reject(res.errMsg);
+                let feeds = res.feeds,
+                    lastkey = res.last_key,
+                    hasmore_friend = res.has_more,
+                    normalizeData = {
+                        result: []
+                    };
+
+                normalizeData = handleResults(feeds);
+
+                if(init) {
+                    dispatch(replaceResultsList(
+                        normalizeData,
+                        lastkey,
+                        null,
+                        hasmore_friend,
+                    ));
+                } else {
+                    dispatch(updateResultsList(
+                        normalizeData,
+                        lastkey,
+                        null,
+                        hasmore_friend,
+                    ));
+                }
+                console.log(res)
+            }).catch(function(err) {
+                err = err.toString();
                 errorCallback && errorCallback(err);
                 console.error(err);
             });
@@ -146,8 +191,8 @@ export const fetchResultRecord = (id) => {
                     normalizeData
                 ));
 
-            }, function(err){
             }).catch(function(err) {
+                err = err.toString();
                 console.error(err);
             });
     }
@@ -179,8 +224,8 @@ export const fetchResultRecord2 = (id) => {
                     normalizeData
                 ));
 
-            }, function(err){
             }).catch(function(err) {
+                err = err.toString();
                 console.error(err);
             });
     }
@@ -196,10 +241,12 @@ const ACTION_HANDLERS = {
             list = results.list.concat(normalizeData.result),
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
+            hasmore_friend = payload.hasmore_friend,
             newObj = { list };
         // 忽略null
         (listLastkey !== null) && (newObj.listLastkey = listLastkey);
         (hasmore !== null) && (newObj.hasmore = hasmore);
+        (hasmore_friend !== null) && (newObj.hasmore_friend = hasmore_friend);
 
         return updateObject(results, newObj);
     },
@@ -209,10 +256,12 @@ const ACTION_HANDLERS = {
             list = normalizeData.result,
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
+            hasmore_friend = payload.hasmore_friend,
             newObj = { list };
         // 忽略null
         (listLastkey !== null) && (newObj.listLastkey = listLastkey);
         (hasmore !== null) && (newObj.hasmore = hasmore);
+        (hasmore_friend !== null) && (newObj.hasmore_friend = hasmore_friend);
 
         return updateObject(results, newObj);
     }

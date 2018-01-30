@@ -38,24 +38,26 @@ function formatCount(posts){
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function updatePapersList(normalizeData, lastkey = null, hasmore = null) {
+export function updatePapersList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: UPDATE_PAPERS_LIST,
         payload: {
             normalizeData: normalizeData,
             listLastkey: lastkey,
-            hasmore
+            hasmore,
+            hasmore_friend,
         }
     }
 }
 
-export function replacePapersList(normalizeData, lastkey = null, hasmore = null) {
+export function replacePapersList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: REPLACE_PAPERS_LIST,
         payload: {
             normalizeData: normalizeData,
             listLastkey: lastkey,
-            hasmore
+            hasmore,
+            hasmore_friend,
         }
     }
 }
@@ -90,10 +92,9 @@ export const fetchPaper = (id, errorCallback) => {
                         normalizeData
                     ));
                 }
-            }, function(err){
-                errorCallback && errorCallback(err);
             }).catch(function(err) {
-                errorCallback && errorCallback();
+                err = err.toString();
+                errorCallback && errorCallback(err);
                 console.error(err);
             });
     }
@@ -114,12 +115,58 @@ export const dispatchPaper = (feeds) => {
     }
 }
 
+
+export const fetchFreindPaperList = (params, errorCallback, init) => {
+    return (dispatch, getState) => {
+        let state = getState(),
+            papers = state.papers,
+            oldAnswers = state.entities.answers,
+            lastkey = init ? 0 : papers.listLastkey || 0,
+            url = `/test/papers/${lastkey}`;
+        return GET(url, params, 500)
+            .then(function(res) {
+                let feeds = res.feeds,
+                    lastkey = res.last_key,
+                    hasmore_friend = res.has_more,
+                    answers = res.answers,
+                    normalizeData = {
+                        result: [],
+                        entities: {},
+                    },
+                    posts;
+                if(feeds && feeds.length){
+                    posts = formatCount(feeds);
+                    normalizeData = normalize(posts, arrayOf(postSchema));
+                }
+                normalizeData.entities.answers = updateObject(oldAnswers, res.answers); // 合并更新entities的answers
+                if(init) {
+                    dispatch(replacePapersList(
+                        normalizeData,
+                        lastkey,
+                        null,
+                        hasmore_friend,
+                    ));
+                } else {
+                    dispatch(updatePapersList(
+                        normalizeData,
+                        lastkey,
+                        null,
+                        hasmore_friend,
+                    ));
+                }
+            }).catch(function(err) {
+                err = err.toString();
+                errorCallback && errorCallback(err);
+                console.error(err);
+            });
+    }
+}
+
 export const fetchPaperList = (errorCallback, init) => {
     return (dispatch, getState) => {
         let papers = getState().papers,
-             lastkey = init ? 0 : papers.listLastkey || 0,
-             url = `/test/papers/${lastkey}`;
-
+            lastkey = init ? 0 : papers.listLastkey || 0,
+            url = `/test/papers/${lastkey}`;
         return GET(url, {}, 500)
             .then(function(res) {
                 let feeds = res.feeds,
@@ -148,10 +195,9 @@ export const fetchPaperList = (errorCallback, init) => {
                         hasmore
                     ));
                 }
-            }, function(err){
-                errorCallback && errorCallback(err);
             }).catch(function(err) {
-                errorCallback && errorCallback();
+                err = err.toString();
+                errorCallback && errorCallback(err);
                 console.error(err);
             });
     }
@@ -167,10 +213,12 @@ const ACTION_HANDLERS = {
             list = papers.list.concat(normalizeData.result),
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
+            hasmore_friend = payload.hasmore_friend,
             newPapers = { list };
         // 忽略null
         (listLastkey !== null) && (newPapers.listLastkey = listLastkey);
         (hasmore !== null) && (newPapers.hasmore = hasmore);
+        (hasmore_friend !== null) && (newPapers.hasmore_friend = hasmore_friend);
 
         return updateObject(papers, newPapers);
     },
@@ -180,10 +228,12 @@ const ACTION_HANDLERS = {
             list = normalizeData.result,
             listLastkey = payload.listLastkey,
             hasmore = payload.hasmore,
+            hasmore_friend = payload.hasmore_friend,
             newPapers = { list };
         // 忽略null
         (listLastkey !== null) && (newPapers.listLastkey = listLastkey);
         (hasmore !== null) && (newPapers.hasmore = hasmore);
+        (hasmore_friend !== null) && (newPapers.hasmore_friend = hasmore_friend);
 
         return updateObject(papers, newPapers);
     },

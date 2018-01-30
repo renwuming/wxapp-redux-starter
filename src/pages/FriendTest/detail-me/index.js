@@ -36,17 +36,16 @@ let pageConfig = {
       });
       toolbarInit(paper.praise_count, paper.praise || false, true, canShare);
 
-
     },
     onShareAppMessage: function() {
-      let { level, id, paper } = this.data,
+      let { pid, id, paper } = this.data,
           { shareTitle, shareDesc, shareImage } = paper;
       this.hidecover();
       return {
         shareTitle,
         shareDesc,
         shareImage,
-        path: `/pages/realfriend/share/index?level=${level}&from=${id}`
+        path: `/pages/FriendTest/detail-share/index?id=${pid}&from=${id}`
       };
     },
     hidecover: function() {
@@ -89,7 +88,6 @@ let pageConfig = {
 
       return UPDATE_Q({
         sessionid: this.data.id,
-        level: this.data.level,
         qid: id,
         answer,
       }).then(_ => {
@@ -109,7 +107,7 @@ let mapStateToData = (state, params) => {
 
     return {
         id: state.entities.sessionid,
-        level: params.level,
+        pid: id,
         paper,
         answerHash,
         questionHash,

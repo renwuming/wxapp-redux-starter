@@ -24,25 +24,7 @@ let pageConfig = {
       this.fetchResultRecord(this.data.id);
     },
     getResult() {
-      // let { detail, questions } = this.data,
-      //      totalScore = questions.reduce((pre,next) => pre+Math.max.apply(null, next.options.map(e=>e.score)), 0),
-      //      score = questions.reduce((pre,next) => pre+next.options[next.selected].score, 0),
-      //      ratio = score / totalScore,
-      //      _result = detail.result.filter(e=>e.score<=ratio).sort().reverse()[0];
-      // if(!_result) _result = detail.result[0];
       return { content: "" };
-
-      // let answers = this.data.answers,
-      //     len = Object.keys(answers).length,
-      //     l = 0;
-      // for(let k in answers) {
-      //   if(answers[k] == this.data.newAnswers[k]) l++;
-      // }
-      // let res = parseFloat(l / len * 100).toFixed(2);
-      // if(isNaN(res)) res = 0;
-      // return {
-      //   content: `${res}%`,
-      // };
     },
     returnBack: function(e) {
         wx.navigateBack();

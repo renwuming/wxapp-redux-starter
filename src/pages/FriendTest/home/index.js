@@ -1,52 +1,17 @@
 import { connect } from '../../../vendors/weapp-redux.js';
-import Toolbar from '../../../components/toolbar/index.js';
-import { clone, updateObject, ArrayIncludeItem } from '../../../libs/utils.js';
-import { POST_RECORD, GET_FRIENDTEST, UPDATE_Q, GET_FRIENDTEST_ANSWERS } from '../../../libs/common.js';
-import { dispatchPaper } from '../../../redux/models/papers.js';
-import { dispatchResultList } from '../../../redux/models/results.js';
-import { dispatchFriendAnswers } from '../../../redux/models/friend_answers.js';
-
+import { fetchFriendResultList } from '../../../redux/models/results.js';
+import { fetchFreindPaperList } from '../../../redux/models/papers.js';
+import { ArrayIncludeItem, homeShare } from '../../../libs/utils.js';
+import Toaster from '../../../components/toaster/index.js';
 
 let pageConfig = {
   data: {
+    hasMorePaper: true,
     activeName: "home",
-    level: 1,
   },
   onLoad: function() {
-
-    GET_FRIENDTEST_ANSWERS(this.data.sessionid).then(res => {
-      let {results} = res;
-      this.dispatchResultList(res).then(_ => {
-        let resultDetails = {};
-        results.forEach(e => {
-          let level = e.level;
-          resultDetails[level] = { newPlayers: [] };
-          e.list.map(detail => {
-            if(!detail.record_count) {
-              resultDetails[level].new = true;
-              let newplayers = resultDetails[level].newPlayers;
-              // 不重复的头像，仅显示前三个
-              if(!ArrayIncludeItem(newplayers, detail.player) && newplayers.length < 3) {
-                newplayers.push(detail.player);
-              }
-            }
-          });
-        });
-        this.setData({
-          results,
-          resultDetails,
-        });
-      });
-    });
-
-    GET_FRIENDTEST(this.data.id, this.data.level).then(res => {
-      let {paper, answers} = res;
-      this.dispatchPaper([paper]);
-      this.dispatchFriendAnswers(answers); // 更新 answers redux
-      this.setData({
-        papers: [paper.id],
-      });
-    });
+    this.errorCallback = Toaster.show.bind(this);
+    this.initResultList();
   },
   navigateTo: function(e) {
     let elCurrentTarget = e.currentTarget,
@@ -58,24 +23,88 @@ let pageConfig = {
         activeName = elCurrentTarget.dataset.active;
     this.setData({ activeName });
   },
+  initResultList: function() {
+    this.waitSessionid = setInterval(() => {
+      if(this.data.sessionid) {
+        clearInterval(this.waitSessionid);
+        this.fetchResultList(this.data.fetchParams, this.errorCallback, true);
+        this.fetchPaperList(this.data.fetchParams, this.errorCallback, true);
+      }
+    }, 100);
+  },
+  onPullDownRefresh: function() {
+    if(this.scrolling) return;
+    this.scrolling = true;
+    if(this.data.activeName === "home") {
+      this.fetchPaperList(this.data.fetchParams, this.errorCallback, true).then(() => {
+        this.scrolling = false;
+        wx.stopPullDownRefresh();
+      });
+    } else if(this.data.activeName === "answer") {
+      console.log(111111)
+      this.fetchResultList(this.data.fetchParams, this.errorCallback, true).then(() => {
+        this.scrolling = false;
+        wx.stopPullDownRefresh();
+      });
+    }
+  },
+  onReachBottom: function() {
+    if(this.scrolling || !this.data.hasmore) return;
+    this.scrolling = true;
+    if(this.data.activeName === "home") {
+      this.fetchPaperList(this.data.fetchParams, this.errorCallback).then(() => {
+        this.scrolling = false;
+      });
+    } else if(this.data.activeName === "answer") {
+      this.fetchResultList(this.data.fetchParams, this.errorCallback).then(() => {
+        this.scrolling = false;
+      });
+    }
+  },
+  onShareAppMessage: homeShare,
 };
-
-
 let mapStateToData = state => {
+  let results = state.results.list,
+      resultsHash = state.entities.results,
+      resultDetailsHash = state.entities.resultDetails,
+      resultDetails = {},
+      newCount = 0,
+      sessionid = state.entities.sessionid;
+
+  results.map(e => {
+    resultDetails[e] = { newPlayers: [] };
+    let item = resultsHash[e];
+    item.list.map(i => {
+      let detail = resultDetailsHash[i];
+      if(!detail.record_count) {
+        resultDetails[e].new = true;
+        let newplayers = resultDetails[e].newPlayers;
+        // 不重复的头像，仅显示前三个
+        if(!ArrayIncludeItem(newplayers, detail.player) && newplayers.length < 3) {
+          newplayers.push(detail.player);
+        }
+      }
+    });
+  });
+
   return {
-    id: state.entities.sessionid,
-    sessionid: state.entities.sessionid,
+    sessionid,
+    papers: state.papers.list,
+    hasMorePapers: state.papers.hasmore_friend,
     postsHash: state.entities.posts,
+    hasMoreResults: state.results.hasmore_friend,
+    results,
+    resultDetails,
+    fetchParams: {
+      sessionid,
+      datatype: 1,
+    },
   }
 };
-
 let mapDispatchToPage = dispatch => ({
-  fetchUserInfoUpdate: (data) => dispatch(fetchUserInfoUpdate(data)),
-  dispatchFriendAnswers: (data) => dispatch(dispatchFriendAnswers(data)),
-  dispatchPaper: (data) => dispatch(dispatchPaper(data)),
-  dispatchResultList: (data) => dispatch(dispatchResultList(data)),
+  fetchPaperList: (params, errorCallback, init) => dispatch(fetchFreindPaperList(params, errorCallback, init)),
+  fetchResultList: (params, errorCallback, init) => dispatch(fetchFriendResultList(params, errorCallback, init))
 });
-
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)
 Page(pageConfig);
