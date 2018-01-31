@@ -11,6 +11,7 @@ import { postSchema, resultsSchema } from '../schema.js';
 // ------------------------------------
 export const UPDATE_RESULTS_LIST = 'UPDATE_RESULTS_LIST';
 export const REPLACE_RESULTS_LIST = 'REPLACE_RESULTS_LIST';
+export const INIT_MORE = 'INIT_MORE';
 // ------------------------------------
 // helpers
 // ------------------------------------
@@ -38,6 +39,16 @@ function handleResults2(results) {
 // ------------------------------------
 // Actions
 // ------------------------------------
+export function initMore() {
+    return {
+        type: INIT_MORE,
+        payload: {
+            hasmore: true,
+            hasmore_friend: true,
+        }
+    }
+}
+
 export function updateResultsList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: UPDATE_RESULTS_LIST,
@@ -82,6 +93,7 @@ export const dispatchResultList = (feeds) => {
 }
 export const fetchResultList = (errorCallback, init) => {
     return (dispatch, getState) => {
+        if(init) dispatch(initMore()); // 重置hasmore loading
         let state = getState(),
              results = state.results,
              sessionid = state.entities.sessionid,
@@ -123,6 +135,7 @@ export const fetchResultList = (errorCallback, init) => {
 
 export const fetchFriendResultList = (params, errorCallback, init) => {
     return (dispatch, getState) => {
+        if(init) dispatch(initMore()); // 重置hasmore loading
         let state = getState(),
             results = state.results,
             sessionid = state.entities.sessionid,
@@ -264,7 +277,15 @@ const ACTION_HANDLERS = {
         (hasmore_friend !== null) && (newObj.hasmore_friend = hasmore_friend);
 
         return updateObject(results, newObj);
-    }
+    },
+    [INIT_MORE]: (papers, action) => {
+        let newPapers = {
+            hasmore: true,
+            hasmore_friend: true,
+        };
+
+        return updateObject(papers, newPapers);
+    },
 }
 // ------------------------------------
 // Reducer
@@ -272,7 +293,8 @@ const ACTION_HANDLERS = {
 export function resultsReducer(results = {
     list: [],
     listLastkey: 0,
-    hasmore: true
+    hasmore: true,
+    hasmore_friend: true,
 }, action) {
     const handler = ACTION_HANDLERS[action.type]
 

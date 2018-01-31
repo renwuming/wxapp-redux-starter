@@ -11,6 +11,7 @@ import { postSchema } from '../schema.js';
 // ------------------------------------
 export const UPDATE_PAPERS_LIST = 'UPDATE_PAPERS_LIST';
 export const REPLACE_PAPERS_LIST = 'REPLACE_PAPERS_LIST';
+export const INIT_MORE = 'INIT_MORE';
 // ------------------------------------
 // helpers
 // ------------------------------------
@@ -38,6 +39,16 @@ function formatCount(posts){
 // ------------------------------------
 // Actions
 // ------------------------------------
+export function initMore() {
+    return {
+        type: INIT_MORE,
+        payload: {
+            hasmore: true,
+            hasmore_friend: true,
+        }
+    }
+}
+
 export function updatePapersList(normalizeData, lastkey = null, hasmore = null, hasmore_friend = null) {
     return {
         type: UPDATE_PAPERS_LIST,
@@ -70,35 +81,6 @@ function updateValidate(data) {
 // ------------------------------------
 // Async Actions
 // ------------------------------------
-export const fetchPaper = (id, errorCallback) => {
-    return (dispatch, getState) => {
-        let papers = getState().papers,
-             entities = getState().entities,
-             oldPaper = entities.posts && entities.posts[id],
-             url = `/test/paper/${id}`;
-
-        if(!updateValidate(oldPaper)) return Promise.resolve();
-        return GET(url, {}, 500)
-            .then(function(res) {
-                let feeds = res.feeds,
-                    posts, normalizeData;
-
-                if(feeds && feeds.length){
-                    posts = formatCount(feeds);
-
-                    normalizeData = normalize(posts, arrayOf(postSchema));
-
-                    dispatch(updatePapersList(
-                        normalizeData
-                    ));
-                }
-            }).catch(function(err) {
-                err = err.toString();
-                errorCallback && errorCallback(err);
-                console.error(err);
-            });
-    }
-}
 
 export const dispatchPaper = (feeds) => {
     return (dispatch, getState) => {
@@ -118,6 +100,8 @@ export const dispatchPaper = (feeds) => {
 
 export const fetchFreindPaperList = (params, errorCallback, init) => {
     return (dispatch, getState) => {
+        if(init) dispatch(initMore()); // 重置hasmore loading
+
         let state = getState(),
             papers = state.papers,
             oldAnswers = state.entities.answers,
@@ -164,6 +148,8 @@ export const fetchFreindPaperList = (params, errorCallback, init) => {
 
 export const fetchPaperList = (errorCallback, init) => {
     return (dispatch, getState) => {
+        if(init) dispatch(initMore()); // 重置hasmore loading
+
         let papers = getState().papers,
             lastkey = init ? 0 : papers.listLastkey || 0,
             url = `/test/papers/${lastkey}`;
@@ -237,6 +223,14 @@ const ACTION_HANDLERS = {
 
         return updateObject(papers, newPapers);
     },
+    [INIT_MORE]: (papers, action) => {
+        let newPapers = {
+            hasmore: true,
+            hasmore_friend: true,
+        };
+
+        return updateObject(papers, newPapers);
+    },
 }
 // ------------------------------------
 // Reducer
@@ -244,7 +238,8 @@ const ACTION_HANDLERS = {
 export function papersReducer(papers = {
     list: [],
     listLastkey: 0,
-    hasmore: true
+    hasmore: true,
+    hasmore_friend: true,
 }, action) {
     const handler = ACTION_HANDLERS[action.type]
 

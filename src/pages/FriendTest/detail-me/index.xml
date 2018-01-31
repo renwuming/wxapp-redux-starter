@@ -1,4 +1,4 @@
-<import src="/components/Baozou/paper-detail/index"></import>
+<import src="/components/FriendTest/paper-detail/index"></import>
 <import src="/components/toolbar/index"></import>
 
 <view class="container toolbar-container">

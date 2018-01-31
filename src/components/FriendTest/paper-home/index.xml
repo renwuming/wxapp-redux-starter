@@ -7,7 +7,7 @@
                 <view class="words">
                     <view>
                         <text class="num DIN">LEVEL</text>
-                        <text class="num DIN white">1</text>
+                        <text class="num DIN white">{{level}}</text>
                     </view>
                 </view>
             </view>

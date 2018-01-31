@@ -62,11 +62,7 @@ let pageConfig = {
         setTimeout(() => {
           let obj = {};
           obj.progress = ++this.data.progress;
-          if(this.data.progress>=this.data.questions.length) {
-            obj.result = {
-              content: "aaaa",
-            };
-          }
+
           this.setData(obj);
           this.selecting = false;
         }, 300);
