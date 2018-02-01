@@ -1,98 +1,79 @@
-.com-grid-paper .grid-paper-bd .title-description .gray-title {
-  color: #666;
-}
-.q-box {
-  width:100%;
-  box-sizing:border-box;
-  padding: 20rpx 44rpx;
-  .title {
-    display: block;
-    font-weight: bold;
-    font-size: 32rpx;
-    min-height: 90rpx;
-  }
-  .radio-group {
-    margin-top: 20rpx;
-    align-items: flex-start;
-    border-radius: 16rpx;
-    :last-child {
-      border: none;
-    }
-    label {
-      width: 100%;
-      position:relative;
-      box-sizing: border-box;
-      font-size: 36rpx;
-      background-color: #fff;
-      border-bottom: 1px solid #eee;
-      radio {
-        display: none;
-      }
-      text {
-        display:block;
-        width: 100%;
-        border: none;
-        box-sizing:border-box;
-        padding: 16rpx 20rpx 12rpx 40rpx;
-      }
-      .selected {
-        background: #ffdf1f;
-      }
-    }
-  }
+.nick {
+  color: #993399;
 }
 .result-box {
-  width:100%;
-  padding: 20rpx 44rpx;
-  .title {
-    box-sizing:border-box;
-    font-size:36rpx;
-    border:8rpx solid #999;
-    width:100%;
-    text-align:center;
-    color:#666;
+  &.top-part {
+    flex: 0!important;
+    .DIN {
+      font-size: 50rpx;
+      color: #33cc33;
+    }
+    .small {
+      color: #333;
+      font-size: 36rpx;
+    }
   }
-  .content {
-    justify-content:center;
-    width:100%;
-    padding: 30rpx 30rpx;
-    font-size:40rpx;
-    text-align:center;
-    background-color:#999;
-    color:#fff;
+  .canvas.content {
+    background-color: transparent;
+    width: 500rpx;
+    height: 360rpx;
+    padding: 0;
   }
 }
-.share-box {
-  text {
-    width:450rpx;
-    position:absolute;
-    right:150rpx;
-    bottom:300rpx;
-    color:#fff;
-    font-size:50rpx;
-  }
+.result-box .player-list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
   image {
     width: 120rpx;
-    height: 110rpx;
-    position: absolute;
-    right: 80rpx;
-    bottom: 150rpx;
+    height: 120rpx;
+    border-radius: 60rpx;
+    border: 4rpx solid #fff;
+    box-sizing: border-box;
   }
-}
-.home-box {
   text {
-    width:450rpx;
-    position:absolute;
-    right:150rpx;
-    top:200rpx;
-    color:#fff;
-    font-size:50rpx;
-  }
-  image {
-    width: 120rpx;
-    height: 110rpx;
-    position: absolute;
-    right: 160rpx;
-    top: 50rpx;
+    color: #333;
+    padding: 0 20rpx;
   }
 }
+.other-result-box {
+  width: 90%;
+  border-radius:10rpx;
+  background-color:#fff;
+  padding:0 20rpx;
+  justify-content:center;
+  margin-top: 30rpx;
+  .other-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:14rpx 0;
+    border-bottom: 1px solid #e9e9e9;
+    &:last-child {
+      border: none;
+    }
+    image {
+      width: 100rpx;
+      height: 100rpx;
+      border: 2rpx solid #eee;
+      border-radius: 4rpx;
+      box-sizing: border-box;
+    }
+    text {
+      color: #f77f9b;
+    }
+    .progress-bar {
+      width: 380rpx;
+      height: 30rpx;
+      background-color: #eee;
+      border-radius: 8rpx;
+      .progress {
+        background-color: #f77f9b;
+        width: 0;
+        height: 100%;
+        border-radius: 8rpx;
+      }
+    }
+  }
+}
+

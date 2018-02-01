@@ -11,7 +11,7 @@ import { postSchema, resultsSchema } from '../schema.js';
 // ------------------------------------
 export const UPDATE_RESULTS_LIST = 'UPDATE_RESULTS_LIST';
 export const REPLACE_RESULTS_LIST = 'REPLACE_RESULTS_LIST';
-export const INIT_MORE = 'INIT_MORE';
+export const INIT_MORE = 'INIT_MORE_RESULTS';
 // ------------------------------------
 // helpers
 // ------------------------------------

@@ -11,7 +11,7 @@ import { postSchema } from '../schema.js';
 // ------------------------------------
 export const UPDATE_PAPERS_LIST = 'UPDATE_PAPERS_LIST';
 export const REPLACE_PAPERS_LIST = 'REPLACE_PAPERS_LIST';
-export const INIT_MORE = 'INIT_MORE';
+export const INIT_MORE = 'INIT_MORE_PAPERS';
 // ------------------------------------
 // helpers
 // ------------------------------------

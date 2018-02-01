@@ -1,9 +1,9 @@
-<import src="/components/Baozou/paper-detail/index"></import>
+<import src="/components/FriendTest/paper-detail/index"></import>
 <import src="/components/toolbar/index"></import>
 
 <view class="container toolbar-container">
 
-  <template is="paper-detail" data="{{...paper, questions, progress, result}}"></template>
+  <template is="paper-detail" data="{{...paper, questions, progress, result, resultCanvas, user, from, otherResults}}"></template>
 
   <template is="toolbar" data="{{...toolbarData}}"></template>
 </view>
