@@ -7,17 +7,17 @@
   </view>
   <view class="part container-h">
     <view class="friend-part" bindtap="navigateTo" data-url="/pages/FriendTest/home/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/cover1.jpg" mode="aspectFill"></image>
+      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover1.jpg" mode="aspectFill"></image>
       <text class="float-text DIN">友情鉴定</text>
     </view>
   </view>
   <view class="part container-h " style="margin-top:20rpx;">
     <view class="baozou-part" bindtap="navigateTo" data-url="/pages/Baozou/home/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/cover2.jpg" mode="aspectFill"></image>
+      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover2.jpg" mode="aspectFill"></image>
       <text class="float-text DIN">暴走测试</text>
     </view>
     <view class="personal-part" bindtap="navigateTo" data-url="/pages/Setting/personal/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/cover4.jpg" mode="aspectFill"></image>
+      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover4.jpg" mode="aspectFill"></image>
       <text class="float-text DIN">个人中心</text>
     </view>
   </view>

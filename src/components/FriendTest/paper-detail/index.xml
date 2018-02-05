@@ -21,7 +21,7 @@
     </view>
     <view wx:if="{{progress>=questions.length}}" class="result-box container top-part">
         <view class="player-list">
-            <image src="{{from.avatarUrl}}" mode="aspectFill"></image>
+            <image src="{{fromUser.avatarUrl}}" mode="aspectFill"></image>
             <text>vs</text>
             <image src="{{user.avatarUrl}}" mode="aspectFill"></image>
         </view>

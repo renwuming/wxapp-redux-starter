@@ -1,6 +1,6 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 import Toolbar from '../../../components/toolbar/index.js';
-import { clone, getDeviceInfo } from '../../../libs/utils.js';
+import { clone, getDeviceInfo, ShareFromMe } from '../../../libs/utils.js';
 import { POST_RECORD, GET_FRIENDTEST, UPDATE_Q } from '../../../libs/common.js';
 import { dispatchFriendAnswers } from '../../../redux/models/friend_answers.js';
 
@@ -14,8 +14,8 @@ let pageConfig = {
     onLoad: function() {
       var me = this,
           toolbarInit = Toolbar.init.bind(me);
-      let {paper, answerHash, questionHash} = this.data,
-          questions = paper.questions.map(e => {
+      let {detail, answerHash, questionHash} = this.data,
+          questions = detail.questions.map(e => {
             e = questionHash[e];
             let id = e.id;
             if(answerHash[id] || answerHash[id] == 0) {
@@ -29,24 +29,13 @@ let pageConfig = {
       });
 
       wx.setNavigationBarTitle({
-        title: paper.title || '泛泛之交'
+        title: detail.title
       });
       let canShare = this.data.questions.every(l => {
         return l.options.some(e => e.hoverClass);
       });
-      toolbarInit(paper.praise_count, paper.praise || false, true, canShare);
+      toolbarInit(detail.praise_count, detail.praise || false, true, canShare);
 
-    },
-    onShareAppMessage: function() {
-      let { pid, id, paper } = this.data,
-          { shareTitle, shareDesc, shareImage } = paper;
-      this.hidecover();
-      return {
-        shareTitle,
-        shareDesc,
-        shareImage,
-        path: `/pages/FriendTest/detail-share/index?id=${pid}&from=${id}`
-      };
     },
     hidecover: function() {
       this.setData({ showsharetip2: false });
@@ -83,7 +72,7 @@ let pageConfig = {
       Toolbar.setShare.call(this, canShare);
 
       return UPDATE_Q({
-        sessionid: this.data.id,
+        sessionid: this.data.sessionid,
         qid: id,
         answer,
       }).then(_ => {
@@ -93,20 +82,24 @@ let pageConfig = {
     returnBack: function(e) {
         wx.navigateBack();
     },
+    onShareAppMessage: function() {
+      return ShareFromMe.call(this, 1);
+    },
 }
 
 let mapStateToData = (state, params) => {
     let id = params.id,
-        paper = state.entities.posts[id],
+        detail = state.entities.posts[id],
         answerHash = state.entities.answers,
         questionHash = state.entities.questions;
 
     return {
-        id: state.entities.sessionid,
-        pid: id,
-        paper,
+        sessionid: state.entities.sessionid,
+        id: id,
+        detail,
         answerHash,
         questionHash,
+        user: state.entities.userInfo,
     }
 };
 

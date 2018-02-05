@@ -146,6 +146,36 @@ export const fetchFreindPaperList = (params, errorCallback, init) => {
     }
 }
 
+export const fetchPaper = (id, errorCallback) => {
+    return (dispatch, getState) => {
+        let papers = getState().papers,
+             entities = getState().entities,
+             oldPaper = entities.posts && entities.posts[id],
+             url = `/test/paper/${id}`;
+
+        if(!updateValidate(oldPaper)) return Promise.resolve();
+        return GET(url, {}, 500)
+            .then(function(res) {
+                let feeds = res.feeds,
+                    posts, normalizeData;
+
+                if(feeds && feeds.length){
+                    posts = formatCount(feeds);
+
+                    normalizeData = normalize(posts, arrayOf(postSchema));
+
+                    dispatch(updatePapersList(
+                        normalizeData
+                    ));
+                }
+            }).catch(function(err) {
+                err = err.toString();
+                errorCallback && errorCallback(err);
+                console.error(err);
+            });
+    }
+}
+
 export const fetchPaperList = (errorCallback, init) => {
     return (dispatch, getState) => {
         if(init) dispatch(initMore()); // 重置hasmore loading

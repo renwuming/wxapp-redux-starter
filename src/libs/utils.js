@@ -221,32 +221,87 @@ Array.prototype.shuffle = function() {
 
 // pageConfig 方法
 export const homeShare = function() {
-    return {
-      title: '暴走测试',
-      desc: '少年，来让叔叔给你测试一下心理~',
-      path: '/pages/Home/index'
-    };
+    let list = [
+    {
+      title: '遇到这种情况，你会怎么办？',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-1.jpg',
+    },
+    {
+      title: '在你的内心深处，是公主还是巫婆？',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-2.jpg',
+    },
+    {
+      title: '你的朋友们喊你做个小测试~',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-3.jpg',
+    },
+    {
+      title: '你何时才能邂逅心中的白马王子呢？',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-4.jpg',
+    },
+    {
+      title: '你喜欢雨天还是雪天？',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-5.jpg',
+    },
+    {
+      title: '你是一个逗比吗？',
+      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-6.jpg',
+    },
+    ];
+
+    let index = Math.floor(Math.random()*6),
+        obj = list[index];
+    obj.path = '/pages/Home/index';
+
+    return obj;
 }
 
 
-export const ShareFromMe = function() {
-  let { detail, sessionid, id } = this.data,
-      { title, description: desc, image: imageUrl } = detail;
+export const ShareFromMe = function(type = 0) {
+  let { detail, sessionid, id, user } = this.data,
+      { title } = detail,
+      pathHash = ["/pages/Baozou/detail-share/index", "/pages/FriendTest/detail-share/index"];
   this.hidecover && this.hidecover();
-  return {
-    title,
-    desc,
-    path: `/pages/Baozou/detail-share/index?id=${id}&from=${sessionid}`
-  };
+
+  let list = [
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-1.jpg',
+  },
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-2.jpg',
+  },
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-3.jpg',
+  },
+  ];
+  let index = Math.floor(Math.random()*3),
+      obj = list[index];
+  obj.title = '你真的了解我吗？';
+  obj.path = `${pathHash[type]}?id=${id}&from=${sessionid}&name=${user.nickName}`;
+  return obj;
 }
 
-export const ShareFromShare = function() {
-  let { detail, from, id } = this.data,
-      { title, description: desc, image: imageUrl } = detail;
+
+export const ShareFromShare = function(type = 0) {
+  let { detail, sessionid, id, name } = this.data,
+      { title } = detail,
+      pathHash = ["/pages/Baozou/detail-share/index", "/pages/FriendTest/detail-share/index"];
   this.hidecover && this.hidecover();
-  return {
-    title,
-    desc,
-    path: `/pages/Baozou/detail-share/index?id=${id}&from=${from}`
-  };
+
+  let list = [
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-1.jpg',
+  },
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-2.jpg',
+  },
+  {
+    imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-3.jpg',
+  },
+  ];
+
+  let index = Math.floor(Math.random()*3),
+      obj = list[index];
+  obj.title = `你真的了解${name}吗？`;
+  obj.path = `${pathHash[type]}?id=${id}&from=${sessionid}&name=${name}`;
+  return obj;
 }

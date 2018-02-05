@@ -1,6 +1,6 @@
 import { connect } from '../../../../vendors/weapp-redux.js';
 import Toolbar from '../../../../components/toolbar/index.js';
-import { clone, updateObject } from '../../../../libs/utils.js';
+import { clone, updateObject, homeShare } from '../../../../libs/utils.js';
 import { POST } from '../../../../libs/request.js';
 import { fetchResultRecord } from "../../../../redux/models/results.js";
 
@@ -35,6 +35,7 @@ let pageConfig = {
     returnBack: function(e) {
         wx.navigateBack();
     },
+    onShareAppMessage: homeShare,
 }
 
 let mapStateToData = (state, params) => {

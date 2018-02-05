@@ -1,6 +1,6 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 import Toolbar from '../../../components/toolbar/index.js';
-import { clone, getDeviceInfo } from '../../../libs/utils.js';
+import { clone, getDeviceInfo, ShareFromShare } from '../../../libs/utils.js';
 import { POST_RECORD, GET_FRIENDTEST, UPDATE_FRIEND_RESULT, GET_FRIENDTEST_PAPERRESULT } from '../../../libs/common.js';
 
 let pageConfig = {
@@ -17,31 +17,38 @@ let pageConfig = {
       var me = this,
           toolbarInit = Toolbar.init.bind(me);
       this.setData({progress:0});
-      GET_FRIENDTEST_PAPERRESULT(this.data.id, this.data.pid).then(res => {
-        this.setData({
-          otherResults: res.list,
-        });
-      });
-      GET_FRIENDTEST(this.data.id, this.data.pid).then(res => {
-        let {paper, answers, user} = res,
-            questions = paper.questions.map(e => {
-              e.title = e.title.replace("你", "");
-              e.options.shuffle();
-              return e;
+      this.initData();
+    },
+    initData: function() {
+      this.waitSessionid = setInterval(() => {
+        if(this.data.sessionid) {
+          clearInterval(this.waitSessionid);
+          GET_FRIENDTEST_PAPERRESULT(this.data.sessionid, this.data.id).then(res => {
+            this.setData({
+              otherResults: res.list,
             });
-        this.setData({
-          paper,
-          questions,
-          answers,
-          from: user,
-        });
+          });
+          GET_FRIENDTEST(this.data.sessionid, this.data.id).then(res => {
+            let {paper, answers, user} = res,
+                questions = paper.questions.map(e => {
+                  e.title = e.title.replace("你", "");
+                  e.options.shuffle();
+                  return e;
+                });
+            this.setData({
+              detail: paper,
+              questions,
+              answers,
+              fromUser: user,
+            });
 
-        wx.setNavigationBarTitle({
-          title: paper.title
-        });
-        toolbarInit(paper.praise_count, paper.praise || false, true);
-      });
-
+            wx.setNavigationBarTitle({
+              title: detail.title
+            });
+            toolbarInit(detail.praise_count, detail.praise || false, true);
+          });
+        }
+      }, 100);
     },
     createAnimation: function(score) {
       let animation = wx.createAnimation({
@@ -53,23 +60,16 @@ let pageConfig = {
       return animation.export();
     },
     updateFriendResult() {
-      let {sessionid, id, pid} = this.data;
+      let {sessionid, id, from} = this.data;
       UPDATE_FRIEND_RESULT({
         sessionid,
-        from: id,
-        pid,
+        from,
+        pid: id,
         answers: this.data.newAnswers,
       });
     },
     onShareAppMessage: function() {
-      let { pid, id } = this.data,
-          { shareTitle, shareDesc, shareImage } = paper;
-      return {
-        shareTitle,
-        shareDesc,
-        shareImage,
-        path: `/pages/realfriend/share/index?id=${pid}&from=${id}`
-      };
+      return ShareFromShare.call(this, 1);
     },
     radioSelect: function(e) {
       if(this.selecting) return;
@@ -115,7 +115,7 @@ let pageConfig = {
 
 
       // 更新otherResults
-      this.data.otherResults.push({
+      this.data.otherResults.unshift({
         player: this.data.user,
         score: value,
       });
@@ -220,9 +220,10 @@ let pageConfig = {
 let mapStateToData = (state, params) => {
     return {
         sessionid: state.entities.sessionid,
-        id: params.from,
-        pid: params.id,
+        from: params.from,
+        id: params.id,
         user: state.entities.userInfo,
+        name: params.name,
     }
 };
 

@@ -40,7 +40,7 @@ let pageConfig = {
       this.setData({progress:0});
     },
     onShareAppMessage: function() {
-      ShareFromShare.call(this);
+      return ShareFromShare.call(this);
     },
     radioSelect: function(e) {
       if(this.selecting) return;
@@ -113,7 +113,8 @@ let mapStateToData = (state, params) => {
         sessionid: state.entities.sessionid,
         from,
         questions,
-        totalScore
+        totalScore,
+        name: params.name,
     }
 };
 

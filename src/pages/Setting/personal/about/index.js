@@ -1,7 +1,7 @@
 let pageConfig = {
   preview: function() {
     wx.previewImage({
-      urls: ["https://www.renwuming.xyz/wumingstore/img/pay.jpg"],
+      urls: ["https://www.renwuming.xyz/wumingstore/img/common/pay.jpg"],
     });
   }
 };

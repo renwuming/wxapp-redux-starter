@@ -7,7 +7,7 @@ let pageConfig = {
         url = elCurrentTarget.dataset.url;
     wx.navigateTo({ url });
   },
-  onShareAppMessage: homeShare
+  onShareAppMessage: homeShare,
 };
 
 

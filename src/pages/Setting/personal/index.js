@@ -1,6 +1,7 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 
 import { fetchUserInfoUpdate } from '../../../redux/models/user.js';
+import { homeShare } from '../../../libs/utils.js';
 
 let pageConfig = {
   login: function(e) {
@@ -15,6 +16,7 @@ let pageConfig = {
          url = elCurrentTarget.dataset.url;
     wx.navigateTo({ url });
   },
+  onShareAppMessage: homeShare,
 };
 
 

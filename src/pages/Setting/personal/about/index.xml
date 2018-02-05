@@ -4,5 +4,5 @@
   <text>如果你喜欢这款小程序</text>
   <text>可以识别下面二维码，请作者喝杯咖啡~</text>
   <text>谢谢支持(*^__^*)</text>
-  <image src="https://www.renwuming.xyz/wumingstore/img/pay.jpg" mode="aspectFit"></image>
+  <image src="https://www.renwuming.xyz/wumingstore/img/common/pay.jpg" mode="aspectFit"></image>
 </view>

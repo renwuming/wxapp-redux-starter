@@ -1,5 +1,6 @@
 import { connect } from '../../../../vendors/weapp-redux.js';
 import { formatDate } from "../../../../libs/utils.js";
+import { homeShare } from '../../../../libs/utils.js';
 
 let pageConfig = {
 
@@ -10,6 +11,7 @@ let pageConfig = {
       url
     });
   },
+  onShareAppMessage: homeShare,
 };
 
 

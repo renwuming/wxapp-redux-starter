@@ -26,7 +26,7 @@ let pageConfig = {
       });
     },
     onShareAppMessage: function() {
-      ShareFromMe.call(this);
+      return ShareFromMe.call(this);
     },
     hidecover: function() {
       this.setData({ showsharetip: false });
@@ -83,7 +83,8 @@ let mapStateToData = (state, params) => {
         detail,
         questions,
         totalScore,
-        sessionid: state.entities.sessionid
+        sessionid: state.entities.sessionid,
+        user: state.entities.userInfo,
     }
 };
 

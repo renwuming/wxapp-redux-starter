@@ -3,7 +3,7 @@
 
 <view class="container toolbar-container">
 
-  <template is="paper-detail" data="{{...paper, questions, progress, result, showsharetip2}}"></template>
+  <template is="paper-detail" data="{{...detail, questions, progress, result, showsharetip2}}"></template>
 
   <template is="toolbar" data="{{...toolbarData}}"></template>
 </view>
