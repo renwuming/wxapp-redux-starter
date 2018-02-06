@@ -217,8 +217,9 @@ let pageConfig = {
     },
     navigateTo: function(e) {
       let elCurrentTarget = e.currentTarget,
-          url = elCurrentTarget.dataset.url;
-      wx.navigateTo({ url });
+          { redirect,url } = elCurrentTarget.dataset;
+      if(redirect) wx.redirectTo({ url });
+      else wx.navigateTo({ url });
     },
 }
 

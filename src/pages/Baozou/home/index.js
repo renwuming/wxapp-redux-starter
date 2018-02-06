@@ -49,13 +49,15 @@ let pageConfig = {
     }
   },
   onReachBottom: function() {
-    if(this.scrolling || !this.data.hasmore) return;
+    if(this.scrolling) return;
     this.scrolling = true;
     if(this.data.activeName === "home") {
+      if(!this.data.hasMorePapers) return;
       this.fetchPaperList(this.errorCallback).then(() => {
         this.scrolling = false;
       });
     } else if(this.data.activeName === "answer") {
+      if(!this.data.hasMoreResults) return;
       this.fetchResultList(this.errorCallback).then(() => {
         this.scrolling = false;
       });

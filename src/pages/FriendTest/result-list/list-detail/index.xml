@@ -3,7 +3,7 @@
 
 <view class="container">
 
-  <template is="result-home" data="{{...postsHash[id]}}"></template>
+  <template is="result-home" data="{{...paper}}"></template>
 
-  <template wx:for="{{results[id].list}}" wx:for-item="id" wx:key="*this" is="result-list-item" data="{{...resultDetails[id]}}"></template>
+  <template wx:for="{{results}}" wx:key="*this" is="result-list-item" data="{{...item}}"></template>
 </view>

@@ -17,16 +17,18 @@ let pageConfig = {
 
 let mapStateToData = (state, params) => {
   let id = params.id,
+      paper = state.entities.posts[id],
+      results = state.entities.results[id].list,
       resultDetails = state.entities.resultDetails;
-  for(let key in resultDetails) {
-    let item = resultDetails[key];
+  results = results.map(id => {
+    let item = resultDetails[id];
     item.date = formatDate(new Date(item.publish_time), "yyyy/MM/dd");
-  }
+    return item;
+  })
   return {
     id,
-    postsHash: state.entities.posts,
-    results: state.entities.results,
-    resultDetails: state.entities.resultDetails
+    paper,
+    results,
   }
 };
 
