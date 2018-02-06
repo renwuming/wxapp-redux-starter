@@ -24,12 +24,12 @@ let pageConfig = {
       this.waitSessionid = setInterval(() => {
         if(this.data.sessionid) {
           clearInterval(this.waitSessionid);
-          GET_FRIENDTEST_PAPERRESULT(this.data.sessionid, this.data.id).then(res => {
+          GET_FRIENDTEST_PAPERRESULT(this.data.sessionid, this.data.id, this.data.from).then(res => {
             this.setData({
               otherResults: res.list,
             });
           });
-          GET_FRIENDTEST(this.data.sessionid, this.data.id).then(res => {
+          GET_FRIENDTEST(this.data.sessionid, this.data.id, this.data.from).then(res => {
             let {paper, answers, user} = res,
                 questions = paper.questions.map(e => {
                   e.title = e.title.replace("你", "");

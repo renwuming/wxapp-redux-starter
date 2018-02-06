@@ -23,9 +23,9 @@
         <block wx:if="{{isShare}}">
             <view wx:if="{{progress>=questions.length}}" class="result-box container top-part">
                 <view class="player-list">
-                    <image src="{{fromUser.avatarUrl}}" mode="aspectFill"></image>
-                    <text>vs</text>
                     <image src="{{user.avatarUrl}}" mode="aspectFill"></image>
+                    <text>vs</text>
+                    <image src="{{fromUser.avatarUrl}}" mode="aspectFill"></image>
                 </view>
                 <canvas canvas-id="{{resultCanvas}}" class="content container canvas"></canvas>
                 <text class="small">友情指数：<text class="DIN">{{result.value}}分</text></text>
