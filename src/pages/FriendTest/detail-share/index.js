@@ -12,6 +12,7 @@ let pageConfig = {
         value: 0,
       },
       resultCanvas: "resultCanvas",
+      isShare: true,
     },
     onLoad: function() {
       var me = this,
@@ -100,7 +101,7 @@ let pageConfig = {
       this.canvasFlag = true;
       this.resultAngle = this.startAngle;
       this.delay = 14;
-      this.rightColor = "#33cc33";
+      this.rightColor = "#8bc3ff";
       this.wrongColor = "#ff6666";
 
       this.ctx = wx.createCanvasContext(this.data.resultCanvas);
@@ -111,8 +112,7 @@ let pageConfig = {
 
       // 绘制百分比数字
       this.totalStep = Math.PI * 2 / this.angleStep;
-      this.percentStep = value / this.totalStep * 2;
-
+      this.percentStep = Math.ceil(value / this.totalStep * 2);
 
       // 更新otherResults
       this.data.otherResults.unshift({
@@ -152,7 +152,7 @@ let pageConfig = {
       });
     },
     drawPercentStep: function() {
-      let p = parseFloat(parseFloat(this.data.result.value) + this.percentStep).toFixed(2);
+      let p = Math.floor(+this.data.result.value + this.percentStep);
       if(p > +this.target) {
         p = this.target;
       } else {
@@ -197,7 +197,7 @@ let pageConfig = {
         if(ans || ans == 0) len++;
         if(ans == this.data.newAnswers[k]) l++;
       }
-      let res = parseFloat(l / len * 100).toFixed(2);
+      let res = Math.floor(l / len * 100);
       if(isNaN(res)) res = 0;
       return res;
     },

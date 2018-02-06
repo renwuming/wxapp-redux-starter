@@ -1,15 +1,18 @@
 .title .nick {
   color: #993399;
 }
+.share-box text {
+  font-size: 42rpx;
+}
 .result-box {
   &.top-part {
     flex: 0!important;
     .DIN {
       font-size: 50rpx;
-      color: #33cc33;
+      color: #4b4c53;
     }
     .small {
-      color: #333;
+      color: #4b4c53;
       font-size: 36rpx;
     }
   }
@@ -32,17 +35,19 @@
     box-sizing: border-box;
   }
   text {
-    color: #333;
+    color: #4b4c53;
     padding: 0 20rpx;
   }
 }
 .other-result-box {
-  width: 90%;
-  border-radius:10rpx;
+  width: 80%;
+  border-top-left-radius:20rpx;
+  border-top-right-radius:20rpx;
   background-color:#fff;
-  padding:0 20rpx;
+  padding:0 40rpx;
   justify-content:center;
   margin-top: 30rpx;
+  flex: 1;
   .other-result-item {
     display: flex;
     justify-content: space-between;
@@ -53,14 +58,25 @@
       border: none;
     }
     image {
-      width: 100rpx;
-      height: 100rpx;
+      width: 140rpx;
+      height: 140rpx;
       border: 2rpx solid #eee;
       border-radius: 4rpx;
       box-sizing: border-box;
     }
-    text {
-      color: #f77f9b;
+    .name-box {
+      width: auto;
+      flex-grow: 0;
+      text {
+        color: #4b4c53;
+        margin-left: 20rpx;
+        width: 140rpx;
+        font-size: 40rpx;
+      }
+    }
+    text.score {
+      font-size: 50rpx;
+      color: #8bc3ff;
     }
     .progress-bar {
       width: 380rpx;

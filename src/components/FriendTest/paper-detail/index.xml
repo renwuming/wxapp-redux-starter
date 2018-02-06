@@ -1,42 +1,66 @@
 <template name="paper-detail">
-    <view wx:if="{{progress<questions.length}}" class="com-grid-paper">
-    	<view class="grid-paper-hd">
-        	<image mode="aspectFill" src="{{image}}"></image>
-        </view>
-        <view class="grid-paper-bd">
-        	<view class="title-description">
-        		<text class="title gray-title">{{title}}</text>
-        		<text class="description">{{description}}</text>
-        	</view>
-        </view>
-    </view>
-    <view wx:for="{{questions}}" wx:for-index="index" wx:key="item" wx:if="{{index===progress}}" class="q-box">
-        <text class="title">{{progress+1}}/{{questions.length}}: <text class="nick">{{from.nickName}}</text>{{item.title}}</text>
-        <radio-group class="container radio-group" bindchange="radioSelect" data-index="{{index}}" data-id="{{item.id}}">
-            <label wx:for="{{item.options}}" wx:for-item="q" wx:for-index="ind" wx:key="q.options">
-                <radio value="{{ind}}"/>
-                <text class="{{q.hoverClass}}">{{q.content}}</text>
-            </label>
-        </radio-group>
-    </view>
-    <view wx:if="{{progress>=questions.length}}" class="result-box container top-part">
-        <view class="player-list">
-            <image src="{{fromUser.avatarUrl}}" mode="aspectFill"></image>
-            <text>vs</text>
-            <image src="{{user.avatarUrl}}" mode="aspectFill"></image>
-        </view>
-        <text class="small">泛泛之交指数</text>
-        <canvas canvas-id="{{resultCanvas}}" class="content container canvas"></canvas>
-        <text class="DIN">{{result.value}}%</text>
-    </view>
-    <view wx:if="{{progress>=questions.length}}" class="other-result-box">
-        <view wx:for="{{otherResults}}" wx:key="item.player" class="other-result-item">
-            <image src="{{item.player.avatarUrl}}" mode="aspectFill"></image>
-            <view class="progress-bar">
-                <view class="progress" animation="{{item.animation}}"></view>
+    <!-- <view style="background:url(/images/bk.jpg) center center/cover;width:100%;height:100%;"> -->
+        <view wx:if="{{progress<questions.length}}" class="com-grid-paper">
+        	<view class="grid-paper-hd">
+            	<image mode="aspectFill" src="{{image}}"></image>
             </view>
-            <text>{{item.score}}%</text>
+            <view class="grid-paper-bd">
+            	<view class="title-description">
+            		<text class="title gray-title">{{title}}</text>
+            		<text class="description">{{description}}</text>
+            	</view>
+            </view>
         </view>
-    </view>
-
+        <view wx:for="{{questions}}" wx:for-index="index" wx:key="item" wx:if="{{index===progress}}" class="q-box">
+            <text class="title">{{progress+1}}/{{questions.length}}: <text class="nick">{{fromUser.nickName}}</text>{{item.title}}</text>
+            <radio-group class="container radio-group" bindchange="radioSelect" data-index="{{index}}" data-id="{{item.id}}">
+                <label wx:for="{{item.options}}" wx:for-item="q" wx:for-index="ind" wx:key="q.options">
+                    <radio value="{{ind}}"/>
+                    <text class="{{q.hoverClass}}">{{q.content}}</text>
+                </label>
+            </radio-group>
+        </view>
+        <block wx:if="{{isShare}}">
+            <view wx:if="{{progress>=questions.length}}" class="result-box container top-part">
+                <view class="player-list">
+                    <image src="{{fromUser.avatarUrl}}" mode="aspectFill"></image>
+                    <text>vs</text>
+                    <image src="{{user.avatarUrl}}" mode="aspectFill"></image>
+                </view>
+                <text class="small">友情指数</text>
+                <canvas canvas-id="{{resultCanvas}}" class="content container canvas"></canvas>
+                <text class="DIN">{{result.value}}分</text>
+            </view>
+            <view wx:if="{{progress>=questions.length}}" class="other-result-box">
+                <view wx:for="{{otherResults}}" wx:key="item.player" class="other-result-item">
+                    <view class="container-h name-box">
+                        <image src="{{item.player.avatarUrl}}" mode="aspectFill"></image>
+                        <text>{{item.player.nickName}}</text>
+                    </view>
+                    <text class="score">{{item.score}}分</text>
+<!--                     <view class="progress-bar">
+                        <view class="progress" animation="{{item.animation}}"></view>
+                    </view> -->
+                </view>
+                <image src="/images/bk-bottom.jpg" mode="aspectFill"></image>
+            </view>
+        </block>
+        <block wx:if="{{!isShare&&progress>=questions.length}}">
+            <view class="com-grid-paper">
+                <view class="grid-paper-hd">
+                    <image mode="aspectFill" src="{{image}}"></image>
+                </view>
+                <view class="grid-paper-bd">
+                    <view class="title-description">
+                        <text class="title gray-title">{{title}}</text>
+                        <text class="description">{{description}}</text>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{showsharetip}}" class="share-box fullcover" bindtap="hidecover">
+                <text class="share-text">分享给朋友，鉴定一下你们的友情~</text>
+                <image mode="aspectFill" src="/images/share_tip.png"></image>
+            </view>
+        </block>
+    <!-- </view> -->
 </template>

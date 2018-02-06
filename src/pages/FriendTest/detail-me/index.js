@@ -8,8 +8,9 @@ let pageConfig = {
     data: {
       progress: 0,
       result: "",
-      showsharetip2: true,
       canShare: false,
+      isShare: false,
+      showsharetip: true,
     },
     onLoad: function() {
       var me = this,
@@ -38,7 +39,7 @@ let pageConfig = {
 
     },
     hidecover: function() {
-      this.setData({ showsharetip2: false });
+      this.setData({ showsharetip: false });
     },
     radioSelect: function(e) {
       if(this.selecting) return;
