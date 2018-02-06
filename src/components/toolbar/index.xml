@@ -7,6 +7,9 @@
 			<button open-type="share"></button>
 			<image src="/images/share.png" mode="aspectFit"></image>
 		</view>
+		<view class="share">
+			<image class="toHome" src="/images/home.png" mode="aspectFit" bindtap="navigateTo" data-url="/pages/Home/index"></image>
+		</view>
 <!-- 		<view wx:if="{{showPraiseIcon}}" class="love" catchtap="addPraise">
 			<image wx:if="{{isPraised}}" src="/images/love.png"></image>
 			<image wx:else src="/images/love_no.png"></image>

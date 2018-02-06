@@ -27,9 +27,8 @@
                     <text>vs</text>
                     <image src="{{user.avatarUrl}}" mode="aspectFill"></image>
                 </view>
-                <text class="small">友情指数</text>
                 <canvas canvas-id="{{resultCanvas}}" class="content container canvas"></canvas>
-                <text class="DIN">{{result.value}}分</text>
+                <text class="small">友情指数：<text class="DIN">{{result.value}}分</text></text>
             </view>
             <view wx:if="{{progress>=questions.length}}" class="other-result-box">
                 <view wx:for="{{otherResults}}" wx:key="item.player" class="other-result-item">
@@ -42,7 +41,7 @@
                         <view class="progress" animation="{{item.animation}}"></view>
                     </view> -->
                 </view>
-                <image src="/images/bk-bottom.jpg" mode="aspectFill"></image>
+                <image class="bottom" src="https://renwuming.xyz/wumingstore/img/common/bk-bottom.png" mode="aspectFill"></image>
             </view>
         </block>
         <block wx:if="{{!isShare&&progress>=questions.length}}">
@@ -57,6 +56,7 @@
                     </view>
                 </view>
             </view>
+            <image class="bottom" src="https://renwuming.xyz/wumingstore/img/common/bk-bottom.png" mode="aspectFill"></image>
             <view wx:if="{{showsharetip}}" class="share-box fullcover" bindtap="hidecover">
                 <text class="share-text">分享给朋友，鉴定一下你们的友情~</text>
                 <image mode="aspectFill" src="/images/share_tip.png"></image>

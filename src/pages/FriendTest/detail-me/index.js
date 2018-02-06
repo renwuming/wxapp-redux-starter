@@ -86,6 +86,11 @@ let pageConfig = {
     onShareAppMessage: function() {
       return ShareFromMe.call(this, 1);
     },
+    navigateTo: function(e) {
+      let elCurrentTarget = e.currentTarget,
+          url = elCurrentTarget.dataset.url;
+      wx.navigateTo({ url });
+    },
 }
 
 let mapStateToData = (state, params) => {

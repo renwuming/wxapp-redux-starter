@@ -265,24 +265,11 @@ export const ShareFromMe = function(type = 0) {
   this.hidecover && this.hidecover();
 
   if(type) {
-    let list = [
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-1.jpg',
-    },
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-2.jpg',
-    },
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-3.jpg',
-    },
-    ];
-    let index = Math.floor(Math.random()*3);
-    obj = list[index];
     obj.title = '你真的了解我吗？';
   } else {
-    obj.imageUrl = imageShare;
     obj.title = title;
   }
+  obj.imageUrl = imageShare;
   obj.path = `${pathHash[type]}?id=${id}&from=${sessionid}&name=${user.nickName}`;
   return obj;
 }
@@ -297,24 +284,11 @@ export const ShareFromShare = function(type = 0) {
   this.hidecover && this.hidecover();
 
   if(type) {
-    let list = [
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-1.jpg',
-    },
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-2.jpg',
-    },
-    {
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-f-3.jpg',
-    },
-    ];
-    let index = Math.floor(Math.random()*3);
-    obj = list[index];
     obj.title = `你真的了解${name}吗？`;
   } else {
-    obj.imageUrl = imageShare;
     obj.title = title;
   }
+  obj.imageUrl = imageShare;
   obj.path = `${pathHash[type]}?id=${id}&from=${sessionid}&name=${name}`;
   return obj;
 }

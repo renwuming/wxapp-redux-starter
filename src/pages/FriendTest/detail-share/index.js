@@ -215,6 +215,11 @@ let pageConfig = {
     returnBack: function(e) {
         wx.navigateBack();
     },
+    navigateTo: function(e) {
+      let elCurrentTarget = e.currentTarget,
+          url = elCurrentTarget.dataset.url;
+      wx.navigateTo({ url });
+    },
 }
 
 let mapStateToData = (state, params) => {
