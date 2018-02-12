@@ -41,7 +41,6 @@ let pageConfig = {
         wx.stopPullDownRefresh();
       });
     } else if(this.data.activeName === "answer") {
-      console.log(111111)
       this.fetchResultList(this.data.fetchParams, this.errorCallback, true).then(() => {
         this.scrolling = false;
         wx.stopPullDownRefresh();

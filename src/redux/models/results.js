@@ -169,7 +169,6 @@ export const fetchFriendResultList = (params, errorCallback, init) => {
                         hasmore_friend,
                     ));
                 }
-                console.log(res)
             }).catch(function(err) {
                 err = err.toString();
                 errorCallback && errorCallback(err);

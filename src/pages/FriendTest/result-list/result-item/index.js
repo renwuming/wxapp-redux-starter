@@ -29,6 +29,12 @@ let pageConfig = {
     returnBack: function(e) {
         wx.navigateBack();
     },
+    navigateTo: function(e) {
+      let elCurrentTarget = e.currentTarget,
+          { redirect,url } = elCurrentTarget.dataset;
+      if(redirect) wx.redirectTo({ url });
+      else wx.navigateTo({ url });
+    },
     onShareAppMessage: homeShare,
 }
 

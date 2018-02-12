@@ -276,7 +276,7 @@ export const ShareFromMe = function(type = 0) {
 
 
 export const ShareFromShare = function(type = 0) {
-  let { detail, sessionid, id, name } = this.data,
+  let { detail, id, name, from } = this.data,
       { title, imageShare } = detail,
       pathHash = ["/pages/Baozou/detail-share/index", "/pages/FriendTest/detail-share/index"],
       obj = {};
@@ -289,6 +289,6 @@ export const ShareFromShare = function(type = 0) {
     obj.title = title;
   }
   obj.imageUrl = imageShare;
-  obj.path = `${pathHash[type]}?id=${id}&from=${sessionid}&name=${name}`;
+  obj.path = `${pathHash[type]}?id=${id}&from=${from}&name=${name}`;
   return obj;
 }
