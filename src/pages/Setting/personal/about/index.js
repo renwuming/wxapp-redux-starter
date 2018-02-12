@@ -1,7 +1,7 @@
 let pageConfig = {
   preview: function() {
     wx.previewImage({
-      urls: ["https://www.renwuming.xyz/wumingstore/img/common/pay.jpg"],
+      urls: ["https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/pay.jpg"],
     });
   }
 };

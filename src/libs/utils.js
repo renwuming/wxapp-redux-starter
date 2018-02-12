@@ -224,27 +224,27 @@ export const homeShare = function() {
     let list = [
     {
       title: '遇到这种情况，你会怎么办？',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-1.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-1.jpg',
     },
     {
       title: '在你的内心深处，是公主还是巫婆？',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-2.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-2.jpg',
     },
     {
       title: '你的朋友们喊你做个小测试~',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-3.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-3.jpg',
     },
     {
       title: '你何时才能邂逅心中的白马王子呢？',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-4.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-4.jpg',
     },
     {
       title: '你喜欢雨天还是雪天？',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-5.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-5.jpg',
     },
     {
       title: '你是一个逗比吗？',
-      imageUrl: 'https://renwuming.xyz/wumingstore/img/common/share-6.jpg',
+      imageUrl: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/share-6.jpg',
     },
     ];
 

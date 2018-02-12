@@ -41,7 +41,7 @@
                         <view class="progress" animation="{{item.animation}}"></view>
                     </view> -->
                 </view>
-                <image class="bottom" src="https://renwuming.xyz/wumingstore/img/common/bk-bottom.png" mode="aspectFill"></image>
+                <image class="bottom" src="https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/bk-bottom.png" mode="aspectFill"></image>
             </view>
         </block>
         <block wx:if="{{!isShare&&progress>=questions.length}}">
@@ -56,7 +56,7 @@
                     </view>
                 </view>
             </view>
-            <image class="bottom" src="https://renwuming.xyz/wumingstore/img/common/bk-bottom.png" mode="aspectFill"></image>
+            <image class="bottom" src="https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/wxapp/common/bk-bottom.png" mode="aspectFill"></image>
             <view wx:if="{{showsharetip}}" class="share-box fullcover" bindtap="hidecover">
                 <text class="share-text">分享给朋友，鉴定一下你们的友情~</text>
                 <image mode="aspectFill" src="/images/share_tip.png"></image>
