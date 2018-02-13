@@ -7,7 +7,7 @@ let timer;
 // 绑定page的作用域，修改page的数据
 // 显示toaster
 
-function show(text, duration = 3000) {
+function show(text, duration = 1000) {
     var me = this;
 
     timer && clearTimeout(timer);

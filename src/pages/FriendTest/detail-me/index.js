@@ -1,19 +1,28 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 import Toolbar from '../../../components/toolbar/index.js';
+import Toaster from '../../../components/toaster/index.js';
 import { clone, getDeviceInfo, ShareFromMe } from '../../../libs/utils.js';
 import { POST_RECORD, GET_FRIENDTEST, UPDATE_Q } from '../../../libs/common.js';
-import { dispatchFriendAnswers } from '../../../redux/models/friend_answers.js';
+import { dispatchFriendAnswers, fetchFriendAnswers } from '../../../redux/models/friend_answers.js';
 
 let pageConfig = {
     data: {
       progress: 0,
       result: "",
-      canShare: false,
       isShare: false,
       showsharetip: true,
+      isFriendTest: true,
+      fShareFlag: false,
     },
     onLoad: function() {
-      var me = this,
+      if(!this.data.answerHash) {
+        this.fetchFriendAnswers().then(() => {
+          this.init();
+        }); // 获取友情鉴定答案列表
+      } else this.init();
+    },
+    init: function() {
+      let me = this,
           toolbarInit = Toolbar.init.bind(me);
       let {detail, answerHash, questionHash} = this.data,
           questions = detail.questions.map(e => {
@@ -32,10 +41,12 @@ let pageConfig = {
       wx.setNavigationBarTitle({
         title: detail.title
       });
-      let canShare = this.data.questions.every(l => {
+      let fShareFlag = this.data.questions.every(l => {
         return l.options.some(e => e.hoverClass);
       });
-      toolbarInit(detail.praise_count, detail.praise || false, true, canShare);
+
+      this.setData({ fShareFlag });
+      toolbarInit(detail.praise_count, detail.praise || false, true);
 
     },
     hidecover: function() {
@@ -67,10 +78,10 @@ let pageConfig = {
       });
       this.data.questions[ind1].options[ind2].hoverClass = "selected"; // hover
       let answer = +this.data.questions[ind1].options[ind2].score;
-      let canShare = this.data.questions.every(l => {
+      let fShareFlag = this.data.questions.every(l => {
         return l.options.some(e => e.hoverClass);
       });
-      Toolbar.setShare.call(this, canShare);
+      this.setData({ fShareFlag });
 
       return UPDATE_Q({
         sessionid: this.data.sessionid,
@@ -92,6 +103,9 @@ let pageConfig = {
       if(redirect) wx.redirectTo({ url });
       else wx.navigateTo({ url });
     },
+    notCompleteTestTip: function() {
+      Toaster.show.call(this, "先答完所有题目，才能进行鉴定哦~");
+    },
 }
 
 let mapStateToData = (state, params) => {
@@ -112,6 +126,7 @@ let mapStateToData = (state, params) => {
 
 let mapDispatchToPage = dispatch => ({
   dispatchFriendAnswers: (data) => dispatch(dispatchFriendAnswers(data)),
+  fetchFriendAnswers: () => dispatch(fetchFriendAnswers()),
 });
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)

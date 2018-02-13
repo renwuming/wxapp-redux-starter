@@ -25,15 +25,17 @@
 		float:right;
 		position:relative;
 		height:100%;
-		padding-right:38px;
+		padding-right:40rpx;
 		button {
 			position: absolute;
 			width: 80%;
 			height: 100%;
 			opacity: 0;
+			padding: 0;
+			z-index: 100;
 		}
 		image{
-			width: 36rpx;
+			width: 210rpx;
 			height: 36rpx;
 			margin-top: 37rpx;
 		}
@@ -41,6 +43,19 @@
 			width: 40rpx;
 			height: 40rpx;
 			margin-top: 34rpx;
+		}
+		.long {
+			width: 260rpx;
+		}
+		.shake {
+			animation-name: shake-hard;
+			animation-duration: 3000ms;
+			animation-timing-function: ease-in-out;
+			animation-iteration-count: infinite;
+			-webkit-animation-name: shake-hard;
+			-webkit-animation-duration: 3000ms;
+			-webkit-animation-timing-function: ease-in-out;
+			-webkit-animation-iteration-count: infinite;
 		}
 	}
 	.love{
@@ -67,4 +82,36 @@
 			text-align: left;
 		}
 	}
+}
+
+@keyframes shake-hard{
+2%{transform:translate(9px, -2px) rotate(2.5deg)}
+3%{transform:translate(8px, 5px) rotate(3.5deg)}
+4%{transform:translate(-3px, 1px) rotate(-1.5deg)}
+5%{transform:translate(0px, -2px) rotate(2.5deg)}
+6%{transform:translate(3px, -4px) rotate(-2.5deg)}
+7%{transform:translate(-1px, 10px) rotate(-.5deg)}
+8%{transform:translate(0px, 10px) rotate(-1.5deg)}
+9%{transform:translate(7px, -1px) rotate(3.5deg)}
+10%{transform:translate(1px, 10px) rotate(3.5deg)}
+11%{transform:translate(1px, -5px) rotate(3.5deg)}
+12%{transform:translate(2px, 1px) rotate(3.5deg)}
+13%{transform:translate(2px, 0px) rotate(2.5deg)}
+0%,14%,100%{transform:translate(0, 0) rotate(0)}
+}
+
+@-webkit-keyframes shake-hard{
+2%{transform:translate(9px, -2px) rotate(2.5deg)}
+3%{transform:translate(8px, 5px) rotate(3.5deg)}
+4%{transform:translate(-3px, 1px) rotate(-1.5deg)}
+5%{transform:translate(0px, -2px) rotate(2.5deg)}
+6%{transform:translate(3px, -4px) rotate(-2.5deg)}
+7%{transform:translate(-1px, 10px) rotate(-.5deg)}
+8%{transform:translate(0px, 10px) rotate(-1.5deg)}
+9%{transform:translate(7px, -1px) rotate(3.5deg)}
+10%{transform:translate(1px, 10px) rotate(3.5deg)}
+11%{transform:translate(1px, -5px) rotate(3.5deg)}
+12%{transform:translate(2px, 1px) rotate(3.5deg)}
+13%{transform:translate(2px, 0px) rotate(2.5deg)}
+0%,14%,100%{transform:translate(0, 0) rotate(0)}
 }

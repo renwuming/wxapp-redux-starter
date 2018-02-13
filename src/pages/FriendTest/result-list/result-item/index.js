@@ -7,24 +7,27 @@ import { fetchResultRecord2 } from "../../../../redux/models/results.js";
 let pageConfig = {
     onShow: function() {
       var me = this,
-            { detail } = me.data,
-            toolbarInit = Toolbar.init.bind(me);
+          { detail } = me.data,
+          toolbarInit = Toolbar.init.bind(me);
 
       wx.setNavigationBarTitle({
           title: detail.title
       });
 
       // 隐藏分享
-      toolbarInit(detail.praise_count, detail.praise || false, true, false);
+      toolbarInit(detail.praise_count, detail.praise || false, false, false);
 
-      this.setData({
-        answerResult: this.getResult()
-      });
       // 已查看
       this.fetchResultRecord(this.data.id);
+
+      this.setData({
+        score: this.getResult(this.data.correctL, this.data.questions.length),
+      });
     },
-    getResult() {
-      return { content: "" };
+    getResult(l, len) {
+      let res = Math.floor(l / len * 100);
+      if(isNaN(res)) res = 0;
+      return res;
     },
     returnBack: function(e) {
         wx.navigateBack();
@@ -46,11 +49,13 @@ let mapStateToData = (state, params) => {
         questions = result.answers.map(e => updateObject(e,qHash[e.id])),
         answerHash = state.entities.answers;
 
+    let correctL = 0;
     questions.forEach(e => {
       let id = e.id,
           ans = answerHash[id];
       if(ans!=undefined) {
         e.correct = ans;
+        if(e.selected == e.correct) correctL++;
       }
     });
 
@@ -61,6 +66,7 @@ let mapStateToData = (state, params) => {
         questions,
         sessionid: state.entities.sessionid,
         answerHash,
+        correctL,
     }
 };
 

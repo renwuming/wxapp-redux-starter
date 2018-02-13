@@ -2,6 +2,7 @@ import { connect } from '../../../vendors/weapp-redux.js';
 import Toolbar from '../../../components/toolbar/index.js';
 import { clone, getDeviceInfo, ShareFromShare } from '../../../libs/utils.js';
 import { POST_RECORD, GET_FRIENDTEST, UPDATE_FRIEND_RESULT, GET_FRIENDTEST_PAPERRESULT } from '../../../libs/common.js';
+import { dispatchPaper } from '../../../redux/models/papers.js';
 
 let pageConfig = {
     data: {
@@ -13,14 +14,15 @@ let pageConfig = {
       },
       resultCanvas: "resultCanvas",
       isShare: true,
+      toFriendTest: true,
     },
     onLoad: function() {
-      var me = this,
-          toolbarInit = Toolbar.init.bind(me);
+      var me = this;
       this.setData({progress:0});
       this.initData();
     },
     initData: function() {
+      let toolbarInit = Toolbar.init.bind(this);
       this.waitSessionid = setInterval(() => {
         if(this.data.sessionid) {
           clearInterval(this.waitSessionid);
@@ -44,9 +46,10 @@ let pageConfig = {
             });
 
             wx.setNavigationBarTitle({
-              title: detail.title
+              title: paper.title
             });
-            toolbarInit(detail.praise_count, detail.praise || false, true);
+            toolbarInit(paper.praise_count, paper.praise || false, false, false);
+            this.fetchPaper([paper]); // 更新paper model
           });
         }
       }, 100);
@@ -221,6 +224,11 @@ let pageConfig = {
       if(redirect) wx.redirectTo({ url });
       else wx.navigateTo({ url });
     },
+    navigateToFriendTest: function(e) {
+      wx.navigateTo({
+        url: `/pages/FriendTest/detail-me/index?id=${this.data.id}`,
+      });
+    },
 }
 
 let mapStateToData = (state, params) => {
@@ -232,7 +240,9 @@ let mapStateToData = (state, params) => {
         name: params.name,
     }
 };
+let mapDispatchToPage = dispatch => ({
+  fetchPaper: (data) => dispatch(dispatchPaper(data)),
+});
 
-
-pageConfig = connect(mapStateToData)(pageConfig)
+pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)
 Page(pageConfig);

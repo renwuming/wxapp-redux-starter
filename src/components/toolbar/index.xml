@@ -3,9 +3,19 @@
 		<view class="arrow-left" catchtap="returnBack">
 			<image src="/images/arrowleft.png"></image>
 		</view>
-		<view wx:if="{{showShare}}" class="share">
+		<view wx:if="{{showShare&&!isFriendTest||showShare&&isFriendTest&&fShareFlag}}" class="share">
 			<button open-type="share"></button>
-			<image src="/images/share.png" mode="aspectFit"></image>
+			<image wx:if="{{isFriendTest}}" class="shake" src="/images/share-f.png" mode="aspectFit"></image>
+			<image wx:else class="shake long" src="/images/share-b.png" mode="aspectFit"></image>
+		</view>
+		<view wx:if="{{toFriendTest}}" class="share" bindtap="navigateToFriendTest">
+			<image class="shake" src="/images/share-f-s.png" mode="aspectFit"></image>
+		</view>
+		<view wx:if="{{toBaozouTest}}" class="share" bindtap="navigateToBaozouTest">
+			<image class="shake" src="/images/share-b-s.png" mode="aspectFit"></image>
+		</view>
+		<view wx:if="{{isFriendTest&&!fShareFlag}}" class="share" bindtap="notCompleteTestTip">
+			<image class="shake" src="/images/share-f.png" mode="aspectFit"></image>
 		</view>
 		<view class="share" bindtap="navigateTo" data-redirect="true" data-url="/pages/Home/index">
 			<image class="toHome" src="/images/home.png" mode="aspectFit"></image>

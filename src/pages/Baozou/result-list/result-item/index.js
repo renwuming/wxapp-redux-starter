@@ -11,11 +11,11 @@ let pageConfig = {
             toolbarInit = Toolbar.init.bind(me);
 
       wx.setNavigationBarTitle({
-          title: detail.title || '趣味测试'
+          title: detail.title
       });
 
       // 隐藏分享
-      toolbarInit(detail.praise_count, detail.praise || false, true, false);
+      toolbarInit(detail.praise_count, detail.praise || false, false, false);
 
       this.setData({
         answerResult: this.getResult()

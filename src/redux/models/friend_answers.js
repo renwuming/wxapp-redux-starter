@@ -1,5 +1,6 @@
 import Promise from '../../vendors/es6-promise.js';
 import { normalize, arrayOf } from '../../vendors/normalizr.min.js';
+import { GET, POST } from '../../libs/request.js';
 
 import { updateObject } from '../../libs/utils.js';
 
@@ -27,6 +28,31 @@ export function updateAnswers(normalizeData) {
 // ------------------------------------
 // Async Actions
 // ------------------------------------
+export const fetchFriendAnswers = () => {
+    return (dispatch, getState) => {
+        let state = getState(),
+            oldAnswers = state.entities.answers,
+            sessionid = state.entities.sessionid,
+            url = `/test/friendtest`,
+            params = { sessionid },
+            normalizeData = {
+                entities: {},
+            };
+
+        return GET(url, params, 500)
+            .then(function(res) {
+                let answers = res.answers;
+
+                normalizeData.entities.answers = updateObject(oldAnswers, answers);
+
+                dispatch(updateAnswers(
+                    normalizeData
+                ));
+            });
+    }
+
+}
+
 export const dispatchFriendAnswers = (answers) => {
     return (dispatch, getState) => {
         let oldAnswers = getState().entities.answers,

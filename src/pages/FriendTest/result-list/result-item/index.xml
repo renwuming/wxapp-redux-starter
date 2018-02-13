@@ -3,7 +3,7 @@
 
 <view class="container toolbar-container">
 
-  <template is="result-detail" data="{{...detail, ...result, questions, answerResult}}"></template>
+  <template is="result-detail" data="{{...detail, ...result, questions, score}}"></template>
 
   <template is="toolbar" data="{{...toolbarData}}"></template>
 </view>

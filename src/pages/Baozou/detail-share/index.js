@@ -11,7 +11,8 @@ let pageConfig = {
       progress: 0,
       score: 0,
       result: "",
-      showhometip: true
+      showhometip: true,
+      toBaozouTest: true,
     },
     onLoad: function() {
       let { detail, id } = this.data,
@@ -34,9 +35,9 @@ let pageConfig = {
       let { detail } = this.data,
            toolbarInit = Toolbar.init.bind(this);
       wx.setNavigationBarTitle({
-          title: detail.title || '趣味测试'
+          title: detail.title
       });
-      toolbarInit(detail.praise_count, detail.praise || false, true);
+      toolbarInit(detail.praise_count, detail.praise || false, false, false);
       this.setData({progress:0});
     },
     onShareAppMessage: function() {
@@ -99,6 +100,11 @@ let pageConfig = {
           { redirect,url } = elCurrentTarget.dataset;
       if(redirect) wx.redirectTo({ url });
       else wx.navigateTo({ url });
+    },
+    navigateToBaozouTest: function(e) {
+      wx.navigateTo({
+        url: `/pages/Baozou/detail-me/index?id=${this.data.id}`,
+      });
     },
 }
 

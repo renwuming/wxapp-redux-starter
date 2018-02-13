@@ -14,6 +14,14 @@
         	</view>
         </view>
     </view>
+    <view class="legend-box">
+        <view class="legend">
+            <text>正确答案：</text><text class="block"></text><text class="block right"></text>
+        </view>
+        <view class="legend">
+            <text>错误答案：</text><text class="block wrong"></text>
+        </view>
+    </view>
     <view wx:for="{{questions}}" wx:for-index="index" wx:key="item" class="q-box result-q-box">
         <text class="title">{{index+1}}/{{questions.length}}: {{item.title}}</text>
         <radio-group class="container radio-group">
@@ -25,8 +33,8 @@
             </label>
         </radio-group>
     </view>
-<!--     <view class="result-box container">
-        <text class="title">测试结果</text>
-        <text class="content container">{{answerResult.content}}</text>
-    </view> -->
+    <view class="result-box container">
+        <text class="title">友情指数</text>
+        <text class="content container"><text class="DIN">{{score}}分</text></text>
+    </view>
 </template>

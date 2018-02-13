@@ -1,8 +1,33 @@
 .q-box .radio-group label {
   .correct {
-    background: #33cc33;
+    background-color: #33cc33;
   }
   .wrong {
-    background: #ff6666;
+    background-color: #ff6666;
+  }
+}
+.legend-box {
+  width: 100%;
+  padding: 30rpx 0;
+  background-color:#fff;
+  .legend {
+    display:flex;
+    justify-content: center;
+    margin:10rpx 8%;
+    align-items:center;
+    .block {
+      width:180rpx;
+      height:20rpx;
+      display:inline-block;
+      background-color:#33cc33;
+      margin-right:40rpx;
+    }
+    .block.right {
+      background-color: #ffdf1f;
+    }
+    .block.wrong {
+      width:400rpx;
+      background-color: #ff6666;
+    }
   }
 }

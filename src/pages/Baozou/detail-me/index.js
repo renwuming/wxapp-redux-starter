@@ -16,10 +16,10 @@ let pageConfig = {
             toolbarInit = Toolbar.init.bind(me);
 
       wx.setNavigationBarTitle({
-        title: detail.title || '趣味测试'
+        title: detail.title
       });
 
-      toolbarInit(detail.praise_count, detail.praise || false, true);
+      toolbarInit(detail.praise_count, detail.praise || false, false);
 
       POST_RECORD(this.data.id).then(res => {
         this.setData({ showsharetip: res.tip });
