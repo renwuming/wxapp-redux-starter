@@ -1,24 +1,22 @@
 <view class="container wrapper">
-  <view class="top part container-h">
-    <view class="container">
-      <image src="{{userInfo.avatarUrl}}" mode="aspectFit" class="portrait"></image>
-      <text class="nick">{{userInfo.nickName}}</text>
-    </view>
-  </view>
-  <view class="part container-h">
-    <view class="friend-part" bindtap="navigateTo" data-url="/pages/FriendTest/home/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover1.jpg" mode="aspectFill"></image>
-      <text class="float-text DIN">友情鉴定</text>
-    </view>
-  </view>
-  <view class="part container-h " style="margin-top:20rpx;">
-    <view class="baozou-part" bindtap="navigateTo" data-url="/pages/Baozou/home/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover2.jpg" mode="aspectFill"></image>
+  <view class="top-box container-h">
+    <view class="container left part" bindtap="navigateTo" data-url="/pages/Baozou/home/index">
+      <image src="/images/cover1.png" mode="aspectFill"></image>
       <text class="float-text DIN">暴走测试</text>
     </view>
-    <view class="personal-part" bindtap="navigateTo" data-url="/pages/Setting/personal/index">
-      <image src="https://www.renwuming.xyz/wumingstore/img/common/cover4.jpg" mode="aspectFill"></image>
-      <text class="float-text DIN">个人中心</text>
+    <view class="container right part">
+      <view class="top part">
+        <image src="{{userInfo.avatarUrl}}" mode="aspectFit" class="portrait"></image>
+        <text class="nick">{{userInfo.nickName}}</text>
+      </view>
+      <view class="bottom part" bindtap="navigateTo" data-url="/pages/Setting/personal/index">
+        <image src="/images/cover2.png" mode="aspectFill"></image>
+        <text class="float-text DIN">个人中心</text>
+      </view>
     </view>
+  </view>
+  <view class="bottom-box container-h part" bindtap="navigateTo" data-url="/pages/FriendTest/home/index">
+    <image src="/images/cover3.png" mode="aspectFill"></image>
+    <text class="float-text DIN">友情鉴定</text>
   </view>
 </view>
