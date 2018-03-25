@@ -51,6 +51,13 @@ let pageConfig = {
             toolbarInit(paper.praise_count, paper.praise || false, false, false);
             this.fetchPaper([paper]); // 更新paper model
           });
+
+          POST_RECORD(this.data.id).then(res => {
+            this.setData({
+              showsharetip: res.tip,
+              auditing: res.tip,
+            });
+          });
         }
       }, 100);
     },

@@ -25,7 +25,10 @@ let pageConfig = {
       });
 
       POST_RECORD(this.data.id).then(res => {
-        this.setData({ showhometip: res.tip });
+        this.setData({
+          showhometip: res.tip,
+          auditing: res.tip,
+        });
       });
     },
     hidecover: function() {

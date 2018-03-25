@@ -1,6 +1,7 @@
 import { connect } from '../../../vendors/weapp-redux.js';
 import { fetchFriendResultList } from '../../../redux/models/results.js';
 import { fetchFreindPaperList } from '../../../redux/models/papers.js';
+import { fetchFriendAnswers } from '../../../redux/models/friend_answers.js';
 import { ArrayIncludeItem, homeShare } from '../../../libs/utils.js';
 import Toaster from '../../../components/toaster/index.js';
 
@@ -29,6 +30,7 @@ let pageConfig = {
         clearInterval(this.waitSessionid);
         this.fetchResultList(this.data.fetchParams, this.errorCallback, true);
         this.fetchPaperList(this.data.fetchParams, this.errorCallback, true);
+        this.fetchFriendAnswers();
       }
     }, 100);
   },
@@ -104,7 +106,8 @@ let mapStateToData = state => {
 };
 let mapDispatchToPage = dispatch => ({
   fetchPaperList: (params, errorCallback, init) => dispatch(fetchFreindPaperList(params, errorCallback, init)),
-  fetchResultList: (params, errorCallback, init) => dispatch(fetchFriendResultList(params, errorCallback, init))
+  fetchResultList: (params, errorCallback, init) => dispatch(fetchFriendResultList(params, errorCallback, init)),
+  fetchFriendAnswers: () => dispatch(fetchFriendAnswers()),
 });
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)

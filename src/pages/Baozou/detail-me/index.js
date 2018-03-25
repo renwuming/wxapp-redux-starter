@@ -8,7 +8,7 @@ let pageConfig = {
       progress: 0,
       score: 0,
       result: "",
-      showsharetip: true
+      showsharetip: true,
     },
     onLoad: function() {
       var me = this,
@@ -22,7 +22,10 @@ let pageConfig = {
       toolbarInit(detail.praise_count, detail.praise || false, false);
 
       POST_RECORD(this.data.id).then(res => {
-        this.setData({ showsharetip: res.tip });
+        this.setData({
+          showsharetip: res.tip,
+          auditing: res.tip,
+        });
       });
     },
     onShareAppMessage: function() {

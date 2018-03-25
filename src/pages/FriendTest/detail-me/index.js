@@ -3,7 +3,7 @@ import Toolbar from '../../../components/toolbar/index.js';
 import Toaster from '../../../components/toaster/index.js';
 import { clone, getDeviceInfo, ShareFromMe } from '../../../libs/utils.js';
 import { POST_RECORD, GET_FRIENDTEST, UPDATE_Q } from '../../../libs/common.js';
-import { dispatchFriendAnswers, fetchFriendAnswers } from '../../../redux/models/friend_answers.js';
+import { dispatchFriendAnswers } from '../../../redux/models/friend_answers.js';
 
 let pageConfig = {
     data: {
@@ -15,11 +15,7 @@ let pageConfig = {
       fShareFlag: false,
     },
     onLoad: function() {
-      if(!this.data.answerHash) {
-        this.fetchFriendAnswers().then(() => {
-          this.init();
-        }); // 获取友情鉴定答案列表
-      } else this.init();
+      this.init();
     },
     init: function() {
       let me = this,
@@ -48,6 +44,12 @@ let pageConfig = {
       this.setData({ fShareFlag });
       toolbarInit(detail.praise_count, detail.praise || false, true);
 
+      POST_RECORD(this.data.id).then(res => {
+        this.setData({
+          showsharetip: res.tip,
+          auditing: res.tip,
+        });
+      });
     },
     hidecover: function() {
       this.setData({ showsharetip: false });
@@ -126,7 +128,6 @@ let mapStateToData = (state, params) => {
 
 let mapDispatchToPage = dispatch => ({
   dispatchFriendAnswers: (data) => dispatch(dispatchFriendAnswers(data)),
-  fetchFriendAnswers: () => dispatch(fetchFriendAnswers()),
 });
 
 pageConfig = connect(mapStateToData, mapDispatchToPage)(pageConfig)

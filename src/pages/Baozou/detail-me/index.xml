@@ -5,5 +5,5 @@
 
   <template is="paper-detail" data="{{...detail, questions, progress, result, showsharetip}}"></template>
 
-  <template is="toolbar" data="{{...toolbarData}}"></template>
+  <template is="toolbar" data="{{...toolbarData, auditing}}"></template>
 </view>
