@@ -1,8 +1,13 @@
 <view class="container wrapper">
   <view class="top container">
-    <image src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
-    <text>{{userInfo.nickName}}</text>
-    <button open-type="getUserInfo" bindgetuserinfo="login">{{loginText}}</button>
+    <view class='avatar'>
+      <open-data type="userAvatarUrl" mode="aspectFill"></open-data>
+    </view>
+    <!-- <image src="{{userInfo.avatarUrl}}" mode="aspectFit"></image> -->
+    <view class='nickname'>
+      <open-data type="userNickName" mode="aspectFill"></open-data>
+    </view>
+    <!-- <button open-type="getUserInfo" bindgetuserinfo="login">{{loginText}}</button> -->
   </view>
   <view class="right container">
     <view class="item container">

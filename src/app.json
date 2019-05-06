@@ -3,7 +3,7 @@
     // First is default to view
     // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
     "pages": [
-        "pages/Home/index",
+        "pages/home/index",
         // 暴走测试
         "pages/Baozou/home/index",
         "pages/Baozou/detail-me/index",
