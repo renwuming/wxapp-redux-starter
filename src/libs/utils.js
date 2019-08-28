@@ -250,7 +250,7 @@ export const homeShare = function() {
 
     let index = Math.floor(Math.random()*6),
         obj = list[index];
-    obj.path = '/pages/Home/index';
+    obj.path = '/pages/home/index';
 
     return obj;
 }
